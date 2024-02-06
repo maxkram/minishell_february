@@ -40,16 +40,20 @@ int	word_filling(t_data *pnt, char const *s)
 	int	i;
 
 	i = 0;
+	// Allocate memory for the value of the token
 	pnt->tokens[++pnt->count_token - 1].value
 		= ft_calloc(count_characters(s) + 1, sizeof(char));
 	if (!pnt->tokens[pnt->count_token - 1].value)
 		return (error_out(pnt, "ft_calloc", 1) - 1);
+	// Copy characters from input string to the token value
 	while (*s && !(*s == ' ' || *s == '<' || *s == '>' || *s == '|'
 			|| *s == '\"' || *s == '\'' || *s == '\t'))
 		pnt->tokens[pnt->count_token - 1].value[i++] = *s++;
 	pnt->tokens[pnt->count_token - 1].value[i] = '\0';
+	// Check for quotes at the end of the word and set the 'no_space' flag
 	if (*s == '\'' || *s == '\"')
 		pnt->tokens[pnt->count_token - 1].no_space = 1;
+	// Set the token type to WORD
 	pnt->tokens[pnt->count_token - 1].type = WORD;
 	return (i);
 }
@@ -79,21 +83,29 @@ int	filling_quotes(t_data *pnt, char const *str, char tmp)
 	int	i;
 
 	j = 0;
+	// Skip the opening quote character
 	str++;
+	// Get the length of the quoted string
 	i = get_length_of_quotes(str, tmp);
+	// Check for an error in getting the length of quotes
 	if (i == -1)
 		return (0);
+	// Allocate memory for the value of the token
 	pnt->tokens[++pnt->count_token - 1].value = ft_calloc(i + 1, sizeof(char));
 	if (!pnt->tokens[pnt->count_token - 1].value)
 		return (error_out(pnt, "ft_calloc", 1) - 2);
+	// Copy the characters inside the quotes to the token value
 	while (*str != tmp && *str)
 		pnt->tokens[pnt->count_token - 1].value[j++] = *str++;
+	// Check if the string ends abruptly (unclosed quote)
 	if (*str++ == '\0')
 		return (-1);
+	// Check for spaces or special characters after the closing quote
 	if (*str == '\"' || *str == '\'' || (*str != ' ' && *str != '<' && *str != '>'
 			&& *str != '|' && *str != '\0' && *str != '\t'))
 		pnt->tokens[pnt->count_token - 1].no_space = 1;
 	pnt->tokens[pnt->count_token - 1].value[i] = '\0';
+	// Set the token type based on the quote type
 	if (tmp == '\"')
 		pnt->tokens[pnt->count_token - 1].type = DQUOTE;
 	else if (tmp == '\'')
@@ -106,23 +118,30 @@ int	filling_quotes(t_data *pnt, char const *str, char tmp)
 int	reallocate_tokens_if_max(t_data *pnt, int max_token)
 {
 	t_token *new_tokens_array;
-
+	// Allocate memory for a new array of tokens with double the size
 	new_tokens_array = ft_calloc(max_token * 2, sizeof(t_token));
+	// If memory allocation fails, return an error
 	if (!new_tokens_array)
 		return (error_out(pnt, "ft_calloc", 1));
+	// Copy the existing tokens to the new array
 	while (--max_token >= 0)
 	{
 		new_tokens_array[max_token].type = pnt->tokens[max_token].type;
+		// Duplicate the value if it exists
 		if (pnt->tokens[max_token].value)
 		{
 			new_tokens_array[max_token].value = ft_strdup_fd(pnt->tokens[max_token].value);
+			// If strdup fails, clean up and return an error
 			if (!new_tokens_array[max_token].value)
 				return (clean_token_array(new_tokens_array, max_token, pnt));
 		}
 		new_tokens_array[max_token].no_space = pnt->tokens[max_token].no_space;
+		// Free the original token's value as it's duplicated in the new array
 		free(pnt->tokens[max_token].value);
 	}
+	// Free the original array of tokens
 	free(pnt->tokens);
+	// Update the pointer to the new array and double the max_token count
 	pnt->tokens = new_tokens_array;
 	pnt->max_token *= 2;
 	return (0);

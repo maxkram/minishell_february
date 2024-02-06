@@ -131,16 +131,21 @@ int	extender(t_data *pnt)
 	end = pnt->count_token;
 	while (i < end)
 	{
+		// Check for REDIRECT_MULTILINE tokens
 		if (pnt->tokens[i].type == REDIRECT_MULTILINE)
 		{
+			// Skip to the next non-space token after the REDIRECT_MULTILINE
 			i += 2;
 			while (pnt->tokens[i].no_space)
 				i++;
 		}
+		// Check for WORD or DQUOTE tokens with '$'
 		if ((pnt->tokens[i].type == WORD || pnt->tokens[i].type == DQUOTE)
 			&& if_has(pnt->tokens[i].value, '$'))
 		{
+			// Check for exceptions
 			ex = check_exception(pnt, i);
+			// Perform token expansion
 			if (token_expansion(pnt->tokens[i].value, pnt, i, ex) == 2)
 				return (2);
 		}
