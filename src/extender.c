@@ -31,6 +31,7 @@ int	variable_index(char **env, char *n)
 	i = 0;
 	while (env[i])
 	{
+		// Check if the current environment variable matches the given name 'n'
 		if (env[i][ft_strlen(n)] == '=' && substring_beginning(env[i], n))
 			return (i);
 		i++;
@@ -59,16 +60,19 @@ int	dollar_replacement(char *string, char **value, t_data *pnt, int exception)
 	const int		length = length_of_variable(string);
 	char	*value_buffer;
 	char	*key;
-
+	// Check for exception and handle special cases
 	if (exception && length == 1)
 		return (*value = ft_strdup_fd(""), length);
 	if (length == 1)
 		return (*value = ft_strdup_fd("$"), length);
+	// Extract the key (variable name) from the string
 	key = ft_substr(string, 1, length - 1);
 	if (key == NULL)
 		return (length);
+	// Retrieve the value of the variable from the environment
 	value_buffer = value_of_variable(pnt, key);
 	free(key);
+	// Allocate memory for the value and copy the variable's value into it
 	if (value_buffer == NULL)
 		*value = ft_strdup_fd("");
 	else
@@ -91,19 +95,23 @@ static int	token_expansion(char *var, t_data *pnt, int i, int j)
 	while (*var)
 	{
 		buffer = NULL;
+		// If the character is '$', perform token replacement
 		if (*var == '$')
 			var += dollar_replacement(var, &buffer, pnt, j);
 		else
 			var += substring_concatenation(var, &buffer);
 		if (buffer == NULL)
 			return (free(result), 2);
+		// Concatenate 'buffer' with 'result'
 		buffer_result = ft_strcat(result, buffer);
 		(free(buffer), free(result));
 		if (buffer_result == NULL)
 			return (2);
+		// Update 'result' with concatenated buffer
 		result = buffer_result;
 	}
 	free(buffer_value);
+	// Update the value of the token in the tokens array
 	pnt->tokens[i].value = result;
 	return (0);
 }

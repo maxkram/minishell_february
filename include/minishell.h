@@ -60,7 +60,7 @@ typedef struct cmd
 	struct cmd	*next; //points to another struct like this one with the next command, or NULL if its the last command
 }			t_cmd;
 
-typedef	enum s_type_token
+typedef	enum s_type_token //names for token like '>', '<<', '|', '""'
 {
 	WORD,
 	PIPE,
@@ -72,7 +72,7 @@ typedef	enum s_type_token
 	SQUOTE
 }	t_type_token;
 
-typedef	enum s_set_mode
+typedef	enum s_set_mode //names for here-doc modes
 {
 	INTERACT,
 	NON_INTERACT,
@@ -80,80 +80,80 @@ typedef	enum s_set_mode
 	MULTILINE
 }	t_set_mode;
 
-typedef	struct s_token
+typedef	struct s_token //for tokenizer
 {
 	char			*value;
 	t_type_token	type;
 	int				no_space;
 }	t_token;
 
-typedef struct s_tab_cmd
+typedef struct s_tab_cmd //data struct for keeping status when we operate with files
 {
-	char	*cmd;
-	char	**args;
-	int		in_fd;
-	int		out_fd;
+	char	*cmd; //to keep results of search
+	char	**args; //not used
+	int		in_fd; //file descriptors
+	int		out_fd; //file descriptors
 	t_token	*redirections;
-	int		file_in;
-	int		file_out;
-	int		num_redirections;
-	int		num_args;
-	int		is_child_process;
-	char	*last_multiline;
-	pid_t	pid;
+	int		file_in; //file descriptors
+	int		file_out; //file descriptors
+	int		num_redirections; // to count number of ">>"s
+	int		num_args; //number of arguments
+	int		is_child_process; //boolean if the process the result of fork() or dup2()
+	char	*last_multiline; //here-doc status
+	pid_t	pid; //pid
 }	t_tab_cmd;
 
+//basic struct to keep the command line variables
 typedef struct s_data
 {
-	t_cmd		*cmd; //pointer to first cmd, linked to the other ones with chained list. (YOU NEED TO ALLOCATE AND PARSE IN HERE)
-	// int			cmd_count; //the amount of commands in the chained list.
-	char		**env; //to free
-	char		**path;
-	char		*input;
-	t_token		*tokens;
-	int			count_token;
-	int			max_token;
-	t_tab_cmd	*cmdt;
-	int			cmdt_count;
-	char		*user_prompt; //to free
-	int			code_exit;
-	// int		exit_promt;
-	int			fd_before;
-	int			first_stdin;
-	int			first_stdout;
+	t_cmd		*cmd; //pointer to first cmd, linked to the other ones with chained list. 
+	char		**env; //to keep the 3rd argument from main : env
+	char		**path; // keep PATH, used for search
+	char		*input; // for everything from input
+	t_token		*tokens; // keep broken pieces of whole input
+	int			count_token; //just counter how many tokens in the input
+	int			max_token; //maximum of tokens (memory allocation purpose)
+	t_tab_cmd	*cmdt; //the link to another data structure
+	int			cmdt_count; // counter how many of child data structs
+	// char		*user_prompt;  // legacy code
+	int			code_exit; // to keep status of exit (2, 1, 0)
+	// int		exit_promt; // legacy code
+	int			fd_before; // file descriptor in the beginning
+	int			first_stdin; //when we create file decriptors we need STDIN_FILENO
+	int			first_stdout; // like previous for STDOUT_FILENO
 	t_set_mode	mode;
 }	t_data;
 
 
-typedef	struct	s_redir
-{
-	int		i;
-	char	*name;
-	char	*value;
-}	t_redir;
+// typedef	struct	s_redir
+// {
+// 	int		i;
+// 	char	*name;							//legacy code
+// 	char	*value;
+// }	t_redir;
 
-typedef struct	s_copy
-{
-		char	*wc;
-		char	**args;
-		char	*cmd;
-		int		i;
-		int		num;
-		t_redir	redir;
-}	t_copy;
+// typedef struct	s_copy
+// {
+// 		char	*wc;
+// 		char	**args;
+// 		char	*cmd;
+// 		int		i;							//legacy code
+// 		int		num;
+// 		t_redir	redir;
+// }	t_copy;
 
-/**
- * NOTE: Multiple cmds when pipe
-*@param	infile path to infile
-*@param	outfile path to outfile
-*@param	first_cmd first cmd in chained lst.
-*/
-typedef struct cmd_table
-{
-	char	*infile;
-	char	*outfile;
-	t_cmd	*first_cmd;
-}			t_table;
+// /**
+//  * NOTE: Multiple cmds when pipe
+// *@param	infile path to infile
+// *@param	outfile path to outfile
+// *@param	first_cmd first cmd in chained lst.
+// */
+// typedef struct cmd_table
+// {
+// 	char	*infile;							//legacy code
+// 	char	*outfile;
+// 	t_cmd	*first_cmd;
+// }			t_table;
 
 //
 //==================[utils.c]===================//
