@@ -103,6 +103,9 @@ typedef struct s_tab_cmd
 	pid_t	pid;
 }	t_tab_cmd;
 
+/**
+ *
+*/
 typedef struct s_data
 {
 	t_cmd		*cmd; //pointer to first cmd, linked to the other ones with chained list. (YOU NEED TO ALLOCATE AND PARSE IN HERE)
