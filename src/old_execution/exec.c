@@ -191,17 +191,17 @@ void	alt_exec_main(t_data *pnt)
 	wait_for_childs(pnt);
 }
 
-// void	alt_exec_main(t_data *pnt)
-// {
-// 	int	i;
-// 	int	pip[2];
+void	alt_exec_main(t_data *pnt)
+{
+	int	i;
+	int	pip[2];
 
-// 	i = -1;
-// 	pnt->fd_before = -1;
-// 	while (++i < pnt->cmdt_count)
-// 	{
-// 		if (find_exec(pnt, &pnt->cmdt[i]) == 0 && ++pnt->cmdt[i].is_child_process)
-// 				command_execution(pnt, &pnt->cmdt[i], i, pip);
-// 	}
-// }
+	i = -1;
+	pnt->fd_before = -1;
+	while (++i < pnt->cmdt_count)
+	{
+		if (find_exec(pnt, &pnt->cmdt[i]) == 0 && ++pnt->cmdt[i].is_child_process)
+				command_execution(pnt, &pnt->cmdt[i], i, pip);
+	}
+}
 

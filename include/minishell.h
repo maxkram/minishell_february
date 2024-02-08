@@ -17,6 +17,7 @@
 # include <errno.h>
 # include <dirent.h>
 # include <limits.h>
+# include <stdbool.h>
 
 //==================VALUES===================//
 # define DEBUG_ON 0
@@ -42,6 +43,20 @@
 //==================Structs===================//
 
 extern int	global_signal;
+
+typedef struct s_pipex_data
+{
+	int		n_cmds; // number of commands
+	int		*pipefds; // array of pipe file descriptors
+	int		n_pipes; // number of pipes
+	bool	here_doc; // true if here_doc is used
+	char	*limiter; // here_doc limiter
+	char	*infile; // input file
+	char	*outfile; // output file
+	char	**argv; // array of command line arguments
+	char	**envp; // array of environment variables
+}	t_pipex_data;
+
 typedef	enum s_type_token //names for token like '>', '<<', '|', '""'
 {
 	WORD,
@@ -104,36 +119,6 @@ typedef struct s_data
 	t_set_mode	mode;
 }	t_data;
 
-
-// typedef	struct	s_redir
-// {
-// 	int		i;
-// 	char	*name;							//legacy code
-// 	char	*value;
-// }	t_redir;
-
-// typedef struct	s_copy
-// {
-// 		char	*wc;
-// 		char	**args;
-// 		char	*cmd;
-// 		int		i;							//legacy code
-// 		int		num;
-// 		t_redir	redir;
-// }	t_copy;
-
-// /**
-//  * NOTE: Multiple cmds when pipe
-// *@param	infile path to infile
-// *@param	outfile path to outfile
-// *@param	first_cmd first cmd in chained lst.
-// */
-// typedef struct cmd_table
-// {
-// 	char	*infile;							//legacy code
-// 	char	*outfile;
-// 	t_cmd	*first_cmd;
-// }			t_table;
 
 //
 //==================[utils.c]===================//
