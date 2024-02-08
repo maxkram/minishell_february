@@ -42,24 +42,6 @@
 //==================Structs===================//
 
 extern int	global_signal;
-
-// /**
-//  * NOTE: Simple command + args
-// *@param	argc Number of args.
-// *@param	argv Array of cmd + all its args.
-// *@param	next Next command.
-// */
-// struct cmd;
-typedef struct cmd
-{
-	int			argc;    // number of arguments (plus cmd)
-	int			fd[2]; //fd[0] is in and fd[1] is out. FOR ME. if =0, std.
-	int			cmd_idx; // starts at 0, index for commands, to keep up more easily.
-	char		*cmd_path; //for me
-	char		**args; //args[0] is cmd, and the others are the arguments.
-	struct cmd	*next; //points to another struct like this one with the next command, or NULL if its the last command
-}			t_cmd;
-
 typedef	enum s_type_token //names for token like '>', '<<', '|', '""'
 {
 	WORD,
@@ -105,7 +87,6 @@ typedef struct s_tab_cmd //data struct for keeping status when we operate with f
 
 typedef struct s_data
 {
-	t_cmd		*cmd; //pointer to first cmd, linked to the other ones with chained list.
 	char		**env; //to keep the 3rd argument from main : env
 	char		**path; // keep PATH, used for search
 	char		*input; // for everything from input
@@ -182,7 +163,6 @@ void	alt_exec_main(t_data *pntr);
 char	*ft_get_env(char *str, char **env);
 char	*cmd_fullpath(t_data *data, char *cmd);
 void	ft_dup2(int fd, int std);
-void	ft_pipe(t_cmd *cmd);
 int		change_fd_input_output(t_data *pntr, t_tab_cmd *tab_cmd, int *fd, int i);
 int		find_path(t_data *pntr, t_tab_cmd *tab_cmd);
 //
