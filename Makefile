@@ -1,12 +1,13 @@
 NAME = minishell
 CC = gcc
 CFLAGS = -Wall -Werror -Wextra -Ofast # -g -fsanitize=address
-LIBS = -Llib/libft -lft -lreadline
-INCLUDES = -Iinclude
+LIBS = -Llib/libft -lft -Lvendor/readline/lib -lreadline
+INCLUDES = -Iinclude -Ivendor/readline/include
 
 SRC_DIR := src
 OBJ_DIR := obj
 LIBFT_DIR := lib/libft
+READLINE_DIR := vendor/readline
 
 # Default execution directory
 EXEC_DIR := old_execution

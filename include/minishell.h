@@ -4,10 +4,9 @@
 # include "../lib/libft/libft.h"
 # include <stdio.h>
 # include <stdlib.h>
-// # include <readline.h>
-# include <readline/readline.h> //i don't know why but it works on my mac's account
-// # include <history.h>
-# include <readline/history.h>
+# include <../vendor/readline/include/readline/readline.h> //i don't know why but it works on my mac's account
+# include <../vendor/readline/include/readline/history.h>
+
 # include <string.h>
 # include <fcntl.h>
 # include <stddef.h>
