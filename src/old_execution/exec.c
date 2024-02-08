@@ -163,6 +163,34 @@ void	wait_for_childs(t_data *pnt)
 //commands in a shell program, handling pipelines, redirections, and
 //executing both built-in and external commands.
 
+// void	alt_exec_main(t_data *pnt)
+// {
+// 	int	i;
+// 	int	pip[2];
+
+// 	i = -1;
+// 	pnt->fd_before = -1;
+// 	while (++i < pnt->cmdt_count)
+// 	{
+// 		if (pipe(pip) == -1)
+// 			return ((void)error_out(pnt, "pipe", 1));
+// 		if (input_output_redirect(pnt, &pnt->cmdt[i]) == 1 && pipelines_redirect(pnt, i, pip))
+// 			continue ;
+// 		change_fd_input_output(pnt, &pnt->cmdt[i], pip, i);
+// 		if (if_builtin(&pnt->cmdt[i]) == 1)
+// 			shoot_builtin(pnt, &pnt->cmdt[i], i, pip);
+// 		else
+// 		{
+// 			if (find_exec(pnt, &pnt->cmdt[i]) == 0
+// 				&& ++pnt->cmdt[i].is_child_process)
+// 				command_execution(pnt, &pnt->cmdt[i], i, pip);
+// 			else
+// 				pipelines_redirect(pnt, i, pip);
+// 		}
+// 	}
+// 	wait_for_childs(pnt);
+// }
+
 void	alt_exec_main(t_data *pnt)
 {
 	int	i;
@@ -172,30 +200,8 @@ void	alt_exec_main(t_data *pnt)
 	pnt->fd_before = -1;
 	while (++i < pnt->cmdt_count)
 	{
-		if (pipe(pip) == -1)
-			return ((void)error_out(pnt, "pipe", 1));
-		if (input_output_redirect(pnt, &pnt->cmdt[i]) == 1 && pipelines_redirect(pnt, i, pip))
-			continue ;
-		change_fd_input_output(pnt, &pnt->cmdt[i], pip, i);
-		if (if_builtin(&pnt->cmdt[i]) == 1)
-			shoot_builtin(pnt, &pnt->cmdt[i], i, pip);
-		else
-		{
-			if (find_exec(pnt, &pnt->cmdt[i]) == 0
-				&& ++pnt->cmdt[i].is_child_process)
+		if (find_exec(pnt, &pnt->cmdt[i]) == 0 && ++pnt->cmdt[i].is_child_process)
 				command_execution(pnt, &pnt->cmdt[i], i, pip);
-			else
-				pipelines_redirect(pnt, i, pip);
-		}
 	}
-	wait_for_childs(pnt);
 }
 
-/*
-alt_exec_main
-pnt->fd_before = -1;
-pntr->cmdt_count = 1;
-pntr->cmdt[0].cmd = "ls";
-pntr->cmdt[0].args = {"ls", NULL};
-
-*/
