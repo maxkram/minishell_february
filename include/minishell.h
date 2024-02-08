@@ -39,6 +39,7 @@
 # define ERR_EXPORT "Invalid identifier for export\n"
 # define ERR_UNSET "Invalid indentifier for unset\n"
 # define ERR_WRITE "Write error\n"
+# define ERROR -1
 //==================Structs===================//
 
 extern int	global_signal;
@@ -103,10 +104,9 @@ typedef struct s_tab_cmd //data struct for keeping status when we operate with f
 	pid_t	pid; //pid
 }	t_tab_cmd;
 
-//basic struct to keep the command line variables
 typedef struct s_data
 {
-	t_cmd		*cmd; //pointer to first cmd, linked to the other ones with chained list. 
+	t_cmd		*cmd; //pointer to first cmd, linked to the other ones with chained list.
 	char		**env; //to keep the 3rd argument from main : env
 	char		**path; // keep PATH, used for search
 	char		*input; // for everything from input
