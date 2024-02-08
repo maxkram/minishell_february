@@ -12,7 +12,7 @@ void    sigint_manager(int status)
 		global_signal = 1;
 		ft_putchar_fd('\n', STDERR_FILENO);
 		rl_on_new_line();
-		// rl_replace_line("", 0);
+		rl_replace_line("", 0);
 		rl_redisplay();
 	}
 }
@@ -25,7 +25,7 @@ void    manage_multiline(int status)
 	{
 		global_signal = 1;
 		ioctl(STDIN_FILENO, TIOCSTI, "\n");
-		// rl_replace_line("", 0);
+		rl_replace_line("", 0);
 		rl_on_new_line();
 	}
 }
