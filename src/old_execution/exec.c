@@ -190,3 +190,12 @@ void	alt_exec_main(t_data *pnt)
 	}
 	wait_for_childs(pnt);
 }
+
+/*
+alt_exec_main
+pnt->fd_before = -1;
+pntr->cmdt_count = 1;
+pntr->cmdt[0].cmd = "ls";
+pntr->cmdt[0].args = {"ls", NULL};
+
+*/
