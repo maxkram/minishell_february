@@ -23,7 +23,12 @@ SRC += $(shell find $(SRC_DIR)/$(EXEC_DIR) -name '*.c')
 # Transforming source paths into object paths
 OBJ := $(SRC:$(SRC_DIR)/%.c=$(OBJ_DIR)/%.o)
 
-all: $(NAME)
+# Add libft as a prerequisite to the all target or to the $(NAME) target
+all: libft $(NAME)
+
+# Rule to compile libft
+libft:
+	@$(MAKE) -C $(LIBFT_DIR)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(@D)
@@ -42,4 +47,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re tests
+.PHONY: all clean fclean re tests libft

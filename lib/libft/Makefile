@@ -6,7 +6,7 @@
 #    By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/17 17:24:38 by hezhukov          #+#    #+#              #
-#    Updated: 2024/02/07 19:04:24 by hezhukov         ###   ########.fr        #
+#    Updated: 2024/02/07 19:22:17 by hezhukov         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,8 +25,8 @@ CFLAGS = -Wall -Wextra -Werror
 RM = /bin/rm -f
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
-	mkdir -p $(OBJDIR)
-	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+	@mkdir -p $(OBJDIR)
+	@$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
 
 all: $(NAME)
 
