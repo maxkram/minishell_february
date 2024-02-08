@@ -1,3 +1,5 @@
+# for a compilation with new execution directory, run `make NEW_EXEC=1`
+
 NAME = minishell
 CC = gcc
 CFLAGS = -Wall -Werror -Wextra -Ofast # -g -fsanitize=address
