@@ -39,6 +39,7 @@
 # define ERR_EXPORT "Invalid identifier for export\n"
 # define ERR_UNSET "Invalid indentifier for unset\n"
 # define ERR_WRITE "Write error\n"
+# define ERROR -1
 //==================Structs===================//
 
 extern int	global_signal;
