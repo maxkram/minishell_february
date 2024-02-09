@@ -45,6 +45,8 @@ void	create_builtin_fd(t_tab_cmd *cmd_tab, int *pipe_fd)
 void	shoot_builtin(t_data *pntr, t_tab_cmd *cmd_tab, int i, int *pipe_fd)
 {
 	create_builtin_fd(cmd_tab, pipe_fd);
+	if (ft_strcmp(cmd_tab->cmd, "echo") == 0)
+		built_echo(pntr, cmd_tab);
 	if (ft_strcmp(cmd_tab->cmd, "exit") == 0)
 		built_exit(pntr, cmd_tab);
 	if (ft_strcmp(cmd_tab->cmd, "env") == 0)
@@ -57,8 +59,6 @@ void	shoot_builtin(t_data *pntr, t_tab_cmd *cmd_tab, int i, int *pipe_fd)
 		build_pwd(pntr);
 	if (ft_strcmp(cmd_tab->cmd, "cd") == 0)
 		// built_cd(pntr, cmd_tab);
-	if (ft_strcmp(cmd_tab->cmd, "echo") == 0)
-		// built_echo(pntr, cmd_tab);
 	recreate_file_descriptors(pntr, cmd_tab, i, pipe_fd);
 }
 
