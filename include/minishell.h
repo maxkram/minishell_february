@@ -90,7 +90,7 @@ typedef	struct s_token //for tokenizer
 typedef struct s_tab_cmd //data struct for keeping status when we operate with files
 {
 	char	*cmd; //to keep results of search
-	char	**args; //not used
+	char	**args; //counts number of argc in main
 	int		in_fd; //file descriptors
 	int		out_fd; //file descriptors
 	t_token	*redirections;
@@ -209,7 +209,7 @@ void	built_cd(char **args, int argc);
 void	built_exit(t_data *pntr, t_tab_cmd *cmd_tab);
 //
 //==================[b_echo.c]===================//
-void	built_echo(char **args, int argc, int fd_out);
+void	built_echo(t_data *pnt, t_tab_cmd *tab_cmd);
 //
 //==================[b_unset.c]===================//
 void	built_unset(char **args, int argc, t_data *data);

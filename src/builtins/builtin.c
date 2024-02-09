@@ -58,7 +58,7 @@ void	shoot_builtin(t_data *pntr, t_tab_cmd *cmd_tab, int i, int *pipe_fd)
 	if (ft_strcmp(cmd_tab->cmd, "cd") == 0)
 		// built_cd(pntr, cmd_tab);
 	if (ft_strcmp(cmd_tab->cmd, "echo") == 0)
-		// built_echo(pntr, cmd_tab);
+		built_echo(pntr, cmd_tab);
 	recreate_file_descriptors(pntr, cmd_tab, i, pipe_fd);
 }
 
