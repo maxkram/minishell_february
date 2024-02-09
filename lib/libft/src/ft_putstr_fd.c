@@ -15,20 +15,35 @@
 /*
 function: writes a string to a file descriptor (fd)
    input: ft_putstr_fd("Hello", 1)
-  output: Hello
+  output: Hello!
 */
 
-void	ft_putstr_fd(char *s, int fd)
+// void	ft_putstr_fd(char *s, int fd)
+// {
+// 	int	i;
+
+// 	if (s != NULL)
+// 	{
+// 		i = 0;
+// 		while (s[i])
+// 		{
+// 			ft_putchar_fd(s[i], fd);
+// 			i++;
+// 		}
+// 	}
+// }
+
+int	ft_putstr_fd(char *s, int fd)
 {
 	int	i;
 
-	if (s != NULL)
+	i = 0;
+	if (!s)
+		return (0);
+	while (*s)
 	{
-		i = 0;
-		while (s[i])
-		{
-			ft_putchar_fd(s[i], fd);
-			i++;
-		}
+		ft_putchar_fd(*s++, fd);
+		i++;
 	}
+	return (i);
 }
