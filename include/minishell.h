@@ -187,7 +187,7 @@ int		change_fd_input_output(t_data *pntr, t_tab_cmd *tab_cmd, int *fd, int i);
 int		find_path(t_data *pntr, t_tab_cmd *tab_cmd);
 //
 //==================[b_cd.c]===================//
-void	built_cd(char **args, int argc);
+void	built_cd(pntr, cmd_tab);
 //
 //==================[b_exit.c]===================//
 void	built_exit(t_data *pntr, t_tab_cmd *cmd_tab);

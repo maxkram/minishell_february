@@ -12,6 +12,7 @@ include/readline_old_27_12/
 test.c
 .tmp_hdoc0
 -/libft_backup/
+.editorconfig
 
 # Prerequisites
 *.d
