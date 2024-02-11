@@ -187,8 +187,8 @@ int		change_fd_input_output(t_data *pntr, t_tab_cmd *tab_cmd, int *fd, int i);
 int		find_path(t_data *pntr, t_tab_cmd *tab_cmd);
 //
 //==================[b_cd.c]===================//
-void	built_cd(pntr, cmd_tab);
-int		make_var(t_data *pnt, const char *var_name, const char *value);
+int		built_cd(t_data *pnt, t_tab_cmd *tab_cmd);
+int		make_var(t_data *pnt, char *var_name, char *value);
 //
 //==================[b_exit.c]===================//
 void	built_exit(t_data *pntr, t_tab_cmd *cmd_tab);
@@ -264,5 +264,6 @@ int		ft_putstr_int(char *s, int fd);
 //==================[env.c]===================//
 int		increase_shlvl(t_data *pntr);
 // int		search_variable(char **ev, char *name);
+int		create_env_var(t_data *pntr, char *key, char *keep);
 
 #endif
