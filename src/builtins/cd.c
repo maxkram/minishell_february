@@ -24,20 +24,40 @@ int make_var(t_data *pnt, const char *var_name, const char *value)
 	return (0); // Return 0 on success, non-zero on failure
 }
 
+// int	change_dir_aux(t_data *pnt, char *path, char *pwd)
+// {
+// 	ft_printf_fd(2, "minishell: cd: %s: ", path);
+// 	perror("");
+// 	pnt->code_exit = 1;
+// 	free(pwd);
+// 	return (1);
+// }
+
 // Function to handle directory change
-int change_dir(t_data *pnt, const char *path, const char *pwd) {
+int change_folder(t_data *pnt, const char *path, const char *pwd) {
 	// if (chdir(path) != 0) {
 	//     perror("minishell: cd");
 	//     return 1;
 	// }
 	if (chdir(path) == -1)
 	{
-
+		ft_printf_fd(2, "minishell: cd: %s: ", path);
+		perror("");
+		pnt->code_exit = 1;
+		free(pwd);
+		return (1);
+		change_dir_aux(pnt, path, pwd);
 	}
 	if (pnt->cmdt_count != 1)
 	{
 		if (chdir(pwd) == -1)
 		{
+			ft_printf_fd(2, "minishell: cd: %s: ", pwd);
+			perror("");
+			pnt->code_exit = 1;
+			free(pwd);
+			return (1);
+			// change_dir_aux(pnt, pwd, pwd);
 
 		}
 		free(pwd);
@@ -63,7 +83,7 @@ int builtin_cd(t_data *pnt, t_tab_cmd *cmd_table) {
 
 	init_pwd = getcwd(NULL, 0);
 	if (!init_pwd) {
-		print_error(pnt, "minishell: cd:", 1);
+		error_out(pnt, "minishell: cd:", 1);
 		return 1;
 	}
 
@@ -73,18 +93,18 @@ int builtin_cd(t_data *pnt, t_tab_cmd *cmd_table) {
 		return 1;
 	}
 
-	if (change_dir(pnt, path, init_pwd) != 0 || pnt->cmdt_count != 1) {
+	if (change_folder(pnt, path, init_pwd) != 0 || pnt->cmdt_count != 1) {
 		return 1;
 	}
 
 	free(init_pwd);
 	temp = getcwd(NULL, 0);
 	if (!temp) {
-		print_error(pnt, "minishell: cd:", 1);
+		error_out(pnt, "minishell: cd:", 1);
 		return 1;
 	}
 
-	if (set_variable(pnt, "PWD", temp) != 0) {
+	if (make_var(pnt, "PWD", temp) != 0) {
 		free(temp);
 		return 1;
 	}
