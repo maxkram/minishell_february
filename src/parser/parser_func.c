@@ -94,7 +94,7 @@ int	clean_tokens(t_token *tokens, int max, t_data *pnt)
 	return (1);
 }
 
-//the words_merging function performs the merging of adjacent WORD tokens and updates the count_token and tokens accordingly. It also deallocates the memory used by the original tokens array
+//the func copies a token from 'pnt' to 'new_tokens'
 
 int	words_merging(t_data *pnt)
 {

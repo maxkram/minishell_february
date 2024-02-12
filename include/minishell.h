@@ -201,7 +201,7 @@ void	built_unset(char **args, int argc, t_data *data);
 //
 //==================[b_env.c]===================//
 void	index_sort(char **arr, int str_count, int *index);
-void	print_env(char **env, int fd);
+// void	print_env(char **env, int fd);
 void	built_env(t_data *data);
 //
 //==================[b_export.c]===================//

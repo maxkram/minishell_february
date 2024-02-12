@@ -54,7 +54,7 @@ int words_splitting(t_data *pnt, t_token *new_tkns, int *i, int *j)
 {
 	char	**temp;
 
-	temp = ft_split_fd(pnt->tokens[*i].value, ' ');
+	temp = ft_split_fd(pnt->tokens[*i].value, 32);
 	if (!temp)
 		return (error_out(pnt, "ft_split", 1));
 	if (!temp[0])
