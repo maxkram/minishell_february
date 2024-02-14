@@ -13,6 +13,7 @@ test.c
 .tmp_hdoc0
 -/libft_backup/
 .editorconfig
+test.c
 
 # Prerequisites
 *.d
