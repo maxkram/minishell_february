@@ -88,7 +88,10 @@ int	fill_redirection(t_data *pnt, char const *str)
 }
 
 //the func parses the input & fills the array of tokens with the right types
-
+/**
+ * @changes
+ * 1. Added incrementation of pnt->pipex_data.n_pipes
+*/
 int	filling_with_tokens(t_data *pnt, int *i, int j)
 {
     // Check if the current token count has reached the maximum, and reallocate if necessary
@@ -97,8 +100,12 @@ int	filling_with_tokens(t_data *pnt, int *i, int j)
 			return (1);
 	// Check the current character and fill tokens accordingly
 	if (pnt->input[*i] == '|')
+	{
 		// If the current character is '|', set the token type to PIPE
 		pnt->tokens[++pnt->count_token - 1].type = PIPE;
+		pnt->n_pipes++;
+		dprintf(2, "pnt->n_pipes: %d\n", pnt->n_pipes);
+	}
 	else if (pnt->input[*i] == '>' || pnt->input[*i] == '<')
 		// If the current character is '>' or '<', handle redirection
 		*i += fill_redirection(pnt, &pnt->input[*i]) - 1;

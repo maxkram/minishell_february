@@ -44,18 +44,6 @@
 
 extern int	global_signal;
 
-typedef struct s_pipex_data
-{
-	int		n_cmds; // number of commands
-	int		*pipefds; // array of pipe file descriptors
-	int		n_pipes; // number of pipes
-	bool	here_doc; // true if here_doc is used
-	char	*limiter; // here_doc limiter
-	char	*infile; // input file
-	char	*outfile; // output file
-	char	**argv; // array of command line arguments
-	char	**envp; // array of environment variables
-}	t_pipex_data;
 
 typedef	enum s_type_token //names for token like '>', '<<', '|', '""'
 {
@@ -116,8 +104,18 @@ typedef struct s_data
 	int			fd_before; // file descriptor in the beginning
 	int			first_stdin; //when we create file decriptors we need STDIN_FILENO
 	int			first_stdout; // like previous for STDOUT_FILENO
-	t_pipex_data	pipex_data; //for pipex
 	t_set_mode	mode;
+
+	// execution
+	int		n_cmds; // number of commands
+	int		*pipefds; // array of pipe file descriptors
+	int		n_pipes; // number of pipes
+	bool	here_doc; // true if here_doc is used
+	char	*limiter; // here_doc limiter
+	char	*infile; // input file
+	char	*outfile; // output file
+	char	**argv; // array of command line arguments
+	char	**envp; // array of environment variables
 }	t_data;
 
 
