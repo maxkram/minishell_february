@@ -57,4 +57,6 @@ void    init_pntr(t_data *pnt, char **env)
 	pnt->env = copy_env;
 	if (increase_shlvl(pnt) == 1)
 		fd_exit(pnt, 0);
+	// EXECUTION
+	pnt->n_pipes = 0;
 }

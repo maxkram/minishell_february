@@ -104,7 +104,6 @@ int	filling_with_tokens(t_data *pnt, int *i, int j)
 		// If the current character is '|', set the token type to PIPE
 		pnt->tokens[++pnt->count_token - 1].type = PIPE;
 		pnt->n_pipes++;
-		dprintf(2, "pnt->n_pipes: %d\n", pnt->n_pipes);
 	}
 	else if (pnt->input[*i] == '>' || pnt->input[*i] == '<')
 		// If the current character is '>' or '<', handle redirection

@@ -17,10 +17,6 @@ void	command_execution(t_data *pnt, t_tab_cmd *tab_cmd, int i, int *fd_pipe)
 		if (dup2(tab_cmd->out_fd, STDOUT_FILENO) && tab_cmd->out_fd != -1)
 			close(tab_cmd->out_fd);
 		set_mode(pnt, CHILD);
-		// dprintf(2, "cmd: %s\n", tab_cmd->cmd);
-		// dprintf(2, "args0: %s\n", tab_cmd->args[0]);
-		// dprintf(2, "args1: %s\n", tab_cmd->args[1]);
-		// dprintf(2, "args2: %s\n", tab_cmd->args[2]);
 		execve(tab_cmd->cmd, tab_cmd->args, pnt->env);
 		error_out(pnt, tab_cmd->cmd, 1);
 		total_clean(pnt);
@@ -151,75 +147,4 @@ void	alt_exec_main(t_data *pnt)
 	wait_for_childs(pnt);
 }
 
-/* 				NEW EXECUTION 									*/
-
-void	create_pipes(int pipefds[], int n_pipes)
-{
-	int	i;
-
-	i = 0;
-	while (i < n_pipes)
-	{
-		if (pipe(pipefds + i * 2) < 0)
-			// error_message("pipe", 1); // @todo add this function to minishell project
-		i++;
-	}
-}
-
-// void	create_child_process(t_pipex_data *pipeline, int cmd_index)
-// {
-// 	int	j;
-
-// 	if (cmd_index == 0 && pipeline->here_doc == true)
-// 	{
-// 		(void)cmd_index;
-// 		// redirect_here_doc(pipeline);
-// 	}
-// 	else if (cmd_index == 0)
-// 		redirect_first_command(pipeline);
-// 	if (cmd_index == pipeline->n_cmds - 1)
-// 		redirect_last_command(pipeline);
-// 	if (cmd_index > 0)
-// 	{
-// 		close(pipeline->pipefds[(cmd_index - 1) * 2 + 1]);
-// 		if (dup2(pipeline->pipefds[(cmd_index - 1) * 2], STDIN_FILENO) < 0)
-// 			error_message("dup2 (stdin)", 1);
-// 	}
-// 	if (cmd_index < pipeline->n_cmds - 1)
-// 	{
-// 		close(pipeline->pipefds[cmd_index * 2]);
-// 		if (dup2(pipeline->pipefds[cmd_index * 2 + 1], STDOUT_FILENO) < 0)
-// 			error_message("dup2 (stdout)", 1);
-// 	}
-// 	j = 0;
-// 	while (j < 2 * pipeline->n_pipes)
-// 		close(pipeline->pipefds[j++]);
-// 	execute_command(pipeline->argv[cmd_index], pipeline);
-// 	error_message("execute_command", 1);
-// }
-
-// void	execute_pipeline(t_data *pnt)
-// {
-// 	int		i;
-// 	pid_t	pid;
-
-// 	create_pipes(pnt->pipex_data.pipefds, pnt->pipex_data.n_pipes); // how to check if this function is working properly
-// 	i = 0;
-// 	while (i < pnt->pipex_data.n_cmds)
-// 	{
-// 		pid = fork();
-// 		if (pid == 0)
-// 			create_child_process(&pnt->pipex_data, i);
-// 		else if (pid < 0)
-// 		{
-// 			perror("fork");
-// 			exit(EXIT_FAILURE);
-// 		}
-// 		else
-// 			close_unused_pipe_ends(&pnt->pipex_data, i);
-// 		i++;
-// 	}
-// 	close_all_pipe_fds(&pnt->pipex_data);
-// 	cleanup_pipes_and_wait(&pnt->pipex_data);
-// }
 

@@ -229,6 +229,13 @@ int		increase_shlvl(t_data *pntr);
 
 // new execution
 void	execute_pipeline(t_data *pnt);
+void	create_pipes(t_data *pnt);
+void	create_child_process(t_data *pnt, int cmd_index);
+void	redirect_here_doc(t_data *pnt);
+void	here_doc(char *limiter, int write_end);
+int		get_next_line(char **line);
+void	redirect_first_command(t_data *pnt);
+void	redirect_last_command(t_data *pnt);
 
-
+void	error_message(const char *message, int should_exit);
 #endif

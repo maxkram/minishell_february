@@ -16,6 +16,13 @@ void	ft_error(char *str)
 	exit(ERROR);
 }
 
+void	error_message(const char *message, int should_exit)
+{
+	perror(message);
+	if (should_exit)
+		exit(1);
+}
+
 void	my_error(char *str)
 {
 	ft_putstr_fd(ERR_MAIN, STDERR_FILENO);
