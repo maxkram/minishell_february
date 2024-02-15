@@ -166,60 +166,60 @@ void	create_pipes(int pipefds[], int n_pipes)
 	}
 }
 
-void	create_child_process(t_pipex_data *pipeline, int cmd_index)
-{
-	int	j;
+// void	create_child_process(t_pipex_data *pipeline, int cmd_index)
+// {
+// 	int	j;
 
-	if (cmd_index == 0 && pipeline->here_doc == true)
-	{
-		(void)cmd_index;
-		// redirect_here_doc(pipeline);
-	}
-	else if (cmd_index == 0)
-		redirect_first_command(pipeline);
-	if (cmd_index == pipeline->n_cmds - 1)
-		redirect_last_command(pipeline);
-	if (cmd_index > 0)
-	{
-		close(pipeline->pipefds[(cmd_index - 1) * 2 + 1]);
-		if (dup2(pipeline->pipefds[(cmd_index - 1) * 2], STDIN_FILENO) < 0)
-			error_message("dup2 (stdin)", 1);
-	}
-	if (cmd_index < pipeline->n_cmds - 1)
-	{
-		close(pipeline->pipefds[cmd_index * 2]);
-		if (dup2(pipeline->pipefds[cmd_index * 2 + 1], STDOUT_FILENO) < 0)
-			error_message("dup2 (stdout)", 1);
-	}
-	j = 0;
-	while (j < 2 * pipeline->n_pipes)
-		close(pipeline->pipefds[j++]);
-	execute_command(pipeline->argv[cmd_index], pipeline);
-	error_message("execute_command", 1);
-}
+// 	if (cmd_index == 0 && pipeline->here_doc == true)
+// 	{
+// 		(void)cmd_index;
+// 		// redirect_here_doc(pipeline);
+// 	}
+// 	else if (cmd_index == 0)
+// 		redirect_first_command(pipeline);
+// 	if (cmd_index == pipeline->n_cmds - 1)
+// 		redirect_last_command(pipeline);
+// 	if (cmd_index > 0)
+// 	{
+// 		close(pipeline->pipefds[(cmd_index - 1) * 2 + 1]);
+// 		if (dup2(pipeline->pipefds[(cmd_index - 1) * 2], STDIN_FILENO) < 0)
+// 			error_message("dup2 (stdin)", 1);
+// 	}
+// 	if (cmd_index < pipeline->n_cmds - 1)
+// 	{
+// 		close(pipeline->pipefds[cmd_index * 2]);
+// 		if (dup2(pipeline->pipefds[cmd_index * 2 + 1], STDOUT_FILENO) < 0)
+// 			error_message("dup2 (stdout)", 1);
+// 	}
+// 	j = 0;
+// 	while (j < 2 * pipeline->n_pipes)
+// 		close(pipeline->pipefds[j++]);
+// 	execute_command(pipeline->argv[cmd_index], pipeline);
+// 	error_message("execute_command", 1);
+// }
 
-void	execute_pipeline(t_data *pnt)
-{
-	int		i;
-	pid_t	pid;
+// void	execute_pipeline(t_data *pnt)
+// {
+// 	int		i;
+// 	pid_t	pid;
 
-	create_pipes(pnt->pipex_data.pipefds, pnt->pipex_data.n_pipes); // how to check if this function is working properly
-	i = 0;
-	while (i < pnt->pipex_data.n_cmds)
-	{
-		pid = fork();
-		if (pid == 0)
-			create_child_process(&pnt->pipex_data, i);
-		else if (pid < 0)
-		{
-			perror("fork");
-			exit(EXIT_FAILURE);
-		}
-		else
-			close_unused_pipe_ends(&pnt->pipex_data, i);
-		i++;
-	}
-	close_all_pipe_fds(&pnt->pipex_data);
-	cleanup_pipes_and_wait(&pnt->pipex_data);
-}
+// 	create_pipes(pnt->pipex_data.pipefds, pnt->pipex_data.n_pipes); // how to check if this function is working properly
+// 	i = 0;
+// 	while (i < pnt->pipex_data.n_cmds)
+// 	{
+// 		pid = fork();
+// 		if (pid == 0)
+// 			create_child_process(&pnt->pipex_data, i);
+// 		else if (pid < 0)
+// 		{
+// 			perror("fork");
+// 			exit(EXIT_FAILURE);
+// 		}
+// 		else
+// 			close_unused_pipe_ends(&pnt->pipex_data, i);
+// 		i++;
+// 	}
+// 	close_all_pipe_fds(&pnt->pipex_data);
+// 	cleanup_pipes_and_wait(&pnt->pipex_data);
+// }
 
