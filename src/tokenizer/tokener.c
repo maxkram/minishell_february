@@ -114,7 +114,7 @@ int	filling_with_tokens(t_data *pnt, int *i, int j)
 			return (error_in_syntax(pnt->input[*i], pnt), 1);
 		*i += j;
 	}
-	else if (pnt->input[*i] != ' ' && pnt->input[*i] != '\t')
+	else if (pnt->input[*i] != ' ' && pnt->input[*i] != '\t') //
 	{
 		// If the current character is not a space or tab, handle filling a word
 		j = word_filling(pnt, &pnt->input[*i]) - 1;

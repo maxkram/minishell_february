@@ -17,6 +17,10 @@ void	command_execution(t_data *pnt, t_tab_cmd *tab_cmd, int i, int *fd_pipe)
 		if (dup2(tab_cmd->out_fd, STDOUT_FILENO) && tab_cmd->out_fd != -1)
 			close(tab_cmd->out_fd);
 		set_mode(pnt, CHILD);
+		// dprintf(2, "cmd: %s\n", tab_cmd->cmd);
+		// dprintf(2, "args0: %s\n", tab_cmd->args[0]);
+		// dprintf(2, "args1: %s\n", tab_cmd->args[1]);
+		// dprintf(2, "args2: %s\n", tab_cmd->args[2]);
 		execve(tab_cmd->cmd, tab_cmd->args, pnt->env);
 		error_out(pnt, tab_cmd->cmd, 1);
 		total_clean(pnt);
@@ -95,15 +99,6 @@ int	input_output_redirect(t_data *pnt, t_tab_cmd *tab_cmd)
 	return (0);
 }
 
-// void	run_cmd(char **args, char *cmd_path, int in_fd, int out_fd)
-// {
-
-// }
-
-//This function, wait_for_childs, is responsible for waiting for the
-//child processes to complete and updating the exit status of the
-//minishell accordingly
-
 void	wait_for_childs(t_data *pnt)
 {
 	int	i;
@@ -123,41 +118,6 @@ void	wait_for_childs(t_data *pnt)
 			pnt->code_exit = WEXITSTATUS(status);
 	}
 }
-
-// void	exec_cmd(t_data *data, t_cmd *cmd)
-// {
-// 	(void)data;
-// 	(void)cmd;
-// }
-
-// void	exec_main(t_data *data)
-// {
-// 	t_cmd	*tmp;
-// 	int		pip[2];
-
-// 	if (!data->cmd)
-// 		return ;
-// 	tmp = data->cmd;
-// 	while (tmp)
-// 	{
-// 		if (tmp->cmd_idx == 0 && data->cmdt->in_fd > 0)
-// 			tmp->fd[0] = data->cmdt->in_fd;
-// 		else if (tmp->cmd_idx < 0)
-// 			tmp->fd[0] = pip[1];
-// 		tmp->cmd_path = cmd_fullpath(data, tmp->args[0]);
-// 		if (tmp->next)
-// 			ft_pipe(tmp);
-// 		else if (data->cmdt->out_fd < 0)
-// 			tmp->fd[1] = data->cmdt->out_fd;
-// 		if (!tmp->cmd_path)
-// 			my_error("Command unknown\n");
-// 		if (tmp->next) //if there is another cmd after pipe
-// 			exec_cmd(data, tmp);
-// 		if (pipe(pip) == -1)
-// 			ft_error(ERR_PIPE);
-// 		tmp = tmp->next;
-// 	}
-// }
 
 //the function is responsible for managing the execution of multiple
 //commands in a shell program, handling pipelines, redirections, and
@@ -191,17 +151,75 @@ void	alt_exec_main(t_data *pnt)
 	wait_for_childs(pnt);
 }
 
-void	alt_exec_main(t_data *pnt)
+/* 				NEW EXECUTION 									*/
+
+void	create_pipes(int pipefds[], int n_pipes)
 {
 	int	i;
-	int	pip[2];
 
-	i = -1;
-	pnt->fd_before = -1;
-	while (++i < pnt->cmdt_count)
+	i = 0;
+	while (i < n_pipes)
 	{
-		if (find_exec(pnt, &pnt->cmdt[i]) == 0 && ++pnt->cmdt[i].is_child_process)
-				command_execution(pnt, &pnt->cmdt[i], i, pip);
+		if (pipe(pipefds + i * 2) < 0)
+			// error_message("pipe", 1); // @todo add this function to minishell project
+		i++;
 	}
+}
+
+void	create_child_process(t_pipex_data *pipeline, int cmd_index)
+{
+	int	j;
+
+	if (cmd_index == 0 && pipeline->here_doc == true)
+	{
+		(void)cmd_index;
+		// redirect_here_doc(pipeline);
+	}
+	else if (cmd_index == 0)
+		redirect_first_command(pipeline);
+	if (cmd_index == pipeline->n_cmds - 1)
+		redirect_last_command(pipeline);
+	if (cmd_index > 0)
+	{
+		close(pipeline->pipefds[(cmd_index - 1) * 2 + 1]);
+		if (dup2(pipeline->pipefds[(cmd_index - 1) * 2], STDIN_FILENO) < 0)
+			error_message("dup2 (stdin)", 1);
+	}
+	if (cmd_index < pipeline->n_cmds - 1)
+	{
+		close(pipeline->pipefds[cmd_index * 2]);
+		if (dup2(pipeline->pipefds[cmd_index * 2 + 1], STDOUT_FILENO) < 0)
+			error_message("dup2 (stdout)", 1);
+	}
+	j = 0;
+	while (j < 2 * pipeline->n_pipes)
+		close(pipeline->pipefds[j++]);
+	execute_command(pipeline->argv[cmd_index], pipeline);
+	error_message("execute_command", 1);
+}
+
+void	execute_pipeline(t_data *pnt)
+{
+	int		i;
+	pid_t	pid;
+
+	create_pipes(pnt->pipex_data.pipefds, pnt->pipex_data.n_pipes); // how to check if this function is working properly
+	i = 0;
+	while (i < pnt->pipex_data.n_cmds)
+	{
+		pid = fork();
+		if (pid == 0)
+			create_child_process(&pnt->pipex_data, i);
+		else if (pid < 0)
+		{
+			perror("fork");
+			exit(EXIT_FAILURE);
+		}
+		else
+			close_unused_pipe_ends(&pnt->pipex_data, i);
+		i++;
+	}
+	close_all_pipe_fds(&pnt->pipex_data);
+	cleanup_pipes_and_wait(&pnt->pipex_data);
 }
 

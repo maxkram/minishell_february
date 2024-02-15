@@ -116,6 +116,7 @@ typedef struct s_data
 	int			fd_before; // file descriptor in the beginning
 	int			first_stdin; //when we create file decriptors we need STDIN_FILENO
 	int			first_stdout; // like previous for STDOUT_FILENO
+	t_pipex_data	pipex_data; //for pipex
 	t_set_mode	mode;
 }	t_data;
 
@@ -227,6 +228,9 @@ void	fd_exit(t_data *pntr, int code_exit);
 int		ft_putstr_int(char *s, int fd);
 //==================[env.c]===================//
 int		increase_shlvl(t_data *pntr);
+
+// new execution
+void	execute_pipeline(t_data *pnt);
 
 
 #endif

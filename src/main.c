@@ -1,7 +1,10 @@
 #include "minishell.h"
 
 //the function that aims to extract and split the directories listed in the PATH environment variable
-
+/**
+ * @changes:
+ * 1. Temporarily changed PATH= to PATH=/home (I need this to test on linux)
+*/
 char	**path_getter(t_data *pnt, int i)
 {
 	char	**result;
@@ -9,7 +12,7 @@ char	**path_getter(t_data *pnt, int i)
 
 	while (pnt->env[++i])
 	{
-		found = ft_strstr(pnt->env[i], "PATH=");
+		found = ft_strstr(pnt->env[i], "PATH=/home");
 		if (found != NULL)
 			break ;
 	}
@@ -47,8 +50,9 @@ int	main(int argc, char *argv[], char **env_p)
 	t_data	pnt;
 
 	(void)argv;
-	if (argc != 1)
-		return (ft_putstr("Error: too many arguments\n", 2));
+	(void)argc;
+	// if (argc != 1)
+	// 	return (ft_putstr("Error: too many arguments\n", 2));
 	init_pntr(&pnt, env_p);
 	while (1)
 	{
@@ -63,7 +67,10 @@ int	main(int argc, char *argv[], char **env_p)
 			add_history(pnt.input);
 		pnt.path = path_getter(&pnt, -1);
 		if (tokener(&pnt) == 0 && extender(&pnt) == 0 && parser(&pnt) == 0)
-			alt_exec_main(&pnt);
+		{
+			// alt_exec_main(&pnt);
+			execute_pipeline(&pnt);
+		}
 		pntr_cleaning(&pnt);
 	}
 }
