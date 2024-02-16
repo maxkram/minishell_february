@@ -69,6 +69,10 @@ int	cmdt_init(t_data *pnt, int j, int *i)
 
 //the parser function is responsible for parsing the input data, merging words, counting pipes, allocating memory for command tables, and initializing each command table entry using the cmdt_init function. The function returns 0 on success and 1 on failure.
 
+/**
+ * @questions
+ * 1. Why words_merging must be equal to 1 to return 1?
+*/
 int	parser(t_data *pnt)
 {
 	int	j;

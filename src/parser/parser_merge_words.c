@@ -94,7 +94,9 @@ int	copy_concat_create(t_data *pnt, t_token *tokens_new, int *i, int *j)
 }
 
 //the token_copy function copies tokens from the original array to the new array, handling different token types appropriately and considering the no_space flag. If the token is of type WORD, it may call words_splitting to handle potential splitting of the token's value.
-
+/*
+1.
+*/
 int	token_copy(t_data *pnt, t_token *tokens_new, int *i, int *j)
 {
 	int	ret;

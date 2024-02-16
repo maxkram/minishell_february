@@ -91,6 +91,14 @@ int	fill_redirection(t_data *pnt, char const *str)
 /**
  * @changes
  * 1. Added incrementation of pnt->pipex_data.n_pipes
+ *
+ * @questions
+ * 1. What defines the maximum number of tokens? -> max_token is defined during initialization stage
+ * 2. What is the purpose of the j variable? -> j is used to store the return value of the filling_quotes function.
+ * 	a. It is used to move the index of the input string to the next character after the closing quote.
+ *  b. It is used to check for errors during filling quotes.
+ *
+ *
 */
 int	filling_with_tokens(t_data *pnt, int *i, int j)
 {
