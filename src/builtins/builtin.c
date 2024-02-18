@@ -49,16 +49,16 @@ void	shoot_builtin(t_data *pntr, t_tab_cmd *cmd_tab, int i, int *pipe_fd)
 		built_echo(pntr, cmd_tab);
 	if (ft_strcmp(cmd_tab->cmd, "cd") == 0)
 		built_cd(pntr, cmd_tab);
-	if (ft_strcmp(cmd_tab->cmd, "exit") == 0)
-		built_exit(pntr, cmd_tab);
-	if (ft_strcmp(cmd_tab->cmd, "env") == 0)
-		built_env(pntr);
-	// if (ft_strcmp(cmd_tab->cmd, "unset") == 0)
-		// built_unset(pntr, cmd_tab);
-	if (ft_strcmp(cmd_tab->cmd, "export") == 0)
-		built_export(pntr, cmd_tab, STDOUT_FILENO);
 	if (ft_strcmp(cmd_tab->cmd, "pwd") == 0)
 		build_pwd(pntr);
+	// if (ft_strcmp(cmd_tab->cmd, "export") == 0)
+	// 	built_export(pntr, cmd_tab, STDOUT_FILENO);
+	if (ft_strcmp(cmd_tab->cmd, "unset") == 0)
+		built_unset(pntr, cmd_tab);
+	if (ft_strcmp(cmd_tab->cmd, "env") == 0)
+		built_env(pntr);
+	if (ft_strcmp(cmd_tab->cmd, "exit") == 0)
+		built_exit(pntr, cmd_tab);
 	recreate_file_descriptors(pntr, cmd_tab, i, pipe_fd);
 }
 

@@ -31,7 +31,6 @@ int	variable_index(char **env, char *n)
 	i = 0;
 	while (env[i])
 	{
-		// Check if the current environment variable matches the given name 'n'
 		if (env[i][ft_strlen(n)] == '=' && substring_beginning(env[i], n))
 			return (i);
 		i++;

@@ -197,7 +197,7 @@ void	built_exit(t_data *pntr, t_tab_cmd *cmd_tab);
 void	built_echo(t_data *pnt, t_tab_cmd *tab_cmd);
 //
 //==================[b_unset.c]===================//
-void	built_unset(char **args, int argc, t_data *data);
+void	built_unset(t_data *pnt, t_tab_cmd *tab_cmd);
 //
 //==================[b_env.c]===================//
 void	index_sort(char **arr, int str_count, int *index);
