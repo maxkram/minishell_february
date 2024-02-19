@@ -8,7 +8,6 @@
 	c. close_all_pipe_fds
 	d. cleanup_pipes_and_wait
 
-
 # 1. execute_pipeline
     Initializes the execution of a series of commands as separate processes, connected through pipes.
     This function sets up the infrastructure for inter-process communication and manages the lifecycle of each process in the pipeline.
@@ -26,3 +25,8 @@
     Closes all remaining open pipe file descriptors in the parent process after all child processes have been forked, ensuring no unused file descriptors remain open.
 ##	d. cleanup_pipes_and_wait
     Performs any necessary cleanup of resources, such as deallocating memory or closing file descriptors. Waits for all child processes to complete, ensuring the parent process only proceeds after the entire pipeline has finished executing.s
+
+
+1. commit all changes
+2. go in main
+3. git merge execution-branch

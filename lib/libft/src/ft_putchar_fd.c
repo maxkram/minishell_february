@@ -12,13 +12,8 @@
 
 #include "libft.h"
 
-/*
-function: writes a character to a file descriptor (fd)
-   input: ft_putchar_fd('a', 1)
-  output: a
-*/
-
-void	ft_putchar_fd(char c, int fd)
+int	ft_putchar_fd(char c, int fd)
 {
 	write(fd, &c, 1);
+	return (1);
 }

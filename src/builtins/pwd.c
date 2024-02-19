@@ -1,6 +1,6 @@
 #include "minishell.h"
 
-void	builtin_pwd(t_data *data)
+void	build_pwd(t_data *data)
 {
 	char	*temp;
 
