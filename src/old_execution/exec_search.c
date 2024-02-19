@@ -86,6 +86,7 @@ int	path_searching(t_data *pnt, t_tab_cmd *tab_cmd, int i)
 			return (free(temp), 0);
 		}
 		free(ret);
+		// free(temp);
 	}
 	return (find_path(pnt, tab_cmd));
 }

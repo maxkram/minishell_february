@@ -1,0 +1,71 @@
+alt_exec_main() <void alt_exec_main (t_data *pnt) at ./src/old_execution/exec.c:122>:
+    pipe()
+    error_out()
+    input_output_redirect() <int input_output_redirect (t_data *pnt, t_tab_cmd *tab_cmd) at ./src/old_execution/exec.c:70>:
+        ft_printf_fd()
+        close()
+        open()
+        error_out()
+        redirects_cmd_tab() <int redirects_cmd_tab (t_data *pnt, t_tab_cmd *tab_cmd, int i) at ./src/old_execution/exec.c:40>:
+            close()
+            open()
+            error_out()
+            create_heredoc()
+    pipelines_redirect() <int pipelines_redirect (t_data *pntr, int i, int *pip) at ./src/old_execution/exec_utils.c:96>:
+        dup2()
+        close()
+        unlink()
+        free()
+    change_fd_input_output() <int change_fd_input_output (t_data *pntr, t_tab_cmd *tab_cmd, int *fd, int i) at ./src/old_execution/exec_utils.c:81>
+    if_builtin()
+    shoot_builtin()
+    find_exec() <int find_exec (t_data *pntr, t_tab_cmd *tab_cmd) at ./src/old_execution/exec_search.c:126>:
+        ft_printf_fd()
+        ft_strchr()
+        check_valid_execution() <int check_valid_execution (t_tab_cmd *tab_cmd, t_data *pntr) at ./src/old_execution/exec_search.c:33>:
+            access()
+            opendir()
+            ft_printf_fd()
+            closedir()
+        path_searching() <int path_searching (t_data *pnt, t_tab_cmd *tab_cmd, int i) at ./src/old_execution/exec_search.c:64>:
+            ft_strdup_fd()
+            error_out()
+            ft_strjoin()
+            access()
+            free()
+            find_path() <int find_path (t_data *pntr, t_tab_cmd *tab_cmd) at ./src/old_execution/exec_utils.c:125>:
+                ft_strdup_fd()
+                error_out()
+                ft_strjoin()
+                access()
+                free()
+        is_exist() <int is_exist (t_data *pntr, t_tab_cmd *tab_cmd, int i) at ./src/old_execution/exec_search.c:95>:
+            ft_strdup_fd()
+            error_out()
+            ft_strjoin()
+            access()
+            free()
+            ft_printf_fd()
+            is_command() <int is_command (t_data *pntr, t_tab_cmd *tab_cmd) at ./src/old_execution/exec_search.c:5>:
+                ft_strdup_fd()
+                error_out()
+                ft_strjoin()
+                access()
+                free()
+                ft_printf_fd()
+    command_execution() <void command_execution (t_data *pnt, t_tab_cmd *tab_cmd, int i, int *fd_pipe) at ./src/old_execution/exec.c:7>:
+        fork()
+        error_out()
+        dup2()
+        close()
+        set_mode()
+        execve()
+        total_clean()
+        exit()
+        fd_cleaning()
+    wait_for_childs() <void wait_for_childs (t_data *pnt) at ./src/old_execution/exec.c:98>:
+        waitpid()
+        WIFSIGNALED()
+        WTERMSIG()
+        WIFEXITED()
+        WEXITSTATUS()

@@ -44,7 +44,6 @@
 
 extern int	global_signal;
 
-
 typedef	enum s_type_token //names for token like '>', '<<', '|', '""'
 {
 	WORD,
@@ -72,6 +71,10 @@ typedef	struct s_token //for tokenizer
 	int				no_space;
 }	t_token;
 
+/**
+ * @brief Command table data structure
+ *
+*/
 typedef struct s_tab_cmd //data struct for keeping status when we operate with files
 {
 	char	*cmd; //to keep results of search
@@ -106,7 +109,7 @@ typedef struct s_data
 	int			first_stdout; // like previous for STDOUT_FILENO
 	t_set_mode	mode;
 
-	// execution
+	// new execution members
 	int		n_cmds; // number of commands
 	int		*pipefds; // array of pipe file descriptors
 	int		n_pipes; // number of pipes
@@ -238,4 +241,9 @@ void	redirect_first_command(t_data *pnt);
 void	redirect_last_command(t_data *pnt);
 
 void	error_message(const char *message, int should_exit);
+
+void check_memory_leaks();
+void* my_malloc(size_t size, const char *file, int line);
+void my_free(void *ptr, const char *file, int line);
+
 #endif

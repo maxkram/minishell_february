@@ -5,6 +5,7 @@
  * @changes:
  * 1. Temporarily changed PATH= to PATH=/home (I need this to test on linux)
 */
+
 char	**path_getter(t_data *pnt, int i)
 {
 	char	**result;
@@ -45,8 +46,6 @@ void env_init(t_data *data, char **env)
 	}
 }
 
-
-
 int	main(int argc, char *argv[], char **env_p)
 {
 	t_data	pnt;
@@ -78,7 +77,7 @@ int	main(int argc, char *argv[], char **env_p)
 }
 
 /************************************ NEW EXECUTION **********************************************/
-
+/*
 void	execute_pipeline(t_data *pnt)
 {
 	int		i;
@@ -251,3 +250,4 @@ void	redirect_last_command(t_data *pnt)
 		close(fd_out);
 	}
 }
+*/

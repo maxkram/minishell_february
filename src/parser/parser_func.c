@@ -98,7 +98,8 @@ int	clean_tokens(t_token *tokens, int max, t_data *pnt)
 /**
  * @questions
  * 1. Why do we need to allocate new_tokens_count(pnt) + 1?
- * 2.
+ * 2. Why do we need to use new_tokens_count instead of pnt->count_token?
+ *
 */
 int	words_merging(t_data *pnt)
 {
