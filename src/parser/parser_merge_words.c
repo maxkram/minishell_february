@@ -7,7 +7,7 @@ int copy_normalization(t_token *new_tokens_array, int *i, int *j, char **tmp)
 	int	k;
 
 	k = -1;
-	if (*i > 0 && new_tokens_array[*j].no_space == 1)
+	if (*i > 0 && new_tokens_array[*j].no_space == 1) //
 	{
 		*j = *j - 1;
 		new_tokens_array[*j].value = ft_strjoin(new_tokens_array[*j].value, tmp[++k]);
@@ -100,6 +100,7 @@ int	copy_concat_create(t_data *pnt, t_token *tokens_new, int *i, int *j)
  * What is the purpose of ret % 2?
  * What is the purpose of copy_concat_create? When and why is it called?
  *
+ * Why do we check only WORD DQUOTE and SQUOTE tokens? -> because
 */
 int	token_copy(t_data *pnt, t_token *tokens_new, int *i, int *j)
 {

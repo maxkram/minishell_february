@@ -4,9 +4,9 @@
 declare -a modules=( \
     # "main.c" \
     # "tokenizer" \
-    # "parser" \
+    "parser" \
     # "extender" \
-    "old_execution" \
+    # "old_execution" \
     # "utils" \
     # "builtins" \
     # "signals"

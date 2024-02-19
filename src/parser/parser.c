@@ -26,7 +26,7 @@ void	test_multiline(t_data *pnt, int j)
 	i = pnt->cmdt[j].num_redirections;
 	while (i--)
 	{
-		if (pnt->cmdt[j].redirections[i].type == REDIRECT_MULTILINE
+		if (pnt->cmdt[j].redirections[i].type == REDIRECT_MULTILINE // heredoc mode
 			|| pnt->cmdt[j].redirections[i].type == REDIRECT_IN)
 		{
 			if (pnt->cmdt[j].redirections[i].type == REDIRECT_MULTILINE)

@@ -22,7 +22,7 @@ int	redirections_fill(t_data *pnt, int j, int i)
 {
 	int	count;
 
-	count = redirections_count(pnt, i);
+	count = redirections_count(pnt, i); // @todo test with different redirection values
 	pnt->cmdt[j].redirections = NULL;
 	pnt->cmdt[j].num_redirections = count;
 	if (count <= 0)
@@ -99,7 +99,10 @@ int	clean_tokens(t_token *tokens, int max, t_data *pnt)
  * @questions
  * 1. Why do we need to allocate new_tokens_count(pnt) + 1?
  * 2. Why do we need to use new_tokens_count instead of pnt->count_token?
- *
+
+ * @brief The purpose of words_merging function is
+ * 1. allocate memory data structures fill them with the tokens
+ * 2.
 */
 int	words_merging(t_data *pnt)
 {
@@ -124,7 +127,7 @@ int	words_merging(t_data *pnt)
 		if (pnt->tokens[k].value)
 			free(pnt->tokens[k].value);
 	free(pnt->tokens);
-	pnt->tokens = new_tokens;
+	pnt->tokens = new_tokens; // @todo after free we again assign data to tokens
 	pnt->count_token = j;
 	return (0);
 }

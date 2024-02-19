@@ -1,71 +1,45 @@
-alt_exec_main() <void alt_exec_main (t_data *pnt) at ./src/old_execution/exec.c:122>:
-    pipe()
-    error_out()
-    input_output_redirect() <int input_output_redirect (t_data *pnt, t_tab_cmd *tab_cmd) at ./src/old_execution/exec.c:70>:
-        ft_printf_fd()
-        close()
-        open()
+parser() <int parser (t_data *pnt) at ./src/parser/parser.c:83>:
+    words_merging() <int words_merging (t_data *pnt) at ./src/parser/parser_func.c:104>:
+        ft_calloc()
+        new_tokens_count() <int new_tokens_count (t_data *pnt) at ./src/parser/parser_utils.c:52>:
         error_out()
-        redirects_cmd_tab() <int redirects_cmd_tab (t_data *pnt, t_tab_cmd *tab_cmd, int i) at ./src/old_execution/exec.c:40>:
-            close()
-            open()
-            error_out()
-            create_heredoc()
-    pipelines_redirect() <int pipelines_redirect (t_data *pntr, int i, int *pip) at ./src/old_execution/exec_utils.c:96>:
-        dup2()
-        close()
-        unlink()
+        token_copy() <int token_copy (t_data *pnt, t_token *tokens_new, int *i, int *j) at ./src/parser/parser_merge_words.c:104>:
+            check_arguments() <int check_arguments (t_type_token type) at ./src/parser/parser_utils.c:5>:
+            words_splitting() <int words_splitting (t_data *pnt, t_token *new_tkns, int *i, int *j) at ./src/parser/parser_merge_words.c:53>:
+                ft_split_fd()
+                error_out()
+                clean_double_pointer() <void clean_double_pointer (char **pnt) at ./src/parser/parser_merge_words.c:32>:
+                    free()
+                copy_normalization() <int copy_normalization (t_token *new_tokens_array, int *i, int *j, char **tmp) at ./src/parser/parser_merge_words.c:5>:
+                    ft_strjoin()
+                    check_if_redirection() <int check_if_redirection (t_type_token type) at ./src/parser/parser_utils.c:14>:
+                    ft_strdup_fd()
+            copy_concat_create() <int copy_concat_create (t_data *pnt, t_token *tokens_new, int *i, int *j) at ./src/parser/parser_merge_words.c:76>:
+                ft_strjoin()
+                error_out()
+                ft_strdup_fd()
+        clean_tokens() <int clean_tokens (t_token *tokens, int max, t_data *pnt) at ./src/parser/parser_func.c:82>:
+            free()
         free()
-    change_fd_input_output() <int change_fd_input_output (t_data *pntr, t_tab_cmd *tab_cmd, int *fd, int i) at ./src/old_execution/exec_utils.c:81>
-    if_builtin()
-    shoot_builtin()
-    find_exec() <int find_exec (t_data *pntr, t_tab_cmd *tab_cmd) at ./src/old_execution/exec_search.c:126>:
-        ft_printf_fd()
-        ft_strchr()
-        check_valid_execution() <int check_valid_execution (t_tab_cmd *tab_cmd, t_data *pntr) at ./src/old_execution/exec_search.c:33>:
-            access()
-            opendir()
-            ft_printf_fd()
-            closedir()
-        path_searching() <int path_searching (t_data *pnt, t_tab_cmd *tab_cmd, int i) at ./src/old_execution/exec_search.c:64>:
-            ft_strdup_fd()
-            error_out()
-            ft_strjoin()
-            access()
-            free()
-            find_path() <int find_path (t_data *pntr, t_tab_cmd *tab_cmd) at ./src/old_execution/exec_utils.c:125>:
-                ft_strdup_fd()
-                error_out()
-                ft_strjoin()
-                access()
-                free()
-        is_exist() <int is_exist (t_data *pntr, t_tab_cmd *tab_cmd, int i) at ./src/old_execution/exec_search.c:95>:
-            ft_strdup_fd()
-            error_out()
-            ft_strjoin()
-            access()
-            free()
-            ft_printf_fd()
-            is_command() <int is_command (t_data *pntr, t_tab_cmd *tab_cmd) at ./src/old_execution/exec_search.c:5>:
-                ft_strdup_fd()
-                error_out()
-                ft_strjoin()
-                access()
-                free()
-                ft_printf_fd()
-    command_execution() <void command_execution (t_data *pnt, t_tab_cmd *tab_cmd, int i, int *fd_pipe) at ./src/old_execution/exec.c:7>:
-        fork()
+    count_pipes() <int count_pipes (t_data *pnt) at ./src/parser/parser_utils.c:23>:
+    ft_calloc()
+    error_out()
+    cmdt_init() <int cmdt_init (t_data *pnt, int j, int *i) at ./src/parser/parser.c:41>:
+        counting_arguments() <int counting_arguments (t_data *pnt, int i) at ./src/parser/parser.c:6>:
+            check_arguments() <int check_arguments (t_type_token type) at ./src/parser/parser_utils.c:5>:
+            check_if_redirection() <int check_if_redirection (t_type_token type) at ./src/parser/parser_utils.c:14>:
+        ft_calloc()
         error_out()
-        dup2()
-        close()
-        set_mode()
-        execve()
-        total_clean()
-        exit()
-        fd_cleaning()
-    wait_for_childs() <void wait_for_childs (t_data *pnt) at ./src/old_execution/exec.c:98>:
-        waitpid()
-        WIFSIGNALED()
-        WTERMSIG()
-        WIFEXITED()
-        WEXITSTATUS()
+        redirections_fill() <int redirections_fill (t_data *pnt, int j, int i) at ./src/parser/parser_func.c:21>:
+            redirections_count() <int redirections_count (t_data *pnt, int i) at ./src/parser/parser_func.c:5>:
+                check_if_redirection() <int check_if_redirection (t_type_token type) at ./src/parser/parser_utils.c:14>:
+            ft_calloc()
+            error_out()
+            check_if_redirection() <int check_if_redirection (t_type_token type) at ./src/parser/parser_utils.c:14>:
+            ft_strdup_fd()
+        test_multiline() <void test_multiline (t_data *pnt, int j) at ./src/parser/parser.c:22>:
+        args_cmd_fill() <int args_cmd_fill (t_data *pnt, int j, int i) at ./src/parser/parser_func.c:52>:
+            check_arguments() <int check_arguments (t_type_token type) at ./src/parser/parser_utils.c:5>:
+            check_if_redirection() <int check_if_redirection (t_type_token type) at ./src/parser/parser_utils.c:14>:
+            ft_strdup_fd()
+            error_out()

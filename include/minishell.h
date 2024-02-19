@@ -51,7 +51,7 @@ typedef	enum s_type_token //names for token like '>', '<<', '|', '""'
 	REDIRECT_IN,
 	REDIRECT_OUT,
 	REDIRECT_APPEND,
-	REDIRECT_MULTILINE,
+	REDIRECT_MULTILINE, //heredoc @todo rename to heredoc
 	DQUOTE,
 	SQUOTE
 }	t_type_token;
@@ -68,7 +68,7 @@ typedef	struct s_token //for tokenizer
 {
 	char			*value;
 	t_type_token	type;
-	int				no_space;
+	int				no_space; // This is a flag to check if it's a space. If it's a space should be processed differently
 }	t_token;
 
 /**
@@ -263,23 +263,4 @@ int		increase_shlvl(t_data *pntr);
 // int		search_variable(char **ev, char *name);
 int		create_env_var(t_data *pntr, char *key, char *keep);
 
-<<<<<<< HEAD
-// new execution
-void	execute_pipeline(t_data *pnt);
-void	create_pipes(t_data *pnt);
-void	create_child_process(t_data *pnt, int cmd_index);
-void	redirect_here_doc(t_data *pnt);
-void	here_doc(char *limiter, int write_end);
-int		get_next_line(char **line);
-void	redirect_first_command(t_data *pnt);
-void	redirect_last_command(t_data *pnt);
-
-void	error_message(const char *message, int should_exit);
-
-void check_memory_leaks();
-void* my_malloc(size_t size, const char *file, int line);
-void my_free(void *ptr, const char *file, int line);
-
-=======
->>>>>>> 960202094864bbc188a9296774c7e4a59ee0e504
 #endif
