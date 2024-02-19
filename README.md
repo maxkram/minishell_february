@@ -27,6 +27,13 @@
     Performs any necessary cleanup of resources, such as deallocating memory or closing file descriptors. Waits for all child processes to complete, ensuring the parent process only proceeds after the entire pipeline has finished executing.s
 
 
-1. commit all changes
-2. go in main
-3. git merge execution-branch
+``` shell
+cat access.log | awk '{print $1}' | sort | uniq -c | sort -nr | awk '{print $2, "requests:", $1}'
+find . -type f | rev | cut -d. -f1 | rev | sort | uniq -c | sort -nr | awk '{print $2, "files:", $1}'
+ps aux | sort -nk +4 | tail | awk '{print $11, "memory usage:", $4"%"}'
+git log --pretty=format:%aN | sort | uniq -c | sort -nr | awk '{print $2, "lines changed:", $1}'
+find . -type f | xargs -L1 dirname | sort | uniq -c | sort -nr | awk '{print $2, "files:", $1}'
+netstat -ntu | awk '{print $5}' | cut -d: -f1 | sort | uniq -c | sort -nr | awk '{print $2, "connections:", $1}'
+grep -rI "pattern" . | wc -l | sort -nr | awk '{print $2, "occurrences:", $1}'
+grep -rI "pattern" . | cut -d: -f1 | uniq -c | sort -nr | awk '{print $2, "occurrences:", $1}'
+```

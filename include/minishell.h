@@ -107,6 +107,7 @@ typedef struct s_data
 	int			fd_before; // file descriptor in the beginning
 	int			first_stdin; //when we create file decriptors we need STDIN_FILENO
 	int			first_stdout; // like previous for STDOUT_FILENO
+	int			n_pipes; // to keep number of pipes
 	t_set_mode	mode;
 }	t_data;
 

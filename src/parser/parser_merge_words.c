@@ -71,27 +71,43 @@ int words_splitting(t_data *pnt, t_token *new_tkns, int *i, int *j)
 	return (0);
 }
 
-//the copy_concat_create function handles the copying and concatenation of values from the original array of tokens to a new array of tokens, taking into account the no_space flag for proper concatenation
 
-int	copy_concat_create(t_data *pnt, t_token *tokens_new, int *i, int *j)
+/**
+ * @brief This function copies tokens from the original array to the new array, handling different token types appropriately and considering the no_space flag. If the token is of type WORD, it may call words_splitting to handle potential splitting of the token's value.
+ * @details
+ * 1. Check if we need to concatenate to the previous token (if *src_index > 0 and new_tokens[*dest_index].no_space == 1)
+ * 2. Adjust destination index to point to the previous token (*dest_index -= 1)
+ * 3. Attempt to concatenate current token's value to the previous token (ft_strjoin)
+ * 4. Free the old value and update the token with the new concatenated value (if successful)
+ * 5. If concatenation is not needed, copy the current token's value to the new token (ft_strdup)
+ * 6. Move to the next destination token (*dest_index += 1)
+*/
+int copy_concat_create(t_data *data, t_token *new_tokens, int *src_index, int *dest_index)
 {
-	if (*i > 0 && tokens_new[*j].no_space == 1)
-	{
-		*j = *j - 1;
-		tokens_new[*j].value = ft_strjoin(tokens_new[*j].value,
-				pnt->tokens[*i].value);
-		if (!tokens_new[*j].value)
-			return (error_out(pnt, "ft_strjoin", 1));
-	}
-	else
-	{
-		tokens_new[*j].value = ft_strdup_fd(pnt->tokens[*i].value);
-		if (!tokens_new[*j].value)
-			return (error_out(pnt, "ft_strdup", 1));
-	}
-	*j = *j + 1;
-	return (0);
+    if (*src_index > 0 && new_tokens[*dest_index].no_space == 1)
+    {
+        *dest_index -= 1;
+        char *new_value = ft_strjoin(new_tokens[*dest_index].value, data->tokens[*src_index].value);
+        if (!new_value)
+        {
+            return (error_out(data, "Memory allocation failed in ft_strjoin", 1));
+        }
+        free(new_tokens[*dest_index].value);
+        new_tokens[*dest_index].value = new_value;
+    }
+    else
+    {
+		free(new_tokens[*dest_index].value);
+        new_tokens[*dest_index].value = ft_strdup(data->tokens[*src_index].value);
+        if (!new_tokens[*dest_index].value)
+        {
+            return (error_out(data, "Memory allocation failed in ft_strdup", 1));
+        }
+    }
+    *dest_index += 1;
+    return 0;
 }
+
 
 //the token_copy function copies tokens from the original array to the new array, handling different token types appropriately and considering the no_space flag. If the token is of type WORD, it may call words_splitting to handle potential splitting of the token's value.
 /**

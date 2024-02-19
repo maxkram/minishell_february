@@ -146,18 +146,6 @@ void alt_exec_main(t_data *pnt)
     pnt->fd_before = -1;
     while (++i < pnt->cmdt_count)
     {
-        // Print the command and its index
-        // printf("\033[32mExecuting command #%d: %s\033[0m\n", i, pnt->cmdt[i].cmd);
-
-        // Print each argument for the command. Since options are part of args, they will be printed here too.
-        // printf("\033[32mArguments and options:\033[0m");
-        // for (int j = 0; j < pnt->cmdt[i].num_args; j++)
-        // {
-        //     printf("\033[32m %s\033[0m", pnt->cmdt[i].args[j]);
-        // }
-        // Additional details can be printed as needed, such as file descriptors or redirection information
-        // printf("\n\033[31mInput FD: %d, Output FD: %d\033[0m\n", pnt->cmdt[i].in_fd, pnt->cmdt[i].out_fd);
-
         if (pipe(pip) == -1)
             return ((void)error_out(pnt, "pipe", 1));
 
