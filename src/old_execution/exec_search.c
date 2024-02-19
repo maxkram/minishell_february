@@ -100,9 +100,9 @@ int path_searching(t_data *pnt, t_tab_cmd *tab_cmd, int i)
             printf("Freed temp after command found\n");
             return 0;
         }
-        free(ret);
+        free(ret); // must be freed if ret is not executable
         printf("Freed ret\n"); // Log freeing ret
-        free(temp); // This correctly frees temp
+        free(temp); // must be freed
         printf("Freed temp\n"); // Log freeing temp
     }
     return (find_path(pnt, tab_cmd));
@@ -160,6 +160,7 @@ int find_exec(t_data *pntr, t_tab_cmd *tab_cmd)
 	if (tab_cmd->cmd[0] == '.' || ft_strchr(tab_cmd->cmd, '/') != 0)
 		return (check_valid_execution(tab_cmd, pntr));
 	result = path_searching(pntr, tab_cmd, i);
+	printf("Result of path_searching: %d\n", result); // Log result of path_searching
 	if (result == 0)
 		return (0);
 	else if (result == 2)
