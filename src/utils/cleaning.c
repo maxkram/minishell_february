@@ -135,3 +135,22 @@ void cleanup_tokens(t_data *data) {
         data->count_token = 0; // Reset token count to 0
     }
 }
+
+void cleanup_commands(t_data *pnt) {
+    for (int j = 0; j < pnt->cmdt_count; j++) {
+        // Free the command
+        if (pnt->cmdt[j].cmd != NULL) {
+            free(pnt->cmdt[j].cmd);
+            pnt->cmdt[j].cmd = NULL; // Avoid dangling pointer
+        }
+
+        // Free each argument
+        if (pnt->cmdt[j].args != NULL) {
+            for (int k = 0; pnt->cmdt[j].args[k] != NULL; k++) {
+                free(pnt->cmdt[j].args[k]);
+            }
+            free(pnt->cmdt[j].args); // Free the array itself if dynamically allocated
+            pnt->cmdt[j].args = NULL; // Avoid dangling pointer
+        }
+    }
+}

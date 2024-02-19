@@ -275,6 +275,7 @@ void	fd_cleaning(t_data *pntr, t_tab_cmd *tab_cmd, int i);
 void	total_clean(t_data *pntr);
 int		clean_tokens(t_token *tokens, int max, t_data *pnt);
 void 	cleanup_tokens(t_data *data);
+void	cleanup_commands(t_data *pnt);
 
 /* Garbage collector */
 // void	gc_malloc_protection(void);

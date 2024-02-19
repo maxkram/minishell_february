@@ -8,6 +8,7 @@
 
 void command_execution(t_data *pnt, t_tab_cmd *tab_cmd, int i, int *fd_pipe)
 {
+
     printf("\033[32mExecuting command \033[35m#%d\033[0m: %s\033[0m\n", i, tab_cmd->cmd);
     printf("\033[32mArguments and options:\033[0m");
     for (int j = 0; tab_cmd->args[j] != NULL; j++) {
@@ -16,7 +17,6 @@ void command_execution(t_data *pnt, t_tab_cmd *tab_cmd, int i, int *fd_pipe)
 
     printf("\n\033[31mInput FD: %d, Output FD: %d\033[0m\n", tab_cmd->in_fd, tab_cmd->out_fd);
     printf("\033[31mPipe FDs: [R] = %d, [W] = %d\033[0m\n", fd_pipe[0], fd_pipe[1]);
-
     tab_cmd->pid = fork();
     if (tab_cmd->pid < 0)
         return ((void)error_out(pnt, "fork", 1));

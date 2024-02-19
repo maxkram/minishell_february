@@ -61,14 +61,10 @@ int check_valid_execution(t_tab_cmd *tab_cmd, t_data *pntr)
 
 //"search_in_path", is responsible for searching the provided command in the directories specified in the PATH environment variable. It iterates through each directory in the PATH, concatenates the directory path with the command, and checks if the resulting path is executable. If an executable path is found, it updates the "cmd_table->cmd" field with the full path to the executable.
 /**
- * @leaks
- * fix the memory leaks
- * [ ] 89 bytes in 5 blocks are definitely lost in loss record 35 of 96
- * 		==1069==    by 0x10000B244: ft_strdup_fd (in ./minishell)
- *		==1069==    by 0x100009104: path_searching (exec_search.c:76)
- * [ ] 94 bytes in 5 blocks are definitely lost in loss record 36 of 96
- *		==1069==    by 0x10000B322: ft_strjoin (in ./minishell)
- *		==1069==    by 0x100009143: path_searching (exec_search.c:79)
+ * @todo
+ * [ ] Leaks
+ * 		[ ] free(temp); // This correctly frees temp
+ * 		[ ] Free tab_cmd->cmd before reassigning it to ret
 */
 int path_searching(t_data *pnt, t_tab_cmd *tab_cmd, int i)
 {
@@ -98,6 +94,7 @@ int path_searching(t_data *pnt, t_tab_cmd *tab_cmd, int i)
         {
             // temp = tab_cmd->cmd; // This line would cause a leak if uncommented
             printf("Command found: %s\n", ret); // Indicate successful command find
+			free(tab_cmd->cmd); // Free tab_cmd->cmd before reassigning it to ret
             tab_cmd->cmd = ret;
             free(temp); // Free temp after reassigning tab_cmd->cmd to ret
             printf("Freed temp after command found\n");
