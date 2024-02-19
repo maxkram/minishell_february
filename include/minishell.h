@@ -121,6 +121,21 @@ typedef struct s_data
 	char	**envp; // array of environment variables
 }	t_data;
 
+/* Garbage collection */
+
+// typedef struct s_mblock
+// {
+// 	void			*address;
+// 	struct s_mblock	*next_mb;
+// }	t_mblock;
+
+// t_mblock	*garbage_collector(void)
+// {
+// 	static t_mblock	head = {NULL, NULL};
+// 	return (&head);
+// }
+
+
 
 // typedef	struct	s_redir
 // {
@@ -262,5 +277,13 @@ int		ft_putstr_int(char *s, int fd);
 int		increase_shlvl(t_data *pntr);
 // int		search_variable(char **ev, char *name);
 int		create_env_var(t_data *pntr, char *key, char *keep);
+
+/* Garbage collector */
+// void	gc_malloc_protection(void);
+// void	*gc_calloc(size_t nmemb, size_t size);
+// void	gc_free(void*address);
+// void	gc_detach(void*address);
+// void	gc_free_all(void);
+// t_ms	*get_ms(void);
 
 #endif

@@ -60,36 +60,57 @@ int check_valid_execution(t_tab_cmd *tab_cmd, t_data *pntr)
 }
 
 //"search_in_path", is responsible for searching the provided command in the directories specified in the PATH environment variable. It iterates through each directory in the PATH, concatenates the directory path with the command, and checks if the resulting path is executable. If an executable path is found, it updates the "cmd_table->cmd" field with the full path to the executable.
-
-int	path_searching(t_data *pnt, t_tab_cmd *tab_cmd, int i)
+/**
+ * @leaks
+ * fix the memory leaks
+ * [ ] 89 bytes in 5 blocks are definitely lost in loss record 35 of 96
+ * 		==1069==    by 0x10000B244: ft_strdup_fd (in ./minishell)
+ *		==1069==    by 0x100009104: path_searching (exec_search.c:76)
+ * [ ] 94 bytes in 5 blocks are definitely lost in loss record 36 of 96
+ *		==1069==    by 0x10000B322: ft_strjoin (in ./minishell)
+ *		==1069==    by 0x100009143: path_searching (exec_search.c:79)
+*/
+int path_searching(t_data *pnt, t_tab_cmd *tab_cmd, int i)
 {
-	char	*ret;
-	char	*temp;
+    char *ret;
+    char *temp;
 
-	while (pnt->path && pnt->path[++i])
-	{
-		if (tab_cmd->cmd[0] == '\0')
-			break ;
-		temp = ft_strdup_fd(pnt->path[i]);
-		if (!temp)
-			return (error_out(pnt, "ft_strdup", 1) + 1);
-		temp = ft_strjoin(temp, "/");
-		if (!temp)
-			return (error_out(pnt, "ft_strjoin", 1) + 1);
-		ret = ft_strjoin(temp, tab_cmd->cmd);
-		if (!ret)
-			return (error_out(pnt, "ft_strjoin", 1) + 1);
-		if (access(ret, X_OK) == 0)
-		{
-			temp = tab_cmd->cmd;
-			tab_cmd->cmd = ret;
-			return (free(temp), 0);
-		}
-		free(ret);
-		// free(temp);
-	}
-	return (find_path(pnt, tab_cmd));
+    while (pnt->path && pnt->path[++i])
+    {
+        if (tab_cmd->cmd[0] == '\0')
+            break;
+        temp = ft_strdup_fd(pnt->path[i]);
+        if (!temp)
+            return (error_out(pnt, "ft_strdup", 1) + 1);
+        printf("Allocated temp (strdup): %s\n", temp); // Log allocation
+
+        temp = ft_strjoin(temp, "/");
+        if (!temp)
+            return (error_out(pnt, "ft_strjoin", 1) + 1);
+        printf("Reallocated temp (strjoin): %s\n", temp); // Log reallocation
+
+        ret = ft_strjoin(temp, tab_cmd->cmd);
+        if (!ret)
+            return (error_out(pnt, "ft_strjoin", 1) + 1);
+        printf("Allocated ret (strjoin): %s\n", ret); // Log allocation
+
+        if (access(ret, X_OK) == 0)
+        {
+            // temp = tab_cmd->cmd; // This line would cause a leak if uncommented
+            printf("Command found: %s\n", ret); // Indicate successful command find
+            tab_cmd->cmd = ret;
+            free(temp); // Free temp after reassigning tab_cmd->cmd to ret
+            printf("Freed temp after command found\n");
+            return 0;
+        }
+        free(ret);
+        printf("Freed ret\n"); // Log freeing ret
+        free(temp); // This correctly frees temp
+        printf("Freed temp\n"); // Log freeing temp
+    }
+    return (find_path(pnt, tab_cmd));
 }
+
 
 //'search_if_exist' is responsible for checking if a given command exists in the directories listed in the PATH environment variable
 

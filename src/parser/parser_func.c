@@ -49,33 +49,40 @@ int	redirections_fill(t_data *pnt, int j, int i)
 
 //the args_cmd_fill function fills in the arguments and the command itself for a specific command in the project. It iterates through the tokens, identifies arguments, and populates the corresponding fields in the command table
 
-int	args_cmd_fill(t_data *pnt, int j, int i)
+int args_cmd_fill(t_data *pnt, int j, int i)
 {
-	int	k;
+    int k;
 
-	k = 0;
-	while (++i < pnt->count_token && pnt->tokens[i].type != PIPE)
-	{
-		if (check_arguments(pnt->tokens[i].type) && (i == 0 || check_if_redirection(pnt->tokens[i - 1].type)))
-		{
-			if (pnt->tokens[i].value[0] == '\0'
-				&& pnt->tokens[i].type == WORD && pnt->cmdt[j].num_args-- > 0)
-				continue ;
-			if (pnt->cmdt[j].cmd == NULL)
-			{
-				pnt->cmdt[j].cmd = ft_strdup_fd(pnt->tokens[i].value);
-				if (!pnt->cmdt[j].cmd)
-					return (error_out(pnt, "ft_strdup", 1) - 2);
-			}
-			pnt->cmdt[j].args[k++] = ft_strdup_fd(pnt->tokens[i].value);
-			if (!pnt->cmdt[j].args[k - 1])
-				return (error_out(pnt, "ft_strdup", 1) - 2);
-		}
-	}
-	if (pnt->cmdt[j].cmd != NULL)
-		pnt->cmdt[j].args[k] = NULL;
-	return (i);
+    k = 0;
+    while (++i < pnt->count_token && pnt->tokens[i].type != PIPE)
+    {
+        if (check_arguments(pnt->tokens[i].type) && (i == 0 || check_if_redirection(pnt->tokens[i - 1].type)))
+        {
+            if (pnt->tokens[i].value[0] == '\0'
+                && pnt->tokens[i].type == WORD && pnt->cmdt[j].num_args-- > 0)
+                continue;
+            if (pnt->cmdt[j].cmd == NULL)
+            {
+                pnt->cmdt[j].cmd = ft_strdup_fd(pnt->tokens[i].value);
+                if (!pnt->cmdt[j].cmd)
+                    return (error_out(pnt, "ft_strdup", 1) - 2);
+                printf("Command allocated for cmd[%d]: %s\n", j, pnt->cmdt[j].cmd); // Debug print for command allocation
+            }
+            pnt->cmdt[j].args[k] = ft_strdup_fd(pnt->tokens[i].value);
+            if (!pnt->cmdt[j].args[k - (k > 0 ? 1 : 0)])
+                return (error_out(pnt, "ft_strdup", 1) - 2);
+            printf("Argument allocated for cmd[%d], arg[%d]: %s\n", j, k, pnt->cmdt[j].args[k - (k > 0 ? 1 : 0)]); // Debug print for argument allocation
+            k++;
+        }
+    }
+    if (pnt->cmdt[j].cmd != NULL)
+    {
+        pnt->cmdt[j].args[k] = NULL;
+        printf("Finalized arguments for cmd[%d] with NULL at args[%d]\n", j, k); // Debug print for argument finalization
+    }
+    return (i);
 }
+
 
 //the clean_tokens function is used to free the memory allocated for the values of tokens in the array and then free the memory allocated for the tokens array itself. After cleanup, it sets the pointers to NULL to avoid potential issues with dangling pointers
 
