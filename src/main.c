@@ -78,7 +78,7 @@ int	main(int argc, char *argv[], char **env_p)
 }
 
 /************************************ NEW EXECUTION **********************************************/
-
+/*
 void	execute_pipeline(t_data *pnt)
 {
 	int		i;
@@ -251,3 +251,4 @@ void	redirect_last_command(t_data *pnt)
 		close(fd_out);
 	}
 }
+*/

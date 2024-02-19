@@ -63,7 +63,7 @@
 int	array_length(char **arr)
 {
 	int	i;
-	
+
 	i = 0;
 	if (!arr)
 		return (0);
