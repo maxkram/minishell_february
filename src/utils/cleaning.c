@@ -107,3 +107,31 @@ void	total_clean(t_data *pntr)
 	close(pntr->first_stdout);
 	close(pntr->first_stdin);
 }
+
+int	clean_tokens(t_token *tokens, int max, t_data *pnt)
+{
+	while (pnt->count_token > ++max)
+	{
+		if (tokens[max].value)
+		{
+			free(tokens[max].value);
+			tokens[max].value = NULL;
+		}
+	}
+	free(tokens);
+	tokens = NULL;
+	return (1);
+}
+void cleanup_tokens(t_data *data) {
+    if (data->tokens) {
+        for (int i = 0; i < data->count_token; i++) {
+            if (data->tokens[i].value) {
+                free(data->tokens[i].value); // Free the value of each token
+                data->tokens[i].value = NULL; // Avoid dangling pointer by setting to NULL
+            }
+        }
+        free(data->tokens); // Free the entire tokens array
+        data->tokens = NULL; // Avoid dangling pointer by setting to NULL
+        data->count_token = 0; // Reset token count to 0
+    }
+}

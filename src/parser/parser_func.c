@@ -63,7 +63,7 @@ int args_cmd_fill(t_data *pnt, int j, int i)
                 continue;
             if (pnt->cmdt[j].cmd == NULL)
             {
-                pnt->cmdt[j].cmd = ft_strdup_fd(pnt->tokens[i].value);
+                pnt->cmdt[j].cmd = ft_strdup(pnt->tokens[i].value);
                 if (!pnt->cmdt[j].cmd)
                     return (error_out(pnt, "ft_strdup", 1) - 2);
                 printf("Command allocated for cmd[%d]: %s\n", j, pnt->cmdt[j].cmd); // Debug print for command allocation
@@ -86,20 +86,6 @@ int args_cmd_fill(t_data *pnt, int j, int i)
 
 //the clean_tokens function is used to free the memory allocated for the values of tokens in the array and then free the memory allocated for the tokens array itself. After cleanup, it sets the pointers to NULL to avoid potential issues with dangling pointers
 
-int	clean_tokens(t_token *tokens, int max, t_data *pnt)
-{
-	while (pnt->count_token > ++max)
-	{
-		if (tokens[max].value)
-		{
-			free(tokens[max].value);
-			tokens[max].value = NULL;
-		}
-	}
-	free(tokens);
-	tokens = NULL;
-	return (1);
-}
 
 //the words_merging function performs the merging of adjacent WORD tokens and updates the count_token and tokens accordingly. It also deallocates the memory used by the original tokens array
 /**

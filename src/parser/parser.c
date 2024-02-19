@@ -99,5 +99,6 @@ int parser(t_data *pnt)
 			return (1);
 		j++;
 	}
+	cleanup_tokens(pnt);
 	return (0);
 }

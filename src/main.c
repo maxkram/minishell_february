@@ -72,6 +72,7 @@ int	main(int argc, char *argv[], char **env_p)
 			alt_exec_main(&pnt);
 			// execute_pipeline(&pnt);
 		}
+		cmdt_cleaning(&pnt);
 		pntr_cleaning(&pnt);
 	}
 }

@@ -108,17 +108,6 @@ typedef struct s_data
 	int			first_stdin; //when we create file decriptors we need STDIN_FILENO
 	int			first_stdout; // like previous for STDOUT_FILENO
 	t_set_mode	mode;
-
-	// new execution members
-	int		n_cmds; // number of commands
-	int		*pipefds; // array of pipe file descriptors
-	int		n_pipes; // number of pipes
-	bool	here_doc; // true if here_doc is used
-	char	*limiter; // here_doc limiter
-	char	*infile; // input file
-	char	*outfile; // output file
-	char	**argv; // array of command line arguments
-	char	**envp; // array of environment variables
 }	t_data;
 
 /* Garbage collection */
@@ -278,6 +267,15 @@ int		increase_shlvl(t_data *pntr);
 // int		search_variable(char **ev, char *name);
 int		create_env_var(t_data *pntr, char *key, char *keep);
 
+
+// Utilities
+void	cmdt_cleaning(t_data *pntr);
+void	pntr_cleaning(t_data *pnt);
+void	fd_cleaning(t_data *pntr, t_tab_cmd *tab_cmd, int i);
+void	total_clean(t_data *pntr);
+int		clean_tokens(t_token *tokens, int max, t_data *pnt);
+void 	cleanup_tokens(t_data *data);
+
 /* Garbage collector */
 // void	gc_malloc_protection(void);
 // void	*gc_calloc(size_t nmemb, size_t size);
@@ -285,5 +283,7 @@ int		create_env_var(t_data *pntr, char *key, char *keep);
 // void	gc_detach(void*address);
 // void	gc_free_all(void);
 // t_ms	*get_ms(void);
+
+
 
 #endif

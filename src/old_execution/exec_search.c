@@ -79,7 +79,7 @@ int path_searching(t_data *pnt, t_tab_cmd *tab_cmd, int i)
     {
         if (tab_cmd->cmd[0] == '\0')
             break;
-        temp = ft_strdup_fd(pnt->path[i]);
+        temp = ft_strdup(pnt->path[i]);
         if (!temp)
             return (error_out(pnt, "ft_strdup", 1) + 1);
         printf("Allocated temp (strdup): %s\n", temp); // Log allocation
@@ -137,6 +137,7 @@ int	is_exist(t_data *pntr, t_tab_cmd *tab_cmd, int i)
 			pntr->code_exit = 126;
 			return (0);
 		}
+		free(temporary); // added to fix the memory leak
 		free(result);
 	}
 	return (is_command(pntr, tab_cmd));

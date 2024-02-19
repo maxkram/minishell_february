@@ -46,7 +46,6 @@ void command_execution(t_data *pnt, t_tab_cmd *tab_cmd, int i, int *fd_pipe)
         pnt->fd_before = fd_pipe[0];
     else
         close(fd_pipe[0]);
-
     fd_cleaning(pnt, tab_cmd, i);
 }
 
