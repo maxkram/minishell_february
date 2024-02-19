@@ -30,23 +30,23 @@ void	index_sort(char **arr, int str_count, int *index)
 	}
 }
 
-void	print_env(char **env, int fd)
-{
-	int	i;
+// void	print_env(char **env, int fd)
+// {
+// 	int	i;
 
-	i = 0;
+// 	i = 0;
 
-	while (env[i] != NULL)
-	{
-		if (find_symbol('=', env[i]))
-		{
-			ft_putstr_fd(env[i], fd);
-			if (write(fd, "\n", 1) == ERROR)
-				ft_error(ERR_WRITE);
-		}
-		i++;
-	}
-}
+// 	while (env[i] != NULL)
+// 	{
+// 		if (find_symbol('=', env[i]))
+// 		{
+// 			ft_putstr_fd(env[i], fd);
+// 			if (write(fd, "\n", 1) == ERROR)
+// 				ft_error(ERR_WRITE);
+// 		}
+// 		i++;
+// 	}
+// }
 
 void	built_env(t_data *data)
 {

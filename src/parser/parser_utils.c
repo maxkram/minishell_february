@@ -54,7 +54,7 @@ int	new_tokens_count(t_data *pnt)
 			j = 0;
 			while (pnt->tokens[i].value[j])
 			{
-				if (pnt->tokens[i].value[j] == ' ')
+				if (pnt->tokens[i].value[j] == 32)
 					k++;
 				j++;
 			}

@@ -75,7 +75,7 @@ typedef	struct s_token //for tokenizer
 typedef struct s_tab_cmd //data struct for keeping status when we operate with files
 {
 	char	*cmd; //to keep results of search
-	char	**args; //not used
+	char	**args; //counts number of argc in main
 	int		in_fd; //file descriptors
 	int		out_fd; //file descriptors
 	t_token	*redirections;
@@ -119,6 +119,36 @@ typedef struct s_data
 }	t_data;
 
 
+// typedef	struct	s_redir
+// {
+// 	int		i;
+// 	char	*name;							//legacy code
+// 	char	*value;
+// }	t_redir;
+
+// typedef struct	s_copy
+// {
+// 		char	*wc;
+// 		char	**args;
+// 		char	*cmd;
+// 		int		i;							//legacy code
+// 		int		num;
+// 		t_redir	redir;
+// }	t_copy;
+
+// /**
+//  * NOTE: Multiple cmds when pipe
+// *@param	infile path to infile
+// *@param	outfile path to outfile
+// *@param	first_cmd first cmd in chained lst.
+// */
+// typedef struct cmd_table
+// {
+// 	char	*infile;							//legacy code
+// 	char	*outfile;
+// 	t_cmd	*first_cmd;
+// }			t_table;
+
 //
 //==================[utils.c]===================//
 t_data	*get_data(void);
@@ -151,20 +181,21 @@ int		change_fd_input_output(t_data *pntr, t_tab_cmd *tab_cmd, int *fd, int i);
 int		find_path(t_data *pntr, t_tab_cmd *tab_cmd);
 //
 //==================[b_cd.c]===================//
-void	built_cd(char **args, int argc);
+int		built_cd(t_data *pnt, t_tab_cmd *tab_cmd);
+int		make_var(t_data *pnt, char *var_name, char *value);
 //
 //==================[b_exit.c]===================//
 void	built_exit(t_data *pntr, t_tab_cmd *cmd_tab);
 //
 //==================[b_echo.c]===================//
-void	built_echo(char **args, int argc, int fd_out);
+void	built_echo(t_data *pnt, t_tab_cmd *tab_cmd);
 //
 //==================[b_unset.c]===================//
-void	built_unset(char **args, int argc, t_data *data);
+void	built_unset(t_data *pnt, t_tab_cmd *tab_cmd);
 //
 //==================[b_env.c]===================//
 void	index_sort(char **arr, int str_count, int *index);
-void	print_env(char **env, int fd);
+// void	print_env(char **env, int fd);
 void	built_env(t_data *data);
 //
 //==================[b_export.c]===================//
@@ -226,16 +257,7 @@ void	fd_exit(t_data *pntr, int code_exit);
 int		ft_putstr_int(char *s, int fd);
 //==================[env.c]===================//
 int		increase_shlvl(t_data *pntr);
+// int		search_variable(char **ev, char *name);
+int		create_env_var(t_data *pntr, char *key, char *keep);
 
-// new execution
-void	execute_pipeline(t_data *pnt);
-void	create_pipes(t_data *pnt);
-void	create_child_process(t_data *pnt, int cmd_index);
-void	redirect_here_doc(t_data *pnt);
-void	here_doc(char *limiter, int write_end);
-int		get_next_line(char **line);
-void	redirect_first_command(t_data *pnt);
-void	redirect_last_command(t_data *pnt);
-
-void	error_message(const char *message, int should_exit);
 #endif
