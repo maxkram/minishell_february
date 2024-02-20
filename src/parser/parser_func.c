@@ -66,19 +66,19 @@ int args_cmd_fill(t_data *pnt, int j, int i)
                 pnt->cmdt[j].cmd = ft_strdup(pnt->tokens[i].value);
                 if (!pnt->cmdt[j].cmd)
                     return (error_out(pnt, "ft_strdup", 1) - 2);
-                printf("Command allocated for cmd[%d]: %s\n", j, pnt->cmdt[j].cmd); // Debug print for command allocation
+                // printf("Command allocated for cmd[%d]: %s\n", j, pnt->cmdt[j].cmd); // Debug print for command allocation
             }
             pnt->cmdt[j].args[k] = ft_strdup_fd(pnt->tokens[i].value);
             if (!pnt->cmdt[j].args[k - (k > 0 ? 1 : 0)])
                 return (error_out(pnt, "ft_strdup", 1) - 2);
-            printf("Argument allocated for cmd[%d], arg[%d]: %s\n", j, k, pnt->cmdt[j].args[k - (k > 0 ? 1 : 0)]); // Debug print for argument allocation
+            // printf("Argument allocated for cmd[%d], arg[%d]: %s\n", j, k, pnt->cmdt[j].args[k - (k > 0 ? 1 : 0)]); // Debug print for argument allocation
             k++;
         }
     }
     if (pnt->cmdt[j].cmd != NULL)
     {
         pnt->cmdt[j].args[k] = NULL;
-        printf("Finalized arguments for cmd[%d] with NULL at args[%d]\n", j, k); // Debug print for argument finalization
+        // printf("Finalized arguments for cmd[%d] with NULL at args[%d]\n", j, k); // Debug print for argument finalization
     }
     return (i);
 }
