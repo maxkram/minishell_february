@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   b_exit.c                                           :+:      :+:    :+:   */
+/*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mkramer <mkramer@student.42.fr>            +#+  +:+       +#+        */
+/*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 10:58:13 by ycyr-roy          #+#    #+#             */
-/*   Updated: 2024/01/07 16:36:28 by mkramer          ###   ########.fr       */
+/*   Updated: 2024/02/19 20:51:16 by hezhukov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ long int	to_long_int(char *s)
 			n = n * 10 + *s - '0';
 		else
 			break ;
-		if ((n > 4294967295 && sgn == 1) || (sgn == -1 && n > 4294967296)) 
+		if ((n > 4294967295 && sgn == 1) || (sgn == -1 && n > 4294967296))
 			return (9999999999);
 		s++;
 	}
@@ -74,7 +74,8 @@ void	built_exit_annex(t_data *pntr, t_tab_cmd *tab_cmd,
 	long int exit_code, int cnt)
 {
 	if (cnt < 2)
-		ft_printf_fd(2, "exit\n");
+		// ft_putstr_fd("exit\n", 2); @changes commented for tester
+		// ft_printf_fd(2, "exit\n");
 	if ((!tab_cmd || tab_cmd->num_args == 1) && cnt < 2)
 	{
 		total_clean(pntr);
@@ -109,7 +110,8 @@ void	built_exit(t_data *pntr, t_tab_cmd *tab_cmd)
 	cnt = pntr->cmdt_count;
 	if (!tab_cmd)
 	{
-		ft_printf_fd(2, "exit\n");
+		// ft_putstr_fd("exit\n", 2); @changes commented for tester
+		// ft_printf_fd(2, "exit\n");
 		total_clean(pntr);
 		exit(pntr->code_exit);
 	}
