@@ -48,7 +48,7 @@ void	index_sort(char **arr, int str_count, int *index)
 // 	}
 // }
 
-void	built_env(t_data *data)
+int	built_env(t_data *data)
 {
 	int	i;
 
@@ -57,4 +57,5 @@ void	built_env(t_data *data)
 	while (data->env[++i])
 		ft_putendl_fd(data->env[i], STDOUT_FILENO);
 	// print_env(data->env, fd_out);
+	return (0);
 }

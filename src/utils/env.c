@@ -61,8 +61,6 @@ int	create_env_var(t_data *pntr, char *key, char *keep)
 	return (0);
 }
 
-//the functionis is designed to increment the value of the 'SHLVL' environment variable
-
 int	increase_shlvl(t_data *pntr)
 {
 	int		shlvl;

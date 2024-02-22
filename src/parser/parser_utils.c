@@ -35,6 +35,20 @@ int	count_pipes(t_data *pnt)
 
 //the new_tokens_count function counts the total number of tokens that would result after splitting WORD tokens based on spaces within their values.
 
+/**
+ * @questions
+ * What is the purpose of this function? ->
+ * What is the purpose of the outer while loop? -> iterate over all tokens
+ * What is the purpose of the inner while loop? -> iterate over the characters within a WORD token
+ * Why do we need this function if we already have a count_tokens function?
+ *
+ * @param i index to iterate over all tokens.
+ * @param j index to iterate over the characters within a WORD token.
+ * @param k count the number of tokens that would result after splitting WORD tokens based on spaces within their values.
+ *
+ * @return the total number of tokens that would result after splitting WORD tokens based on spaces within their values.
+*/
+
 int	new_tokens_count(t_data *pnt)
 {
 	int	i;

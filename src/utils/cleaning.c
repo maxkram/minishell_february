@@ -54,34 +54,6 @@ void	pntr_cleaning(t_data *pnt)
 	pnt->path = NULL;
 }
 
-//function for safely freeing the memory associated with an array of strings
-
-// void	double_pntr_cleaning(char **pntr)
-// {
-// 	// if (!pntr)
-// 	// 	return ;
-// 	// while (*pntr)
-// 	// {
-// 	// 	free(*pntr);
-// 	// 	*pntr++ = NULL;
-// 	// }
-// 	// free(pntr);
-// 	// pntr = NULL;
-// 	int	i;
-
-// 	i = 0;
-// 	if (pntr)
-// 	{
-// 		while(pntr[i])
-// 		{
-// 			free(pntr[i]);
-// 			pntr[i] = NULL;
-// 			i++;
-// 		}
-// 		free(pntr);
-// 		pntr = NULL;
-// 	}
-// }
 
 //the function is responsible for cleaning up file descriptors and resources associated with output redirection and here documents
 
@@ -107,3 +79,58 @@ void	total_clean(t_data *pntr)
 	close(pntr->first_stdout);
 	close(pntr->first_stdin);
 }
+
+int	clean_tokens(t_token *tokens, int max, t_data *pnt)
+{
+	while (pnt->count_token > ++max)
+	{
+		if (tokens[max].value)
+		{
+			free(tokens[max].value);
+			tokens[max].value = NULL;
+		}
+	}
+	free(tokens);
+	tokens = NULL;
+	return (1);
+}
+void cleanup_tokens(t_data *data) {
+    if (data->tokens) {
+        for (int i = 0; i < data->count_token; i++) {
+            if (data->tokens[i].value) {
+                free(data->tokens[i].value); // Free the value of each token
+                data->tokens[i].value = NULL; // Avoid dangling pointer by setting to NULL
+            }
+        }
+        free(data->tokens); // Free the entire tokens array
+        data->tokens = NULL; // Avoid dangling pointer by setting to NULL
+        data->count_token = 0; // Reset token count to 0
+    }
+}
+
+void cleanup_commands(t_data *pnt) {
+    for (int j = 0; j < pnt->cmdt_count; j++) {
+        // Free the command
+        if (pnt->cmdt[j].cmd != NULL) {
+            free(pnt->cmdt[j].cmd);
+            pnt->cmdt[j].cmd = NULL; // Avoid dangling pointer
+        }
+
+        // Free each argument
+        if (pnt->cmdt[j].args != NULL) {
+            for (int k = 0; pnt->cmdt[j].args[k] != NULL; k++) {
+                free(pnt->cmdt[j].args[k]);
+            }
+            free(pnt->cmdt[j].args); // Free the array itself if dynamically allocated
+            pnt->cmdt[j].args = NULL; // Avoid dangling pointer
+        }
+    }
+}
+
+void error_message(char *message, int exit_status)
+{
+	ft_putstr_fd(message, STDERR_FILENO);
+    if (exit_status != 0)
+		exit(exit_status);
+}
+

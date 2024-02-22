@@ -84,6 +84,7 @@ char	*ft_strtok(char *str, const char *delim);
 size_t	ft_strspn(const char *str1, const char *str2);
 size_t	ft_strcspn(const char *str1, const char *str2);
 char	*ft_strpbrk(const char *str, const char *accept);
+char	*ft_strndup(const char *src, size_t n);
 
 char	*charjoinfree(char *str, char c);
 int		ft_printf_fd(int fd, const char *format, ...);

@@ -2,7 +2,7 @@
 
 NAME = minishell
 CC = gcc
-CFLAGS = -Wall -Werror -Wextra -Ofast # -g -fsanitize=address
+CFLAGS = -Wall -Werror -Wextra -g #-fsanitize=address
 LIBS = -Llib/libft -lft -Lvendor/readline/lib -lreadline
 INCLUDES = -Iinclude -Ivendor/readline/include
 

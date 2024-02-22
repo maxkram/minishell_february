@@ -90,7 +90,18 @@ int	fill_redirection(t_data *pnt, char const *str)
 }
 
 //the func parses the input & fills the array of tokens with the right types
-
+/**
+ * @changes
+ * 1. Added incrementation of pnt->pipex_data.n_pipes
+ *
+ * @questions
+ * 1. What defines the maximum number of tokens? -> max_token is defined during initialization stage
+ * 2. What is the purpose of the j variable? -> j is used to store the return value of the filling_quotes function.
+ * 	a. It is used to move the index of the input string to the next character after the closing quote.
+ *  b. It is used to check for errors during filling quotes.
+ *
+ *
+*/
 int	filling_with_tokens(t_data *pnt, int *i, int j)
 {
     // Check if the current token count has reached the maximum, and reallocate if necessary
@@ -99,8 +110,11 @@ int	filling_with_tokens(t_data *pnt, int *i, int j)
 			return (1);
 	// Check the current character and fill tokens accordingly
 	if (pnt->input[*i] == '|')
+	{
 		// If the current character is '|', set the token type to PIPE
 		pnt->tokens[++pnt->count_token - 1].type = PIPE;
+		pnt->n_pipes++;
+	}
 	else if (pnt->input[*i] == '>' || pnt->input[*i] == '<')
 		// If the current character is '>' or '<', handle redirection
 		*i += fill_redirection(pnt, &pnt->input[*i]) - 1;
@@ -116,7 +130,7 @@ int	filling_with_tokens(t_data *pnt, int *i, int j)
 			return (error_in_syntax(pnt->input[*i], pnt), 1);
 		*i += j;
 	}
-	else if (pnt->input[*i] != ' ' && pnt->input[*i] != '\t')
+	else if (pnt->input[*i] != ' ' && pnt->input[*i] != '\t') //
 	{
 		// If the current character is not a space or tab, handle filling a word
 		j = word_filling(pnt, &pnt->input[*i]) - 1;

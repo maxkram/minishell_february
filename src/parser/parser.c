@@ -10,8 +10,7 @@ int	counting_arguments(t_data *pnt, int i)
 	count = 0;
 	while (i < pnt->count_token && pnt->tokens[i].type != PIPE)
 	{
-		if (check_arguments(pnt->tokens[i].type) && (i == 0
-				|| check_if_redirection(pnt->tokens[i - 1].type)))
+		if (check_arguments(pnt->tokens[i].type) && (i == 0 || check_if_redirection(pnt->tokens[i - 1].type)))
 			count++;
 		i++;
 	}
@@ -27,7 +26,7 @@ void	test_multiline(t_data *pnt, int j)
 	i = pnt->cmdt[j].num_redirections;
 	while (i--)
 	{
-		if (pnt->cmdt[j].redirections[i].type == REDIRECT_MULTILINE
+		if (pnt->cmdt[j].redirections[i].type == REDIRECT_MULTILINE // heredoc mode
 			|| pnt->cmdt[j].redirections[i].type == REDIRECT_IN)
 		{
 			if (pnt->cmdt[j].redirections[i].type == REDIRECT_MULTILINE)
@@ -69,10 +68,22 @@ int	cmdt_init(t_data *pnt, int j, int *i)
 
 //the parser function is responsible for parsing the input data, merging words, counting pipes, allocating memory for command tables, and initializing each command table entry using the cmdt_init function. The function returns 0 on success and 1 on failure.
 
-int	parser(t_data *pnt)
+/**
+ * @brief The parser function is responsible for preparing the command table.
+ * 1. it takes the tokenized input
+ * 2. counts the number of commands
+ * 3. allocates the command table
+ * 4. initializes each entry by parsing the tokens into arguments, redirections etc.
+ * The initialized table can then be used to execute the commands.
+ *
+ * @questions
+ * Why do we need words_merging function?
+ *
+ */
+int parser(t_data *pnt)
 {
-	int	j;
-	int	i;
+	int j;
+	int i;
 
 	j = 0;
 	i = 0;
@@ -88,5 +99,6 @@ int	parser(t_data *pnt)
 			return (1);
 		j++;
 	}
+	cleanup_tokens(pnt);
 	return (0);
 }

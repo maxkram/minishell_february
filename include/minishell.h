@@ -17,6 +17,7 @@
 # include <errno.h>
 # include <dirent.h>
 # include <limits.h>
+# include <stdbool.h>
 
 //==================VALUES===================//
 # define DEBUG_ON 0
@@ -43,23 +44,6 @@
 
 extern int	global_signal;
 
-// /**
-//  * NOTE: Simple command + args
-// *@param	argc Number of args.
-// *@param	argv Array of cmd + all its args.
-// *@param	next Next command.
-// */
-// struct cmd;
-typedef struct cmd
-{
-	int			argc;    // number of arguments (plus cmd)
-	int			fd[2]; //fd[0] is in and fd[1] is out. FOR ME. if =0, std.
-	int			cmd_idx; // starts at 0, index for commands, to keep up more easily.
-	char		*cmd_path; //for me
-	char		**args; //args[0] is cmd, and the others are the arguments.
-	struct cmd	*next; //points to another struct like this one with the next command, or NULL if its the last command
-}			t_cmd;
-
 typedef	enum s_type_token //names for token like '>', '<<', '|', '""'
 {
 	WORD,
@@ -67,7 +51,7 @@ typedef	enum s_type_token //names for token like '>', '<<', '|', '""'
 	REDIRECT_IN,
 	REDIRECT_OUT,
 	REDIRECT_APPEND,
-	REDIRECT_MULTILINE,
+	REDIRECT_MULTILINE, //heredoc @todo rename to heredoc
 	DQUOTE,
 	SQUOTE
 }	t_type_token;
@@ -84,9 +68,13 @@ typedef	struct s_token //for tokenizer
 {
 	char			*value;
 	t_type_token	type;
-	int				no_space;
+	int				no_space; // This is a flag to check if it's a space. If it's a space should be processed differently
 }	t_token;
 
+/**
+ * @brief Command table data structure
+ *
+*/
 typedef struct s_tab_cmd //data struct for keeping status when we operate with files
 {
 	char	*cmd; //to keep results of search
@@ -105,7 +93,6 @@ typedef struct s_tab_cmd //data struct for keeping status when we operate with f
 
 typedef struct s_data
 {
-	t_cmd		*cmd; //pointer to first cmd, linked to the other ones with chained list.
 	char		**env; //to keep the 3rd argument from main : env
 	char		**path; // keep PATH, used for search
 	char		*input; // for everything from input
@@ -120,51 +107,12 @@ typedef struct s_data
 	int			fd_before; // file descriptor in the beginning
 	int			first_stdin; //when we create file decriptors we need STDIN_FILENO
 	int			first_stdout; // like previous for STDOUT_FILENO
+	int			n_pipes; // to keep number of pipes
 	t_set_mode	mode;
 }	t_data;
 
-
-// typedef	struct	s_redir
-// {
-// 	int		i;
-// 	char	*name;							//legacy code
-// 	char	*value;
-// }	t_redir;
-
-// typedef struct	s_copy
-// {
-// 		char	*wc;
-// 		char	**args;
-// 		char	*cmd;
-// 		int		i;							//legacy code
-// 		int		num;
-// 		t_redir	redir;
-// }	t_copy;
-
-// /**
-//  * NOTE: Multiple cmds when pipe
-// *@param	infile path to infile
-// *@param	outfile path to outfile
-// *@param	first_cmd first cmd in chained lst.
-// */
-// typedef struct cmd_table
-// {
-// 	char	*infile;							//legacy code
-// 	char	*outfile;
-// 	t_cmd	*first_cmd;
-// }			t_table;
-
-//
-//==================[utils.c]===================//
-t_data	*get_data(void);
-void	ft_error(char *str);
-void	my_error(char *str);
-int 	error_out(t_data *pnt, char *s, int n);
-void	safe_free(void **ptr);
-void	error_in_syntax(int type, t_data *pntr);
-//
 //==================[t_utils.c]===================//
-void	free_all(t_data *data);
+
 //
 //==================[prompt.c]===================//
 void	prompt_create(t_data *data);
@@ -182,7 +130,6 @@ void	alt_exec_main(t_data *pntr);
 char	*ft_get_env(char *str, char **env);
 char	*cmd_fullpath(t_data *data, char *cmd);
 void	ft_dup2(int fd, int std);
-void	ft_pipe(t_cmd *cmd);
 int		change_fd_input_output(t_data *pntr, t_tab_cmd *tab_cmd, int *fd, int i);
 int		find_path(t_data *pntr, t_tab_cmd *tab_cmd);
 //
@@ -202,12 +149,12 @@ void	built_unset(t_data *pnt, t_tab_cmd *tab_cmd);
 //==================[b_env.c]===================//
 void	index_sort(char **arr, int str_count, int *index);
 // void	print_env(char **env, int fd);
-void	built_env(t_data *data);
+int		built_env(t_data *data);
 //
 //==================[b_export.c]===================//
 int		var_in_env(char *str);
 void	print_export(char **env, int fd);
-void	built_export(t_data *data, t_tab_cmd *cmd, int fd_out);
+int		built_export(t_data *data, t_tab_cmd *cmd);
 //
 //==================[parser.c]===================//
 int		parser(t_data *pointer);
@@ -265,5 +212,36 @@ int		ft_putstr_int(char *s, int fd);
 int		increase_shlvl(t_data *pntr);
 // int		search_variable(char **ev, char *name);
 int		create_env_var(t_data *pntr, char *key, char *keep);
+
+
+
+// Utilities
+void	cmdt_cleaning(t_data *pntr);
+void	pntr_cleaning(t_data *pnt);
+void	fd_cleaning(t_data *pntr, t_tab_cmd *tab_cmd, int i);
+void	total_clean(t_data *pntr);
+int		clean_tokens(t_token *tokens, int max, t_data *pnt);
+void 	cleanup_tokens(t_data *data);
+void	cleanup_commands(t_data *pnt);
+void	error_message(char *message, int exit_status);
+
+//
+t_data	*get_data(void);
+void	ft_error(char *str);
+void	my_error(char *str);
+int 	error_out(t_data *pnt, char *s, int n);
+void	safe_free(void **ptr);
+void	error_in_syntax(int type, t_data *pntr);
+void	free_all(t_data *data);
+
+/* Garbage collector */
+// void	gc_malloc_protection(void);
+// void	*gc_calloc(size_t nmemb, size_t size);
+// void	gc_free(void*address);
+// void	gc_detach(void*address);
+// void	gc_free_all(void);
+// t_ms	*get_ms(void);
+
+
 
 #endif
