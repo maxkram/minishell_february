@@ -31,7 +31,7 @@ int	variable_index(char **env, char *n)
 	i = 0;
 	while (env[i])
 	{
-		if (env[i][ft_strlen(n)] == '=' && substring_beginning(env[i], n))
+		if (substring_beginning(env[i], n) && env[i][ft_strlen(n)] == '=')
 			return (i);
 		i++;
 	}

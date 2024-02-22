@@ -6,7 +6,7 @@
 /*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/29 10:58:13 by ycyr-roy          #+#    #+#             */
-/*   Updated: 2024/02/19 20:51:16 by hezhukov         ###   ########.fr       */
+/*   Updated: 2024/02/20 11:04:59 by hezhukov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,14 @@ void	built_exit_annex(t_data *pntr, t_tab_cmd *tab_cmd,
 }
 
 //the function handles the "exit" command in a shell program
-
+/**
+ * @brief The built_exit function handles the built-in 'exit' command.
+ * @details The function handles the exit command, allowing the user to exit the program
+ * @changes
+ * - I commented the ft_putstr_fd("exit\n", 2) to pass the test.
+ * - I commented the ft_printf_fd(2, "exit\n") to pass the test.
+ * - I changed exit code from 2 to 255 to pass the test.
+*/
 void	built_exit(t_data *pntr, t_tab_cmd *tab_cmd)
 {
 	int	cnt;
@@ -120,7 +127,7 @@ void	built_exit(t_data *pntr, t_tab_cmd *tab_cmd)
 	{
 		ft_printf_fd(2, "minishell: exit: %s: numeric argument required\n",
 			tab_cmd->args[1]);
-		pntr->code_exit = 2;
+		pntr->code_exit = 255;
 		if (cnt < 2)
 			total_clean(pntr);
 		if (cnt < 2)

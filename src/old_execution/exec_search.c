@@ -39,7 +39,7 @@ int check_valid_execution(t_tab_cmd *tab_cmd, t_data *pntr)
 		directory = opendir(tab_cmd->cmd);
 		if (directory)
 		{
-			ft_printf_fd(2, "minishell: %s: Is a directory\n", tab_cmd->cmd);
+			ft_printf_fd(2, "minishell: %s: is a directory\n", tab_cmd->cmd);
 			pntr->code_exit = 126;
 			closedir(directory);
 		}
@@ -47,7 +47,7 @@ int check_valid_execution(t_tab_cmd *tab_cmd, t_data *pntr)
 			return (0);
 		else
 		{
-			ft_printf_fd(2, "minishell: %s: No permission\n",
+			ft_printf_fd(2, "minishell: %s: Permission denied\n",
 				tab_cmd->cmd);
 			pntr->code_exit = 126;
 		}
@@ -128,7 +128,7 @@ int	is_exist(t_data *pntr, t_tab_cmd *tab_cmd, int i)
 			temporary = tab_cmd->cmd;
 			tab_cmd->cmd = result;
 			free(temporary);
-			ft_printf_fd(2, "minishell: %s: No permission\n",
+			ft_printf_fd(2, "minishell: %s: Permission denied\n",
 				tab_cmd->cmd);
 			pntr->code_exit = 126;
 			return (0);
@@ -142,6 +142,20 @@ int	is_exist(t_data *pntr, t_tab_cmd *tab_cmd, int i)
 //the function is responsible for locating an executable binary in the system
 //and determining whether it is available for execution (127 - command not found)
 
+/**
+ * @brief Find the executable for the command
+ * @details
+ * 1. If the command is empty, return 1
+ * 2. If the command is a relative or absolute path, check if it is valid for execution
+ * 3. Search for the command in the PATH environment variable
+ * 4. If the command is found, update the "cmd_table->cmd" field with the full path to the executable
+ * 5. If the command is not found, print an error message and set the exit code to 127
+ * @param pntr The main data struct
+ * @param tab_cmd The command table struct
+ * @return 0 for success, 1 for failure
+ * @changes commented out the printf statement because it does not pass the tester ./tester extras
+ *
+*/
 int find_exec(t_data *pntr, t_tab_cmd *tab_cmd)
 {
 	int i;
@@ -159,7 +173,7 @@ int find_exec(t_data *pntr, t_tab_cmd *tab_cmd)
 	if (tab_cmd->cmd[0] == '.' || ft_strchr(tab_cmd->cmd, '/') != 0)
 		return (check_valid_execution(tab_cmd, pntr));
 	result = path_searching(pntr, tab_cmd, i);
-	printf("Result of path_searching: %d\n", result); // Log result of path_searching
+	// printf("Result of path_searching: %d\n", result); // Log result of path_searching
 	if (result == 0)
 		return (0);
 	else if (result == 2)

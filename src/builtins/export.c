@@ -1,121 +1,170 @@
 #include "minishell.h"
 
-static int	export_valid(char *str)
+void	free_ptr(void *ptr)
 {
-	int i;
-
-	i = 0;
-	if (!ft_isalpha(str[i]) && str[i] != '_')
-		return (FALSE);
-	while (str[i])
+	if (ptr != NULL)
 	{
-		if (str[i] == '=')
-			break ;
-		if (ft_isalnum(str[i]) == FALSE && str[i] != '_')
-			return(FALSE);
-		i++;
+		free(ptr);
+		ptr = NULL;
 	}
-	return (TRUE);
 }
-int	var_in_env(char *str)
+
+static char	**realloc_env_vars(t_data *data, int size)
 {
+	char	**new_env;
 	int		i;
-	int		limit;
-	t_data *data;
 
+	new_env = ft_calloc(size + 1, sizeof * new_env);
+	if (!new_env)
+		return (NULL);
 	i = 0;
-	data = get_data();
-	limit = 0;
-	while (str[limit] && str[limit] != '=')
-		limit++;
-	while(data->env[i])
+	while (data->env[i] && i < size)
 	{
-		if (ft_strncmp(str, data->env[i], limit) == 0)
-		{
-			data->env[i] = str;
-			return (TRUE);
-		}
+		new_env[i] = ft_strdup(data->env[i]);
+		free_ptr(data->env[i]);
 		i++;
 	}
-	return (FALSE);
-}
-
-static void	env_addline(char *str)
-{
-	int i;
-	t_data *data;
-	char **new_env;
-
-	i = 0;
-	data = get_data();
-	if (export_valid(str) == FALSE)
-		my_error(ERR_EXPORT);
-	else if (var_in_env(str) == TRUE)
-		return ;
-	while (data->env[i])
-		i++;
-	new_env = ft_calloc(i + 2, sizeof(char *));
-	i = 0;
-	while (data->env[i])
-	{
-		new_env[i] = data->env[i];
-		i++;
-	}
-	new_env[i] = ft_strdup_fd(str);
 	free(data->env);
-	data->env = new_env;
+	return (new_env);
 }
 
-void	print_export(char **env, int fd)
+int	env_var_count(char **env)
 {
 	int	i;
-	int	j;
-	int	equal;
-	int	index[arr_len(env)];
 
 	i = 0;
-	index_sort(env, arr_len(env), index);
-	printf("(print_export) -> arr_len(env) = %d\n", arr_len(env));
-	while (env && env[i] != NULL)
-	{
-		j = 0;
-		ft_putstr_fd(EXPORT_PREFIX, fd);
-		equal = find_symbol('=', env[index[i]]);
-		while (env[index[i]][j] != '\0')
-		{
-			ft_putchar_fd(env[index[i]][j], fd);
-			if (j > 0 && j == equal)
-				ft_putchar_fd('"', fd);
-			j++;
-		}
-		if (equal)
-			ft_putchar_fd('"', fd);
-		ft_putchar_fd('\n', fd);
+	while (env && env[i])
 		i++;
-	}
+	return (i);
 }
 
-void	built_export(t_data *data, t_tab_cmd *cmd, int fd_out)
+void	free_str_tab(char **tab)
 {
-	int i;
-	i = 0;
-	// printf("(built_export) -> cmd = %s\n", cmd->cmd);
-	// if (data->env)
-	// 	printf("(built_export) -> env exists.\n");
-	// else
-	// 	printf("(built_export) -> env does not exist.\n");
-	// printf("(built_export) -> num_args = %d\n", cmd->num_args);
+	int	i;
 
-	if (cmd->num_args < 1)
+	i = 0;
+	if (tab)
 	{
-		if (data->env != NULL)
-			return (print_export(data->env, fd_out));
-		else
-			my_error("Empty environnement\n");
-	}
-	while (i < cmd->num_args)
-	{
-		env_addline(cmd->args[i]);
-		i++;
+		while (tab[i])
+		{
+			if (tab[i])
+			{
+				free_ptr(tab[i]);
+				tab[i] = NULL;
+			}
+			i++;
+		}
+		free(tab);
+		tab = NULL;
 	}
 }
+
+int	get_env_var_index(char **env, char *var)
+{
+	int		i;
+	char	*tmp;
+
+	tmp = ft_strjoin(var, "=");
+	if (!tmp)
+		return (-1);
+	i = 0;
+	while (env[i])
+	{
+		if (ft_strncmp(tmp, env[i], ft_strlen(tmp)) == 0)
+		{
+			free_ptr(tmp);
+			return (i);
+		}
+		i++;
+	}
+	free_ptr(tmp);
+	return (-1);
+}
+
+bool	set_env_var(t_data *data, char *key, char *value)
+{
+	int		idx;
+	char	*tmp;
+
+	idx = get_env_var_index(data->env, key);
+	if (value == NULL)
+		value = "";
+	tmp = ft_strjoin("=", value);
+	if (!tmp)
+		return (false);
+	if (idx != -1 && data->env[idx])
+	{
+		free_ptr(data->env[idx]);
+		data->env[idx] = ft_strjoin(key, tmp);
+	}
+	else
+	{
+		idx = env_var_count(data->env);
+		data->env = realloc_env_vars(data, idx + 1);
+		if (!data->env)
+			return (false);
+		data->env[idx] = ft_strjoin(key, tmp);
+	}
+	free_ptr(tmp);
+	return (true);
+}
+
+bool	is_valid_env_var_key(char *var)
+{
+	int	i;
+
+	i = 0;
+	if (ft_isalpha(var[i]) == 0 && var[i] != '_')
+		return (false);
+	i++;
+	while (var[i] && var[i] != '=')
+	{
+		if (ft_isalnum(var[i]) == 0 && var[i] != '_')
+			return (false);
+		i++;
+	}
+	return (true);
+}
+
+/**
+ * @brief built_export function is used to set the environment variables
+ * @details
+ * 1. The built_export function is used to set the environment variables.
+ * 2. The function iterates through the command arguments and sets the environment variables.
+ * 3. If the argument is a valid environment variable key, the function sets the environment variable.
+ * 4. If the argument contains a key-value pair, the function splits the key-value pair and sets the environment variable.
+ * 5. The function returns the status of the command execution.
+ * @param data The structure containing the shell data
+ * @param cmd The structure containing the command data
+ * @return int The status of the command execution
+ * @retval 0 If the command is executed successfully
+ * @retval 1 If the command execution fails
+*/
+
+int	built_export(t_data *data, t_tab_cmd *cmd)
+{
+	int		i;
+	int		ret;
+	char	*key;
+	char	*value;
+
+	ret = EXIT_SUCCESS;
+	i = 1;
+	while (cmd->args[i])
+	{
+		if (!is_valid_env_var_key(cmd->args[i]))
+			error_message(" not a valid identifier", EXIT_FAILURE);
+		else if (ft_strchr(cmd->args[i], '='))
+		{
+			char *equal_sign_pos = ft_strchr(cmd->args[i], '=');
+			key = ft_strndup(cmd->args[i], equal_sign_pos - cmd->args[i]);
+			value = ft_strdup(equal_sign_pos + 1);
+			set_env_var(data, key, value);
+			free(key);
+			free(value);
+		}
+		i++;
+	}
+	return (EXIT_SUCCESS);
+}
+

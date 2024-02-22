@@ -16,21 +16,6 @@ void	ft_error(char *str)
 	exit(ERROR);
 }
 
-void	error_message(const char *message, int should_exit)
-{
-	perror(message);
-	if (should_exit)
-		exit(1);
-}
-
-void	my_error(char *str)
-{
-	ft_putstr_fd(ERR_MAIN, STDERR_FILENO);
-	ft_putstr_fd(str, STDERR_FILENO);
-	// free_all(get_data());
-	exit (ERROR);
-}
-
 int error_out(t_data *pnt, char *s, int n)
 {
 	if (n == 1)

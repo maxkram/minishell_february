@@ -54,34 +54,6 @@ void	pntr_cleaning(t_data *pnt)
 	pnt->path = NULL;
 }
 
-//function for safely freeing the memory associated with an array of strings
-
-// void	double_pntr_cleaning(char **pntr)
-// {
-// 	// if (!pntr)
-// 	// 	return ;
-// 	// while (*pntr)
-// 	// {
-// 	// 	free(*pntr);
-// 	// 	*pntr++ = NULL;
-// 	// }
-// 	// free(pntr);
-// 	// pntr = NULL;
-// 	int	i;
-
-// 	i = 0;
-// 	if (pntr)
-// 	{
-// 		while(pntr[i])
-// 		{
-// 			free(pntr[i]);
-// 			pntr[i] = NULL;
-// 			i++;
-// 		}
-// 		free(pntr);
-// 		pntr = NULL;
-// 	}
-// }
 
 //the function is responsible for cleaning up file descriptors and resources associated with output redirection and here documents
 
@@ -154,3 +126,11 @@ void cleanup_commands(t_data *pnt) {
         }
     }
 }
+
+void error_message(char *message, int exit_status)
+{
+	ft_putstr_fd(message, STDERR_FILENO);
+    if (exit_status != 0)
+		exit(exit_status);
+}
+

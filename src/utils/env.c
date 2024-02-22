@@ -61,18 +61,6 @@ int	create_env_var(t_data *pntr, char *key, char *keep)
 	return (0);
 }
 
-//the functionis is designed to increment the value of the 'SHLVL' environment variable
-/**
- * @questions
- * 1. What is the purpose of the function?
- * 2. What is the purpose of the variable_index function?
- * 3. What is the purpose of the create_env_var function?
- * 4. Why do we ft_atoi(pntr->env[shlvl] + 6) instead of ft_atoi(pntr->env[shlvl])?
- * 5. What is the purpose of the increase_shlvl function?
- *
- * @problems
- * 1. On mac I cannot debug the code because after curr = ft_atoi(pntr->env[shlvl] + 6); the code stops working
-*/
 int	increase_shlvl(t_data *pntr)
 {
 	int		shlvl;

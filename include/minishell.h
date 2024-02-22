@@ -111,63 +111,8 @@ typedef struct s_data
 	t_set_mode	mode;
 }	t_data;
 
-/* Garbage collection */
-
-// typedef struct s_mblock
-// {
-// 	void			*address;
-// 	struct s_mblock	*next_mb;
-// }	t_mblock;
-
-// t_mblock	*garbage_collector(void)
-// {
-// 	static t_mblock	head = {NULL, NULL};
-// 	return (&head);
-// }
-
-
-
-// typedef	struct	s_redir
-// {
-// 	int		i;
-// 	char	*name;							//legacy code
-// 	char	*value;
-// }	t_redir;
-
-// typedef struct	s_copy
-// {
-// 		char	*wc;
-// 		char	**args;
-// 		char	*cmd;
-// 		int		i;							//legacy code
-// 		int		num;
-// 		t_redir	redir;
-// }	t_copy;
-
-// /**
-//  * NOTE: Multiple cmds when pipe
-// *@param	infile path to infile
-// *@param	outfile path to outfile
-// *@param	first_cmd first cmd in chained lst.
-// */
-// typedef struct cmd_table
-// {
-// 	char	*infile;							//legacy code
-// 	char	*outfile;
-// 	t_cmd	*first_cmd;
-// }			t_table;
-
-//
-//==================[utils.c]===================//
-t_data	*get_data(void);
-void	ft_error(char *str);
-void	my_error(char *str);
-int 	error_out(t_data *pnt, char *s, int n);
-void	safe_free(void **ptr);
-void	error_in_syntax(int type, t_data *pntr);
-//
 //==================[t_utils.c]===================//
-void	free_all(t_data *data);
+
 //
 //==================[prompt.c]===================//
 void	prompt_create(t_data *data);
@@ -204,12 +149,12 @@ void	built_unset(t_data *pnt, t_tab_cmd *tab_cmd);
 //==================[b_env.c]===================//
 void	index_sort(char **arr, int str_count, int *index);
 // void	print_env(char **env, int fd);
-void	built_env(t_data *data);
+int		built_env(t_data *data);
 //
 //==================[b_export.c]===================//
 int		var_in_env(char *str);
 void	print_export(char **env, int fd);
-void	built_export(t_data *data, t_tab_cmd *cmd, int fd_out);
+int		built_export(t_data *data, t_tab_cmd *cmd);
 //
 //==================[parser.c]===================//
 int		parser(t_data *pointer);
@@ -269,6 +214,7 @@ int		increase_shlvl(t_data *pntr);
 int		create_env_var(t_data *pntr, char *key, char *keep);
 
 
+
 // Utilities
 void	cmdt_cleaning(t_data *pntr);
 void	pntr_cleaning(t_data *pnt);
@@ -277,6 +223,16 @@ void	total_clean(t_data *pntr);
 int		clean_tokens(t_token *tokens, int max, t_data *pnt);
 void 	cleanup_tokens(t_data *data);
 void	cleanup_commands(t_data *pnt);
+void	error_message(char *message, int exit_status);
+
+//
+t_data	*get_data(void);
+void	ft_error(char *str);
+void	my_error(char *str);
+int 	error_out(t_data *pnt, char *s, int n);
+void	safe_free(void **ptr);
+void	error_in_syntax(int type, t_data *pntr);
+void	free_all(t_data *data);
 
 /* Garbage collector */
 // void	gc_malloc_protection(void);

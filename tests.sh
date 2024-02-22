@@ -1,33 +1,24 @@
 #!/bin/bash
 
-# Command to test
-COMMAND="echo Hello World"
+PROGRAM="./minishell"
+INPUT_PARAMS=("ls" "echo Hello" "pwd")
 
-# Expected output lines (adjust according to your shell's behavior and output format)
-EXPECTED_OUTPUT_LINES=(
-    "minishell\$ $COMMAND"
-    "Hello World"
-    "minishell\$ exit"
-)
-
-# Function to join array elements into a string
-join_by() { local IFS="$1"; shift; echo "$*"; }
-
-# Expected output as a single string
-EXPECTED_OUTPUT=$(join_by $'\n' "${EXPECTED_OUTPUT_LINES[@]}")
-
-# Execute the command in minishell and capture the output
-ACTUAL_OUTPUT=$(printf "%s\nexit\n" "$COMMAND" | ./minishell)
-
-# Compare actual output to expected output
-if [ "$ACTUAL_OUTPUT" == "$EXPECTED_OUTPUT" ]; then
-    echo "Test passed!"
-else
-    echo "Test failed."
-    echo "----------------"
-    echo "Expected output:"
-    echo "$EXPECTED_OUTPUT"
-    echo "----------------"
-    echo "Actual output:"
-    echo "$ACTUAL_OUTPUT"
-fi
+for PARAM in "${INPUT_PARAMS[@]}"; do
+    echo "Testing with input: $PARAM"
+    # Sanitize PARAM for filename by replacing spaces with underscores
+    SAFE_PARAM=$(echo "$PARAM" | sed 's/ /_/g')
+    # Run valgrind, redirecting output to a file with the sanitized PARAM in the filename
+    valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes $PROGRAM <<EOF > "/tmp/valgrind_output_${SAFE_PARAM}.txt" 2>&1
+$PARAM
+exit
+EOF
+    # Simplified check for memory leaks
+    if grep -q "definitely lost: 0 bytes in 0 blocks" "/tmp/valgrind_output_${SAFE_PARAM}.txt" && \
+       grep -q "indirectly lost: 0 bytes in 0 blocks" "/tmp/valgrind_output_${SAFE_PARAM}.txt" && \
+       grep -q "possibly lost: 0 bytes in 0 blocks" "/tmp/valgrind_output_${SAFE_PARAM}.txt"; then
+        echo "No memory leaks for input: $PARAM"
+    else
+        echo "Memory leaks detected for input: $PARAM"
+    fi
+    echo "--------------------------------"
+done
