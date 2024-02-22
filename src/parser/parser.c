@@ -1,7 +1,7 @@
 #include "../include/minishell.h"
 #include "../lib/libft/libft.h"
 
-//the counting_arguments function iterates through a range of tokens, counting the number of arguments in a command. It considers the position of the token in the command and the validity of the token type to determine whether it should be counted as an argument. The count is then returned as the result of the function.
+//the func counts nums of args till "|"
 
 int	counting_arguments(t_data *pnt, int i)
 {
@@ -10,15 +10,15 @@ int	counting_arguments(t_data *pnt, int i)
 	count = 0;
 	while (i < pnt->count_token && pnt->tokens[i].type != PIPE)
 	{
-		if (check_arguments(pnt->tokens[i].type) && (i == 0
-				|| check_if_redirection(pnt->tokens[i - 1].type)))
+		if ((i == 0 || check_if_redirection(pnt->tokens[i - 1].type))
+				&& check_arguments(pnt->tokens[i].type))
 			count++;
 		i++;
 	}
 	return (count);
 }
 
-//the test_multiline function checks for the presence of certain redirection types (REDIRECT_MULTILINE and REDIRECT_IN) in a command and adjusts the no_space attribute accordingly for the first matching redirection. The loop iterates in reverse order through the redirections, and the function breaks out of the loop after processing the first matching redirection.
+//the func verify if the last redirection in the command line was a heredoc or input redirection
 
 void	test_multiline(t_data *pnt, int j)
 {

@@ -73,17 +73,13 @@ int	fill_redirection(t_data *pnt, char const *str)
 	if (*str == '<')
 	{
 		pnt->tokens[pnt->count_token - 1].type = REDIRECT_IN;
-		// Check if the next character is also '<'
 		if (*(str + 1) == '<' && ret++)
-			// If yes, set the token type to REDIRECT_MULTILINE and increment ret
 			pnt->tokens[pnt->count_token - 1].type = REDIRECT_MULTILINE;
 	}
 	else if (*str == '>')
 	{
 		pnt->tokens[pnt->count_token - 1].type = REDIRECT_OUT;
-		// Check if the next character is also '>'
 		if (*(str + 1) == '>' && ret++)
-			// If yes, set the token type to REDIRECT_APPEND and increment ret
 			pnt->tokens[pnt->count_token - 1].type = REDIRECT_APPEND;
 	}
 	return (ret);
@@ -93,35 +89,26 @@ int	fill_redirection(t_data *pnt, char const *str)
 
 int	filling_with_tokens(t_data *pnt, int *i, int j)
 {
-    // Check if the current token count has reached the maximum, and reallocate if necessary
 	if (pnt->count_token == pnt->max_token)
 		if (reallocate_tokens_if_max(pnt, pnt->max_token) == 1)
 			return (1);
-	// Check the current character and fill tokens accordingly
 	if (pnt->input[*i] == '|')
-		// If the current character is '|', set the token type to PIPE
 		pnt->tokens[++pnt->count_token - 1].type = PIPE;
 	else if (pnt->input[*i] == '>' || pnt->input[*i] == '<')
-		// If the current character is '>' or '<', handle redirection
 		*i += fill_redirection(pnt, &pnt->input[*i]) - 1;
 	else if (pnt->input[*i] == '\'' || pnt->input[*i] == '\"')
 	{
-		// If the current character is a quote, handle filling quotes
 		j = filling_quotes(pnt, &pnt->input[*i], pnt->input[*i]) - 1;
 		if (j == -2)
-			// Check for error during filling quotes
 			return (1);
 		if (j == -1)
-			// Check for syntax error during filling quotes
 			return (error_in_syntax(pnt->input[*i], pnt), 1);
 		*i += j;
 	}
 	else if (pnt->input[*i] != ' ' && pnt->input[*i] != '\t')
 	{
-		// If the current character is not a space or tab, handle filling a word
 		j = word_filling(pnt, &pnt->input[*i]) - 1;
 		if (j == -1)
-			// Check for error during filling a word
 			return (error_out(pnt, "ft_calloc", 1));
 		*i += j;
 	}
