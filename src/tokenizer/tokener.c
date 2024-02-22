@@ -4,26 +4,26 @@
 
 int	check_syntax_redirection(t_data *pnt, int i)
 {
-	// if ((check_if_redirection(pnt->tokens[i + 1].type) == 0)
-	// 	&& ((pnt->tokens[i].type == REDIRECT_OUT)
-	// 	|| (pnt->tokens[i].type == REDIRECT_IN)
-	// 	|| (pnt->tokens[i].type == REDIRECT_APPEND
-	// 	|| pnt->tokens[i].type == REDIRECT_MULTILINE)))
-	// 	return (error_in_syntax(pnt->tokens[i + 1].type, pnt), 1);
-	// return (0);
-	if (pnt->tokens[i].type == REDIRECT_APPEND
-		&& (check_if_redirection(pnt->tokens[i + 1].type) == 0))
-		return (error_in_syntax(pnt->tokens[i + 1].type, pnt), 1);
-	else if (pnt->tokens[i].type == REDIRECT_MULTILINE
-		&& (check_if_redirection(pnt->tokens[i + 1].type) == 0))
-		return (error_in_syntax(pnt->tokens[i + 1].type, pnt), 1);
-	else if (pnt->tokens[i].type == REDIRECT_IN
-		&& (check_if_redirection(pnt->tokens[i + 1].type) == 0))
-		return (error_in_syntax(pnt->tokens[i + 1].type, pnt), 1);
-	else if (pnt->tokens[i].type == REDIRECT_OUT
-		&& (check_if_redirection(pnt->tokens[i + 1].type) == 0))
+	if ((check_if_redirection(pnt->tokens[i + 1].type) == 0)
+		&& ((pnt->tokens[i].type == REDIRECT_OUT)
+		|| (pnt->tokens[i].type == REDIRECT_IN)
+		|| (pnt->tokens[i].type == REDIRECT_APPEND
+		|| pnt->tokens[i].type == REDIRECT_MULTILINE)))
 		return (error_in_syntax(pnt->tokens[i + 1].type, pnt), 1);
 	return (0);
+	// if (pnt->tokens[i].type == REDIRECT_APPEND
+	// 	&& (check_if_redirection(pnt->tokens[i + 1].type) == 0))
+	// 	return (error_in_syntax(pnt->tokens[i + 1].type, pnt), 1);
+	// else if (pnt->tokens[i].type == REDIRECT_MULTILINE
+	// 	&& (check_if_redirection(pnt->tokens[i + 1].type) == 0))
+	// 	return (error_in_syntax(pnt->tokens[i + 1].type, pnt), 1);
+	// else if (pnt->tokens[i].type == REDIRECT_IN
+	// 	&& (check_if_redirection(pnt->tokens[i + 1].type) == 0))
+	// 	return (error_in_syntax(pnt->tokens[i + 1].type, pnt), 1);
+	// else if (pnt->tokens[i].type == REDIRECT_OUT
+	// 	&& (check_if_redirection(pnt->tokens[i + 1].type) == 0))
+	// 	return (error_in_syntax(pnt->tokens[i + 1].type, pnt), 1);
+	// return (0);
 }
 
 //this function performs syntax checking on command tokens, specifically checking for errors related to pipes and redirections. If it encounters a syntax error, it calls error_in_syntax and returns 1; otherwise, it returns 0.
@@ -36,19 +36,21 @@ int	syntax_checking(t_data *pnt)
 	while (++i < pnt->count_token)
 	{
 		// Check for PIPE at the end of the command
-		if (pnt->tokens[i].type == PIPE && i == pnt->count_token - 1)
+		if (pnt->tokens[i].type == PIPE && ((i == pnt->count_token - 1)
+				|| (i == 0) || (pnt->tokens[i + 1].type == PIPE)
+				|| (check_if_redirection(pnt->tokens[i - 1].type) == 0)))
 			return (error_in_syntax(pnt->tokens[i].type, pnt), 1);
 		// Check for PIPE at the beginning of the command
-		else if (pnt->tokens[i].type == PIPE && i == 0)
-			return (error_in_syntax(pnt->tokens[i].type, pnt), 1);
-		// Check for consecutive PIPE symbol
-		else if (pnt->tokens[i].type == PIPE
-			&& pnt->tokens[i + 1].type == PIPE)
-			return (error_in_syntax(pnt->tokens[i].type, pnt), 1);
-		// Check for PIPE without a preceding redirection
-		else if (pnt->tokens[i].type == PIPE
-			&& (check_if_redirection(pnt->tokens[i - 1].type) == 0))
-			return (error_in_syntax(pnt->tokens[i].type, pnt), 1);
+		// else if (pnt->tokens[i].type == PIPE && i == 0)
+		// 	return (error_in_syntax(pnt->tokens[i].type, pnt), 1);
+		// // Check for consecutive PIPE symbol
+		// else if (pnt->tokens[i].type == PIPE
+		// 	&& pnt->tokens[i + 1].type == PIPE)
+		// 	return (error_in_syntax(pnt->tokens[i].type, pnt), 1);
+		// // Check for PIPE without a preceding redirection
+		// else if (pnt->tokens[i].type == PIPE
+		// 	&& (check_if_redirection(pnt->tokens[i - 1].type) == 0))
+		// 	return (error_in_syntax(pnt->tokens[i].type, pnt), 1);
 		// Check for redirection at the end of the command
 		else if (check_if_redirection(pnt->tokens[i].type) == 0
 			&& i == pnt->count_token - 1)
