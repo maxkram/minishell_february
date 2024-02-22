@@ -14,6 +14,8 @@ test.c
 -/libft_backup/
 .editorconfig
 test.c
+-/libft_backup/
+./minishell_tester
 
 # Prerequisites
 *.d
@@ -67,3 +69,4 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+minishell_tester
