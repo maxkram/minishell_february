@@ -1,6 +1,16 @@
-#include "minishell.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   multiline.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/22 18:28:36 by hezhukov          #+#    #+#             */
+/*   Updated: 2024/02/22 19:13:42 by hezhukov         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-//the name_create_multiline function generates a unique file name for a temporary file used in the context of a multiline input (here document) by combining a constant string with the string representation of an integer
+#include "minishell.h"
 
 static char	*name_create_multiline(int i)
 {
@@ -14,8 +24,6 @@ static char	*name_create_multiline(int i)
 	free(with_itoa);
 	return (file_name);
 }
-
-//the using_dollar function handles the expansion of variables prefixed with a dollar sign ('$') in a given string. It calculates the length of the variable name, extracts the variable name, retrieves its value, and sets the result accordingly. If the expansion is within an arithmetic expression, it returns an empty string for length 1
 
 int	using_dollar(char *letter, char **result, t_data *pnt, int e)
 {
@@ -39,8 +47,6 @@ int	using_dollar(char *letter, char **result, t_data *pnt, int e)
 	free(buffer);
 	return (length);
 }
-
-//the broaden_local_token function iterates through each character in the input string, expanding local variables starting with a dollar sign ('$'). It uses the using_dollar function for variable expansion and handles character concatenation. The result is the expanded string with resolved local variables
 
 static char	*broaden_local_token(t_data *pnt, char *letter)
 {
@@ -71,11 +77,9 @@ static char	*broaden_local_token(t_data *pnt, char *letter)
 	return (free(buffer_value), result);
 }
 
-//function provides a mechanism for the user to input multiple lines until a specified delimiter is encountered. Each line is processed using broaden_local_token and written to the specified file descriptor. The function takes care of handling user interrupts and memory allocation errors.
-
 static int	input_to_file_descriptor(t_data *pnt, int fd, char *delimiter)
 {
-	char 			*string;
+	char			*string;
 	static int		i;
 
 	i = 0;
@@ -85,8 +89,7 @@ static int	input_to_file_descriptor(t_data *pnt, int fd, char *delimiter)
 		string = readline("> ");
 		if (global_signal == 1)
 			return (free(string), 1);
-		if (string == NULL  && ft_printf_fd(STDERR_FILENO, "minishell: warning: \
-here-document at line %d delimited by end-of-file(wanted `%s')\n", i, delimiter))
+		if (string == NULL && ft_printf_fd(STDERR_FILENO, "minishell: warning: here-document at line %d delimited by end-of-file(wanted `%s')\n", i, delimiter))
 			break ;
 		if (ft_strcmp(string, delimiter) == 0)
 			break ;
@@ -102,8 +105,6 @@ here-document at line %d delimited by end-of-file(wanted `%s')\n", i, delimiter)
 		free(string);
 	return (0);
 }
-
-//function provides a way to handle here-documents by creating temporary files, capturing user input, and then processing the input based on the redirection specifications. The temporary file is deleted after use unless additional redirection is specified (tab_cmd->redirections[i].no_space == 3)
 
 int	create_heredoc(t_data *pnt, t_tab_cmd *tab_cmd, int i)
 {

@@ -97,3 +97,15 @@ Input redirection can be combined with other shell features to enhance its utili
    - This reads lines from `inputFile` and processes them one at a time with `command`.
 
 These combinations showcase the flexibility of shell redirection mechanisms, allowing for complex input and output flows in shell commands and scripts.
+
+[ ] norminette
+[ ] refactor execution
+[ ] fix heredoc
+[ ] export does not print env
+[ ] fix export GHOST=123 | env | grep GHOST
+[ ] replace ft_printf_fd
+
+
+# concerns
+[ ] in extender different path to include #include "../include/minishell.h"
+[ ] inside signals one more global variable int global_signal = 0;

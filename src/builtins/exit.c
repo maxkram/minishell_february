@@ -5,15 +5,12 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/29 10:58:13 by ycyr-roy          #+#    #+#             */
-/*   Updated: 2024/02/20 11:04:59 by hezhukov         ###   ########.fr       */
+/*   Created: 2024/02/22 18:25:17 by hezhukov          #+#    #+#             */
+/*   Updated: 2024/02/22 18:41:17 by hezhukov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-//function checks if a given string is a valid argument for numeric operations.
-//It check that the string represents a valid number by examining its chars.
 
 int	ok_for_numeric(char *s)
 {
@@ -30,15 +27,10 @@ int	ok_for_numeric(char *s)
 	return (0);
 }
 
-//function is designed to convert a string representation of a number to a
-//long int, considering leading whitespace and sign, and it includes checks
-//for overflow conditions.
-
 long int	to_long_int(char *s)
 {
 	long int	n;
 	long int	sgn;
-	// int			dgt;
 
 	n = 0;
 	sgn = 1;
@@ -51,11 +43,6 @@ long int	to_long_int(char *s)
 			sgn *= -1;
 	while (*s)
 	{
-		// dgt = *s - '0';
-		// if ((n > LONG_MAX && sgn == 1) || (sgn == -1 && n > LONG_MAX))
-		// 	return (9999999999);
-		// n = n * 10 + dgt;
-		// s++;
 		if (*s >= '0' && *s <= '9')
 			n = n * 10 + *s - '0';
 		else
@@ -67,15 +54,15 @@ long int	to_long_int(char *s)
 	return (sgn * n);
 }
 
-//the function handles the exit command, allowing the user to exit the program
-//with a specified exit code
-
+/**
+ * @changes
+ * - deleted
+ * 	if (cnt < 2)
+		ft_putstr_fd("exit\n", 2);
+*/
 void	built_exit_annex(t_data *pntr, t_tab_cmd *tab_cmd,
 	long int exit_code, int cnt)
 {
-	if (cnt < 2)
-		// ft_putstr_fd("exit\n", 2); @changes commented for tester
-		// ft_printf_fd(2, "exit\n");
 	if ((!tab_cmd || tab_cmd->num_args == 1) && cnt < 2)
 	{
 		total_clean(pntr);
@@ -104,7 +91,7 @@ void	built_exit_annex(t_data *pntr, t_tab_cmd *tab_cmd,
 //the function handles the "exit" command in a shell program
 /**
  * @brief The built_exit function handles the built-in 'exit' command.
- * @details The function handles the exit command, allowing the user to exit the program
+ * @details The function handles the exit command
  * @changes
  * - I commented the ft_putstr_fd("exit\n", 2) to pass the test.
  * - I commented the ft_printf_fd(2, "exit\n") to pass the test.
@@ -117,8 +104,6 @@ void	built_exit(t_data *pntr, t_tab_cmd *tab_cmd)
 	cnt = pntr->cmdt_count;
 	if (!tab_cmd)
 	{
-		// ft_putstr_fd("exit\n", 2); @changes commented for tester
-		// ft_printf_fd(2, "exit\n");
 		total_clean(pntr);
 		exit(pntr->code_exit);
 	}

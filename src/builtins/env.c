@@ -1,52 +1,69 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   env.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/22 18:24:22 by hezhukov          #+#    #+#             */
+/*   Updated: 2024/02/22 18:33:29 by hezhukov         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-void	index_sort(char **arr, int str_count, int *index)
+static void	init_index_array(int *index, int size)
 {
-	int		i;
-	int		swapped;
-	int		tmp;
+	int	i;
 
-	i = -1;
-	swapped = 1;
-	while (++i < str_count)
-        index[i] = i;
 	i = 0;
-	while (arr[index[i]] && swapped)
+	while (i < size)
 	{
-		swapped = 0;
-		i = 0;
-		while (i < str_count - 1)
-		{
-			// printf("i is %d\nstr is %s\n", i, arr[index[i]]);
-			if (ft_strncmp(arr[index[i]], arr[index[i + 1]], ft_strlen(arr[index[i]])) > 0)
-			{
-				tmp = index[i];
-				index[i] = index[i + 1];
-				index[i + 1] = tmp;
-				swapped = 1;
-			}
-			i++;
-		}
+		index[i] = i;
+		i++;
 	}
 }
 
-// void	print_env(char **env, int fd)
-// {
-// 	int	i;
+static void	swap_elements(int *a, int *b)
+{
+	int	tmp;
 
-// 	i = 0;
+	tmp = *a;
+	*a = *b;
+	*b = tmp;
+}
 
-// 	while (env[i] != NULL)
-// 	{
-// 		if (find_symbol('=', env[i]))
-// 		{
-// 			ft_putstr_fd(env[i], fd);
-// 			if (write(fd, "\n", 1) == ERROR)
-// 				ft_error(ERR_WRITE);
-// 		}
-// 		i++;
-// 	}
-// }
+static int	compare_and_swap(char **arr, int *index, int size)
+{
+	int	i;
+	int	swapped;
+
+	swapped = 0;
+	i = 0;
+	while (i < size - 1)
+	{
+		if (ft_strncmp(arr[index[i]], arr[index[i + 1]], \
+			ft_strlen(arr[index[i]])) > 0)
+		{
+			swap_elements(&index[i], &index[i + 1]);
+			swapped = 1;
+		}
+		i++;
+	}
+	return (swapped);
+}
+
+void	index_sort(char **arr, int str_count, int *index)
+{
+	int	swapped;
+
+	init_index_array(index, str_count);
+	swapped = 1;
+	while (swapped)
+	{
+		swapped = compare_and_swap(arr, index, str_count);
+	}
+}
 
 int	built_env(t_data *data)
 {
@@ -56,6 +73,5 @@ int	built_env(t_data *data)
 	data->code_exit = 0;
 	while (data->env[++i])
 		ft_putendl_fd(data->env[i], STDOUT_FILENO);
-	// print_env(data->env, fd_out);
 	return (0);
 }

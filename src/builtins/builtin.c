@@ -1,8 +1,19 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   builtin.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/22 18:23:36 by hezhukov          #+#    #+#             */
+/*   Updated: 2024/02/22 18:23:38 by hezhukov         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-//recreate_file_descriptors is responsible for resetting file descriptors, closing unnecessary file descriptors, and performing cleanup tasks after executing a command in the shell.
-
-void	recreate_file_descriptors(t_data *pntr, t_tab_cmd *cmd_tab, int i, int *pipe_fd)
+void	recreate_file_descriptors(t_data *pntr, \
+	t_tab_cmd *cmd_tab, int i, int *pipe_fd)
 {
 	if (cmd_tab->out_fd != -1)
 		close(cmd_tab->out_fd);
@@ -23,8 +34,6 @@ void	recreate_file_descriptors(t_data *pntr, t_tab_cmd *cmd_tab, int i, int *pip
 	}
 }
 
-//create_builtin_fd prepares the file descriptors for input and output redirection and handles pipes for a built-in command before its execution.
-
 void	create_builtin_fd(t_tab_cmd *cmd_tab, int *pipe_fd)
 {
 	if (cmd_tab->in_fd != -1)
@@ -37,10 +46,6 @@ void	create_builtin_fd(t_tab_cmd *cmd_tab, int *pipe_fd)
 		dup2(cmd_tab->out_fd, STDOUT_FILENO);
 	close(pipe_fd[1]);
 }
-
-//function checks which built-in command is requested in the current cmd_table and calls the
-//corresponding function to handle the execution of that built-in command. After executing the
-//built-in command, it calls restore_fds to restore file descriptors to their original state
 
 void	shoot_builtin(t_data *pntr, t_tab_cmd *cmd_tab, int i, int *pipe_fd)
 {
@@ -61,8 +66,6 @@ void	shoot_builtin(t_data *pntr, t_tab_cmd *cmd_tab, int i, int *pipe_fd)
 		built_exit(pntr, cmd_tab);
 	recreate_file_descriptors(pntr, cmd_tab, i, pipe_fd);
 }
-
-//This function, if_builtin, checks if a given command is a built-in command by comparing its name (cmd_tab->cmd) with a list of known built-in command names.
 
 int	if_builtin(t_tab_cmd *tab_cmd)
 {
