@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/22 18:28:43 by hezhukov          #+#    #+#             */
+/*   Updated: 2024/02/22 18:28:44 by hezhukov         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 t_data	*get_data(void)
@@ -12,11 +24,10 @@ void	ft_error(char *str)
 	ft_putstr_fd(ERR_MAIN, STDERR_FILENO);
 	ft_putstr_fd(str, STDERR_FILENO);
 	perror(ERR_EXP);
-	// free_all(get_data());
 	exit(ERROR);
 }
 
-int error_out(t_data *pnt, char *s, int n)
+int	error_out(t_data *pnt, char *s, int n)
 {
 	if (n == 1)
 	{
@@ -26,10 +37,7 @@ int error_out(t_data *pnt, char *s, int n)
 	}
 	return (1);
 }
-/*
-frees the memory of a pointer and sets it to NULL
-(protects against double free)
-*/
+
 void	safe_free(void **ptr)
 {
 	if (ptr && *ptr)
@@ -38,19 +46,6 @@ void	safe_free(void **ptr)
 		*ptr = NULL;
 	}
 }
-
-// is designed to handle syntax errors in the input provided to the shell. It takes a type parameter to determine the specific type of syntax error and prints an appropriate error message along with setting the exit code for the shell.
-// The types and their corresponding messages are as follows:
-
-// 39: Unexpected single quote: prints "''\n"
-// 0: Unexpected newline: prints "newline'\n"
-// 34: Unexpected double quote: prints "\"'\n"
-// 5: Unexpected token for here document (<<): prints "<<'\n"
-// 4: Unexpected token for appending output (>>): prints ">>'\n"
-// 3: Unexpected token for redirecting output (>): prints ">'\n"
-// 2: Unexpected token for redirecting input (<): prints "<'\n"
-// 1: Unexpected token for pipe (|): prints "|'\n"
-
 
 void	error_in_syntax(int type, t_data *pntr)
 {

@@ -27,7 +27,6 @@
 # include <ctype.h>
 # include <stdarg.h>
 
-
 typedef struct s_list
 {
 	void			*content;

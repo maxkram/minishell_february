@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   find_symbol.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ycyr-roy <ycyr-roy@student.42.fr>          +#+  +:+       +#+        */
+/*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/04 13:43:09 by ycyr-roy          #+#    #+#             */
-/*   Updated: 2023/12/04 13:43:18 by ycyr-roy         ###   ########.fr       */
+/*   Updated: 2024/02/22 17:20:00 by hezhukov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	find_symbol(char c, char *str)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	if (!str)

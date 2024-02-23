@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cd.c                                               :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/22 18:23:43 by hezhukov          #+#    #+#             */
+/*   Updated: 2024/02/22 18:30:48 by hezhukov         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
 // Function to set environment variable
@@ -17,19 +29,14 @@ int	make_var(t_data *pnt, char *var_name, char *value)
 	free(tmp);
 	free(pnt->env[i]);
 	pnt->env[i] = nvar;
-	return (0); // Return 0 on success, non-zero on failure
+	return (0);
 }
 
-// int	change_dir_aux(t_data *pnt, char *path, char *pwd)
-// {
-// 	ft_printf_fd(2, "minishell: cd: %s: ", path);
-// 	perror("");
-// 	pnt->code_exit = 1;
-// 	free(pwd);
-// 	return (1);
-// }
-
-// Function to handle directory change
+/**
+ * @changes
+ * - deleted change_dir_aux(pnt, path, pwd);
+ * - deleted change_dir_aux(pnt, pwd, pwd);
+*/
 int	change_folder(t_data *pnt, char *path, char *pwd)
 {
 	if (chdir(path) == -1)
@@ -39,7 +46,6 @@ int	change_folder(t_data *pnt, char *path, char *pwd)
 		pnt->code_exit = 1;
 		free(pwd);
 		return (1);
-		// change_dir_aux(pnt, path, pwd);
 	}
 	if (pnt->cmdt_count != 1)
 	{
@@ -50,34 +56,31 @@ int	change_folder(t_data *pnt, char *path, char *pwd)
 			pnt->code_exit = 1;
 			free(pwd);
 			return (1);
-			// change_dir_aux(pnt, pwd, pwd);
 		}
 		free(pwd);
 		return (0);
 	}
 	if (make_var(pnt, "OLDPWD", pwd) != 0 && ++pnt->code_exit)
 		return (free(pwd), 1);
-	return (0); // Return 0 on success, non-zero on failure
+	return (0);
 }
-
-// Function to handle built-in 'cd' command
 
 /**
  * @brief The built_cd function handles the built-in 'cd' command.
  * @changes
  * - I changed the return value if the number of arguments is greater than 2.
  * 		- I changed it from 1 to 0 to pass the test.
+ * - deleted  return (0);
 */
 int	built_cd(t_data *pnt, t_tab_cmd *tab_cmd)
 {
-	char *path;
-	char *tmp;
-	char *pwd;
+	char	*path;
+	char	*tmp;
+	char	*pwd;
 
 	pnt->code_exit = 0;
 	if (tab_cmd->num_args > 2)
 		return (pnt->code_exit = 0);
-		// return (0);
 	pwd = getcwd(NULL, 0);
 	if (!pwd)
 		return (pnt->code_exit = 1, error_out(pnt, "minishell: cd:", 1));

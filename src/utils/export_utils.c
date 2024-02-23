@@ -1,45 +1,53 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_free.c                                          :+:      :+:    :+:   */
+/*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/10 13:23:33 by ycyr-roy          #+#    #+#             */
-/*   Updated: 2024/02/22 17:19:53 by hezhukov         ###   ########.fr       */
+/*   Created: 2024/02/22 18:42:17 by hezhukov          #+#    #+#             */
+/*   Updated: 2024/02/22 18:45:13 by hezhukov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-void	ft_free(void **ptr)
+void	free_ptr(void *ptr)
 {
-	if (ptr && *ptr)
+	if (ptr != NULL)
 	{
-		*ptr = NULL;
 		free(ptr);
+		ptr = NULL;
 	}
 }
 
-void	*free_null(void *ptr)
-{
-	if (ptr)
-		free(ptr);
-	return (NULL);
-}
-
-void	*arr_free(void **arr)
+void	free_str_tab(char **tab)
 {
 	int	i;
 
 	i = 0;
-	if (!arr)
-		return (NULL);
-	while (arr[i] != NULL)
+	if (tab)
 	{
-		arr[i] = free_null(arr[i]);
-		i++;
+		while (tab[i])
+		{
+			if (tab[i])
+			{
+				free_ptr(tab[i]);
+				tab[i] = NULL;
+			}
+			i++;
+		}
+		free(tab);
+		tab = NULL;
 	}
-	free_null(arr);
-	return (NULL);
+}
+
+int	env_var_count(char **env)
+{
+	int	i;
+
+	i = 0;
+	while (env && env[i])
+		i++;
+	return (i);
 }

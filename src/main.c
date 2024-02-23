@@ -1,10 +1,17 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/22 18:28:49 by hezhukov          #+#    #+#             */
+/*   Updated: 2024/02/22 18:29:20 by hezhukov         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-/**
- * @brief: This function is responsible for extracting and splitting the directories listed in the PATH environment variable
- * @changes:
- * 1. Temporarily changed PATH= to PATH=/home (I need this to test on linux)
-*/
 char	**path_getter(t_data *pnt, int i)
 {
 	char	**result;
@@ -27,18 +34,16 @@ char	**path_getter(t_data *pnt, int i)
 	return (result);
 }
 
-//function in the minishell project of Ecole 42 is responsible for initializing the environment data in the t_data structure. It takes as input the t_data pointer (data) and an array of strings (env) representing the environment variables. (130 == CTRL+C)
-
-void env_init(t_data *data, char **env)
+void	env_init(t_data *data, char **env)
 {
-	int i;
+	int	i;
 
 	i = 0;
-	while(env[i])
+	while (env[i])
 		i++;
 	data->env = ft_calloc(i + 1, sizeof(char *));
 	i = 0;
-	while(env[i])
+	while (env[i])
 	{
 		data->env[i] = ft_strdup_fd(env[i]);
 		i++;
@@ -51,8 +56,8 @@ int	main(int argc, char *argv[], char **env_p)
 
 	(void)argv;
 	(void)argc;
-	// if (argc != 1)
-	// 	return (ft_putstr("Error: too many arguments\n", 2));
+	if (argc != 1)
+		return (ft_putstr("Error: too many arguments\n", 2));
 	init_pntr(&pnt, env_p);
 	while (1)
 	{
@@ -67,7 +72,7 @@ int	main(int argc, char *argv[], char **env_p)
 			add_history(pnt.input);
 		pnt.path = path_getter(&pnt, -1);
 		if (tokener(&pnt) == 0 && extender(&pnt) == 0 && parser(&pnt) == 0)
-			alt_exec_main(&pnt);
+			execution(&pnt);
 		cmdt_cleaning(&pnt);
 		pntr_cleaning(&pnt);
 	}

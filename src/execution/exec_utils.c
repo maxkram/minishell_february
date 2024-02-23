@@ -1,6 +1,16 @@
-#include "minishell.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exec_utils.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/22 18:26:52 by hezhukov          #+#    #+#             */
+/*   Updated: 2024/02/22 18:26:53 by hezhukov         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-//This function, change_fd_input_output, is responsible for updating the input and output file descriptors (in_fd and out_fd) of a command in the t_tab_cmd structure
+#include "minishell.h"
 
 int	change_fd_input_output(t_data *pntr, t_tab_cmd *tab_cmd, int *fd, int i)
 {
@@ -15,11 +25,10 @@ int	change_fd_input_output(t_data *pntr, t_tab_cmd *tab_cmd, int *fd, int i)
 	return (0);
 }
 
-//This function, pipelines_redirect, is responsible for managing file descriptors and closing unnecessary pipes during the execution of a command within a pipeline
-
 int	pipelines_redirect(t_data *pntr, int i, int *pip)
 {
-	if (dup2(pntr->cmdt[i].in_fd, STDIN_FILENO) > -1 && pntr->cmdt[i].in_fd != -1)
+	if (dup2(pntr->cmdt[i].in_fd, STDIN_FILENO) > -1 && \
+		pntr->cmdt[i].in_fd != -1)
 		close(pntr->cmdt[i].in_fd);
 	if (pntr->cmdt[i].out_fd != -1)
 		dup2(pntr->cmdt[i].out_fd, STDOUT_FILENO);
@@ -43,8 +52,6 @@ int	pipelines_redirect(t_data *pntr, int i, int *pip)
 	}
 	return (1);
 }
-
-//function finds the executable path of a command by looking in the current directory. If successful, it updates the command with the full path, and if not, it returns an error code. The function also handles memory allocation errors gracefully
 
 int	find_path(t_data *pntr, t_tab_cmd *tab_cmd)
 {

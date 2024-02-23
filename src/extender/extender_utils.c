@@ -1,8 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   extender_utils.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/22 18:27:05 by hezhukov          #+#    #+#             */
+/*   Updated: 2024/02/22 18:47:57 by hezhukov         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/minishell.h"
 
-//function, length_of_variable, calculates the length of a variable name starting from a given position in the input string n. It assumes that the variable name starts at index 1 in the string 'n' (i.e., after the initial '$' character). The function stops counting characters when it encounters a character that is not alphanumeric or an underscore ('_').
-
-int length_of_variable(const char *n)
+int	length_of_variable(const char *n)
 {
 	int	i;
 
@@ -14,22 +24,18 @@ int length_of_variable(const char *n)
 	return (i);
 }
 
-//function if_has checks if a given character 'c' is present in the string n. If the character is found, the function returns 1; otherwise, it returns 0. Works like strchr
-
-int if_has(const char *n, char c)
+int	if_has(const char *n, char c)
 {
 	if (!n)
 		return (0);
 	while (*n)
-	{   
+	{
 		if (*n == c)
 			return (1);
 		n++;
 	}
 	return (0);
 }
-
-//function, substring_concatenation, searches for the first occurrence of the character $ in the provided string (string). When it finds the $ character or reaches the end of the string, it extracts a substring from the beginning of the string up to the position of the first $. The extracted substring is then stored in the pointer pntr. The function returns the index of the first $ character in the string.
 
 int	substring_concatenation(char *string, char **pnt)
 {
@@ -40,4 +46,27 @@ int	substring_concatenation(char *string, char **pnt)
 		i++;
 	*pnt = ft_substr(string, 0, (size_t)i);
 	return (i);
+}
+
+int	check_exception(t_data *pnt, int i)
+{
+	return (pnt->tokens[i].type == WORD
+		&& i + 1 < pnt->count_token
+		&& pnt->tokens[i + 1].type != WORD
+		&& pnt-> tokens[i].no_space
+		&& ft_strlen(pnt->tokens[i].value) == 1);
+}
+
+int	variable_index(char **env, char *n)
+{
+	int	i;
+
+	i = 0;
+	while (env[i])
+	{
+		if (substring_beginning(env[i], n) && env[i][ft_strlen(n)] == '=')
+			return (i);
+		i++;
+	}
+	return (-1);
 }

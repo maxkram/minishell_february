@@ -1,14 +1,24 @@
-#include "../include/minishell.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exit_utils.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/22 18:28:21 by hezhukov          #+#    #+#             */
+/*   Updated: 2024/02/22 18:28:24 by hezhukov         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-//the function free the memory allocated for a dynamic array of strings (char **p)
+#include "../include/minishell.h"
 
 void	free_string_array(char **pnt)
 {
 	int	i;
-	
+
 	i = 0;
 	if (pnt)
-	{	
+	{
 		while (pnt[i])
 		{
 			free(pnt[i]);
@@ -20,7 +30,6 @@ void	free_string_array(char **pnt)
 	}
 }
 
-//function is used to exit the shell program with a specified exit code
 void	fd_exit(t_data *pntr, int code_exit)
 {
 	if (code_exit == 1)

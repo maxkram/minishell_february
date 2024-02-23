@@ -1,136 +1,68 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cleaning.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/22 18:28:06 by hezhukov          #+#    #+#             */
+/*   Updated: 2024/02/22 19:13:54 by hezhukov         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "minishell.h"
 
-//cleans memory allocated by the command table (pntr->cmdt)
-void	cmdt_cleaning(t_data *pntr)
-{
-	if (pntr->cmdt)
-	{
-		while (0 < pntr->cmdt_count--)
-		{
-			if (pntr->cmdt[pntr->cmdt_count].args)
-				while (0 < pntr->cmdt[pntr->cmdt_count].num_args--)
-					free(pntr->cmdt[pntr->cmdt_count].args[pntr->cmdt[pntr->cmdt_count].num_args]);
-			if (pntr->cmdt[pntr->cmdt_count].args)
-				free(pntr->cmdt[pntr->cmdt_count].args);
-			pntr->cmdt[pntr->cmdt_count].args = NULL;
-			if (pntr->cmdt[pntr->cmdt_count].redirections)
-				while (0 < pntr->cmdt[pntr->cmdt_count].num_redirections--)
-					free(pntr->cmdt[pntr->cmdt_count].redirections[pntr->cmdt[pntr->cmdt_count].num_redirections].value);
-			if (pntr->cmdt[pntr->cmdt_count].redirections)
-				free(pntr->cmdt[pntr->cmdt_count].redirections);
-			pntr->cmdt[pntr->cmdt_count].redirections = NULL;
-			if (pntr->cmdt[pntr->cmdt_count].cmd)
-				free(pntr->cmdt[pntr->cmdt_count].cmd);
-			pntr->cmdt[pntr->cmdt_count].cmd = NULL;
-		}
-		free(pntr->cmdt);
-		pntr->cmdt = NULL;
-	}
-}
-
-//the function is responsible for freeing memory allocated for various components of the t_data structure
-void	pntr_cleaning(t_data *pnt)
+void	cleanup_tokens(t_data *data)
 {
 	int	i;
 
-	if (pnt->tokens)
+	if (!data->tokens)
+		return ;
+	i = -1;
+	while (++i < data->count_token)
 	{
-		while (pnt->count_token > 0)
-			free(pnt->tokens[--pnt->count_token].value);
-		free(pnt->tokens);
-		pnt->tokens = NULL;
-	}
-	cmdt_cleaning(pnt);
-	if (pnt->input)
-		free(pnt->input);
-	pnt->input = NULL;
-	i = 0;
-	if (pnt->path)
-	{
-		while (pnt->path[i])
-			free(pnt->path[i++]);
-		free(pnt->path);
-	}
-	pnt->path = NULL;
-}
-
-
-//the function is responsible for cleaning up file descriptors and resources associated with output redirection and here documents
-
-void	fd_cleaning(t_data *pntr, t_tab_cmd *tab_cmd, int i)
-{
-	if (tab_cmd->out_fd != -1)
-		close(tab_cmd->out_fd);
-	else if (tab_cmd->in_fd != -1)
-		close(tab_cmd->in_fd);
-	if (pntr->cmdt[i].last_multiline)
-	{
-		unlink(pntr->cmdt[i].last_multiline);
-		free(pntr->cmdt[i].last_multiline);
-	}
-}
-
-//the function designed to release resources and perform cleanup tasks before the program exits. It frees memory, closes file descriptors, and delegates additional cleanup to the clean_stuff function.
-
-void	total_clean(t_data *pntr)
-{
-	clean_double_pointer(pntr->env);
-	pntr_cleaning(pntr);
-	close(pntr->first_stdout);
-	close(pntr->first_stdin);
-}
-
-int	clean_tokens(t_token *tokens, int max, t_data *pnt)
-{
-	while (pnt->count_token > ++max)
-	{
-		if (tokens[max].value)
+		if (data->tokens[i].value)
 		{
-			free(tokens[max].value);
-			tokens[max].value = NULL;
+			free(data->tokens[i].value);
+			data->tokens[i].value = NULL;
 		}
 	}
-	free(tokens);
-	tokens = NULL;
-	return (1);
-}
-void cleanup_tokens(t_data *data) {
-    if (data->tokens) {
-        for (int i = 0; i < data->count_token; i++) {
-            if (data->tokens[i].value) {
-                free(data->tokens[i].value); // Free the value of each token
-                data->tokens[i].value = NULL; // Avoid dangling pointer by setting to NULL
-            }
-        }
-        free(data->tokens); // Free the entire tokens array
-        data->tokens = NULL; // Avoid dangling pointer by setting to NULL
-        data->count_token = 0; // Reset token count to 0
-    }
+	free(data->tokens);
+	data->tokens = NULL;
+	data->count_token = 0;
 }
 
-void cleanup_commands(t_data *pnt) {
-    for (int j = 0; j < pnt->cmdt_count; j++) {
-        // Free the command
-        if (pnt->cmdt[j].cmd != NULL) {
-            free(pnt->cmdt[j].cmd);
-            pnt->cmdt[j].cmd = NULL; // Avoid dangling pointer
-        }
+void	cleanup_commands(t_data *data)
+{
+	int	i;
+	int	j;
 
-        // Free each argument
-        if (pnt->cmdt[j].args != NULL) {
-            for (int k = 0; pnt->cmdt[j].args[k] != NULL; k++) {
-                free(pnt->cmdt[j].args[k]);
-            }
-            free(pnt->cmdt[j].args); // Free the array itself if dynamically allocated
-            pnt->cmdt[j].args = NULL; // Avoid dangling pointer
-        }
-    }
+	i = 0;
+	while (i < data->cmdt_count)
+	{
+		if (data->cmdt[i].cmd != NULL)
+		{
+			free(data->cmdt[i].cmd);
+			data->cmdt[i].cmd = NULL;
+		}
+		if (data->cmdt[i].args != NULL)
+		{
+			j = 0;
+			while (data->cmdt[i].args[j] != NULL)
+			{
+				free(data->cmdt[i].args[j]);
+				j++;
+			}
+			free(data->cmdt[i].args);
+			data->cmdt[i].args = NULL;
+		}
+		i++;
+	}
 }
 
-void error_message(char *message, int exit_status)
+void	error_message(char *message, int exit_status)
 {
 	ft_putstr_fd(message, STDERR_FILENO);
-    if (exit_status != 0)
+	if (exit_status != 0)
 		exit(exit_status);
 }
-

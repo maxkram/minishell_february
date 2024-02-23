@@ -1,6 +1,16 @@
-#include "../include/minishell.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   init.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/02/22 18:28:30 by hezhukov          #+#    #+#             */
+/*   Updated: 2024/02/22 18:28:30 by hezhukov         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
-//is responsible for duplicating the standard input (stdin) and standard output (stdout) file descriptors and storing the duplicated descriptors in a t_data structure
+#include "../include/minishell.h"
 
 void	init_start_file_desc(t_data *pnt)
 {
@@ -11,8 +21,6 @@ void	init_start_file_desc(t_data *pnt)
 	if (pnt->first_stdin == -1)
 		fd_exit(pnt, 1);
 }
-
-//the function defines a function named split_dup that takes an array of strings (char **old) and returns a new dynamically allocated array of strings (char **new), where each string in the new array is a duplicate of the corresponding string in the input array.
 
 char	**string_to_array(char **source)
 {
@@ -34,9 +42,7 @@ char	**string_to_array(char **source)
 	return (copy);
 }
 
-//initiates the variables to defaults
-
-void    init_pntr(t_data *pnt, char **env)
+void	init_pntr(t_data *pnt, char **env)
 {
 	char	**copy_env;
 
@@ -57,6 +63,5 @@ void    init_pntr(t_data *pnt, char **env)
 	pnt->env = copy_env;
 	if (increase_shlvl(pnt) == 1)
 		fd_exit(pnt, 0);
-	// EXECUTION
 	pnt->n_pipes = 0;
 }
