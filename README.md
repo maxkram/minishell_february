@@ -109,3 +109,15 @@ These combinations showcase the flexibility of shell redirection mechanisms, all
 # concerns
 [ ] in extender different path to include #include "../include/minishell.h"
 [ ] inside signals one more global variable int global_signal = 0;
+
+## heredoc
+- [ ] bash in heredoc mode expand variables even with single and doudble quotes.
+
+minishell$ cat << EOF
+> $USER
+> "$USER"
+> '$USER'
+> EOF
+device
+"$USER"
+'$USER'

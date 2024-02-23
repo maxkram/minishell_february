@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:26:57 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/22 18:45:44 by hezhukov         ###   ########.fr       */
+/*   Updated: 2024/02/23 14:31:57 by device           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,7 @@ void	wait_for_childs(t_data *pnt)
 }
 
 void	execution(t_data *pnt)
+
 {
 	int	i;
 	int	pip[2];
