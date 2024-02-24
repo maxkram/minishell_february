@@ -6,7 +6,7 @@
 /*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:43:52 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/24 10:47:12 by hezhukov         ###   ########.fr       */
+/*   Updated: 2024/02/24 11:09:28 by hezhukov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -241,4 +241,7 @@ int		realloc_and_check(t_data *pnt);
 int		handle_pipe(t_data *pnt);
 int		handle_quotes(t_data *pnt, int *i);
 int		handle_word(t_data *pnt, int *i);
+int		clean_token_array(t_token *array_tokens, \
+	int max_number_token, t_data *pnt);
+int		reallocate_tokens_if_max(t_data *pnt, int max_token);
 #endif

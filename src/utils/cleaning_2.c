@@ -6,7 +6,7 @@
 /*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:28:06 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/24 09:21:10 by hezhukov         ###   ########.fr       */
+/*   Updated: 2024/02/24 10:54:44 by hezhukov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,19 +92,4 @@ void	total_clean(t_data *pntr)
 	pntr_cleaning(pntr);
 	close(pntr->first_stdout);
 	close(pntr->first_stdin);
-}
-
-int	clean_tokens(t_token *tokens, int max, t_data *pnt)
-{
-	while (pnt->count_token > ++max)
-	{
-		if (tokens[max].value)
-		{
-			free(tokens[max].value);
-			tokens[max].value = NULL;
-		}
-	}
-	free(tokens);
-	tokens = NULL;
-	return (1);
 }
