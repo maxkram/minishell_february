@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   multiline.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:28:36 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/24 00:20:36 by device           ###   ########.fr       */
+/*   Updated: 2024/02/24 10:21:57 by hezhukov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ static int	in_to_fd(t_data *pnt, int fd, char *delimiter)
 	while (1)
 	{
 		buffer = readline("> ");
-		if (global_signal == 1)
+		if (g_global_signal == 1)
 			return (free(buffer), 1);
 		if (ft_strcmp(buffer, delimiter) == 0)
 			break ;

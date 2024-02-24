@@ -6,19 +6,19 @@
 /*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:27:41 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/22 18:27:42 by hezhukov         ###   ########.fr       */
+/*   Updated: 2024/02/24 10:21:57 by hezhukov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	global_signal = 0;
+int	g_global_signal = 0;
 
 void	sigint_manager(int status)
 {
 	if (status == SIGINT)
 	{
-		global_signal = 1;
+		g_global_signal = 1;
 		ft_putchar_fd('\n', STDERR_FILENO);
 		rl_on_new_line();
 		rl_replace_line("", 0);
@@ -30,7 +30,7 @@ void	manage_multiline(int status)
 {
 	if (status == SIGINT)
 	{
-		global_signal = 1;
+		g_global_signal = 1;
 		ioctl(STDIN_FILENO, TIOCSTI, "\n");
 		rl_replace_line("", 0);
 		rl_on_new_line();

@@ -6,7 +6,7 @@
 /*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:27:20 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/22 19:10:12 by hezhukov         ###   ########.fr       */
+/*   Updated: 2024/02/24 09:41:20 by hezhukov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,6 @@ int	words_merging(t_data *pnt)
 	int		i;
 	int		j;
 	int		k;
-
 	i = 0;
 	j = 0;
 	k = -1;
