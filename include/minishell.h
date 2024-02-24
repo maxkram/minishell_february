@@ -6,7 +6,7 @@
 /*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:43:52 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/23 17:03:19 by device           ###   ########.fr       */
+/*   Updated: 2024/02/23 21:20:12 by device           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -235,6 +235,6 @@ int		check_exception(t_data *pnt, int i);
 int		variable_index(char **env, char *n);
 int		substring_beginning(char *word, char *start);
 int		path_searching(t_data *data, t_tab_cmd *tab_cmd);
-
+int		print_env_vars(t_data *data);
 
 #endif

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:23:43 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/22 18:30:48 by hezhukov         ###   ########.fr       */
+/*   Updated: 2024/02/23 23:51:33 by device           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// Function to set environment variable
+// @todo done cd with no args
 int	make_var(t_data *pnt, char *var_name, char *value)
 {
 	char	*tmp;
@@ -32,11 +32,6 @@ int	make_var(t_data *pnt, char *var_name, char *value)
 	return (0);
 }
 
-/**
- * @changes
- * - deleted change_dir_aux(pnt, path, pwd);
- * - deleted change_dir_aux(pnt, pwd, pwd);
-*/
 int	change_folder(t_data *pnt, char *path, char *pwd)
 {
 	if (chdir(path) == -1)
@@ -65,35 +60,60 @@ int	change_folder(t_data *pnt, char *path, char *pwd)
 	return (0);
 }
 
-/**
- * @brief The built_cd function handles the built-in 'cd' command.
- * @changes
- * - I changed the return value if the number of arguments is greater than 2.
- * 		- I changed it from 1 to 0 to pass the test.
- * - deleted  return (0);
-*/
+char	*get_target_path(t_tab_cmd *tab_cmd)
+{
+	char	*path;
+
+	if (tab_cmd->num_args <= 1 || !tab_cmd->args[1] || tab_cmd->args[1][0] == 0)
+	{
+		path = getenv("HOME");
+		if (!path)
+		{
+			ft_putstr_fd("minishell: cd: HOME not set\n", 2);
+			return (NULL);
+		}
+	}
+	else
+	{
+		path = tab_cmd->args[1];
+	}
+	return (path);
+}
+
+int	change_directory_and_update_pwd(t_data *pnt, char *path)
+{
+	char	*pwd;
+
+	pwd = getcwd(NULL, 0);
+	if (!pwd || change_folder(pnt, path, pwd) != 0 || pnt->cmdt_count != 1)
+	{
+		free(pwd);
+		pnt->code_exit = 1;
+		error_out(pnt, "minishell: cd:", 1);
+		return (1);
+	}
+	free(pwd);
+	pwd = getcwd(NULL, 0);
+	if (!pwd || make_var(pnt, "PWD", pwd) != 0)
+	{
+		free(pwd);
+		pnt->code_exit = 1;
+		return (1);
+	}
+	free(pwd);
+	return (0);
+}
+
 int	built_cd(t_data *pnt, t_tab_cmd *tab_cmd)
 {
 	char	*path;
-	char	*tmp;
-	char	*pwd;
 
 	pnt->code_exit = 0;
-	if (tab_cmd->num_args > 2)
-		return (pnt->code_exit = 0);
-	pwd = getcwd(NULL, 0);
-	if (!pwd)
-		return (pnt->code_exit = 1, error_out(pnt, "minishell: cd:", 1));
-	path = tab_cmd->args[1];
-	if (!path || path[0] == 0)
-		return (free(pwd), 1);
-	if (change_folder(pnt, path, pwd) != 0 || pnt->cmdt_count != 1)
+	path = get_target_path(tab_cmd);
+	if (!path)
+	{
+		pnt->code_exit = 1;
 		return (1);
-	free(pwd);
-	tmp = getcwd(NULL, 0);
-	if (!tmp)
-		return (pnt->code_exit = 1, error_out(pnt, "minishell: cd:", 1));
-	if (make_var(pnt, "PWD", tmp) != 0)
-		return (pnt->code_exit = 1, free(tmp), 1);
-	return (free(tmp), 0);
+	}
+	return (change_directory_and_update_pwd(pnt, path));
 }

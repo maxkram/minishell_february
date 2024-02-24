@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:28:12 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/22 18:28:13 by hezhukov         ###   ########.fr       */
+/*   Updated: 2024/02/23 21:19:59 by device           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,4 +64,17 @@ int	increase_shlvl(t_data *pntr)
 	free(pntr->env[shlvl]);
 	pntr->env[shlvl] = new_shlvl;
 	return (0);
+}
+
+int	print_env_vars(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (data->env[i])
+	{
+		printf("declare -x %s\n", data->env[i]);
+		i++;
+	}
+	return (EXIT_SUCCESS);
 }
