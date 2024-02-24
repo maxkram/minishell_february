@@ -6,7 +6,7 @@
 /*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:43:52 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/24 10:22:25 by hezhukov         ###   ########.fr       */
+/*   Updated: 2024/02/24 10:47:12 by hezhukov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -236,5 +236,9 @@ int		variable_index(char **env, char *n);
 int		substring_beginning(char *word, char *start);
 int		path_searching(t_data *data, t_tab_cmd *tab_cmd);
 int		print_env_vars(t_data *data);
-
+int		fill_redirection(t_data *pnt, char const *str);
+int		realloc_and_check(t_data *pnt);
+int		handle_pipe(t_data *pnt);
+int		handle_quotes(t_data *pnt, int *i);
+int		handle_word(t_data *pnt, int *i);
 #endif

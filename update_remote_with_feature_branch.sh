@@ -48,4 +48,7 @@ git merge $FEATURE_BRANCH --message "$MERGE_MESSAGE"
 # Push main branch to remote
 git push origin $MAIN_BRANCH
 
+# Switch back to feature branch
+git checkout $FEATURE_BRANCH
+
 echo "Feature branch '$FEATURE_BRANCH' has been merged into '$MAIN_BRANCH' and pushed to remote with the message: $MERGE_MESSAGE"

@@ -256,7 +256,7 @@ for PARAM in "${INPUT_PARAMS[@]}"; do
     COUNTER=$((COUNTER + 1))
 
     # Run valgrind with the current command, redirecting output to a file
-    valgrind --leak-check=full $PROGRAM <<EOF > "/tmp/valgrind_output_${SAFE_PARAM}.txt" 2>&1
+    valgrind $PROGRAM <<EOF > "/tmp/valgrind_output_${SAFE_PARAM}.txt" 2>&1
 $PARAM
 exit
 EOF

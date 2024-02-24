@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokener.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:27:58 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/24 00:29:35 by device           ###   ########.fr       */
+/*   Updated: 2024/02/24 10:47:45 by hezhukov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,55 +55,18 @@ int	syntax_checking(t_data *pnt)
 	return (0);
 }
 
-int	fill_redirection(t_data *pnt, char const *str)
+int	parse_input_to_tokens(t_data *pnt, int *i)
 {
-	int	ret;
-
-	ret = 1;
-	pnt->count_token++;
-	if (*str == '<')
-	{
-		pnt->tokens[pnt->count_token - 1].type = REDIRECT_IN;
-		if (*(str + 1) == '<' && ret++)
-			pnt->tokens[pnt->count_token - 1].type = REDIRECT_MULTILINE;
-	}
-	else if (*str == '>')
-	{
-		pnt->tokens[pnt->count_token - 1].type = REDIRECT_OUT;
-		if (*(str + 1) == '>' && ret++)
-			pnt->tokens[pnt->count_token - 1].type = REDIRECT_APPEND;
-	}
-	return (ret);
-}
-
-int	filling_with_tokens(t_data *pnt, int *i, int j)
-{
-	if (pnt->count_token == pnt->max_token)
-		if (reallocate_tokens_if_max(pnt, pnt->max_token) == 1)
-			return (1);
+	if (realloc_and_check(pnt))
+		return (1);
 	if (pnt->input[*i] == '|')
-	{
-		pnt->tokens[++pnt->count_token - 1].type = PIPE;
-		pnt->n_pipes++;
-	}
+		return (handle_pipe(pnt));
 	else if (pnt->input[*i] == '>' || pnt->input[*i] == '<')
 		*i += fill_redirection(pnt, &pnt->input[*i]) - 1;
 	else if (pnt->input[*i] == '\'' || pnt->input[*i] == '\"')
-	{
-		j = filling_quotes(pnt, &pnt->input[*i], pnt->input[*i]) - 1;
-		if (j == -2)
-			return (1);
-		if (j == -1)
-			return (error_in_syntax(pnt->input[*i], pnt), 1);
-		*i += j;
-	}
+		return (handle_quotes(pnt, i));
 	else if (pnt->input[*i] != ' ' && pnt->input[*i] != '\t')
-	{
-		j = word_filling(pnt, &pnt->input[*i]) - 1;
-		if (j == -1)
-			return (error_out(pnt, "ft_calloc", 1));
-		*i += j;
-	}
+		return (handle_word(pnt, i));
 	return (0);
 }
 
@@ -116,7 +79,7 @@ int	tokener(t_data *pnt)
 	if (!pnt->tokens)
 		return (error_out(pnt, "ft_calloc", 1));
 	while (pnt->input[++i])
-		if (filling_with_tokens(pnt, &i, 0) == 1)
+		if (parse_input_to_tokens(pnt, &i) == 1)
 			return (1);
 	return (syntax_checking(pnt));
 }
