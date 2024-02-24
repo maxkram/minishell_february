@@ -85,6 +85,35 @@ int	fill_redirection(t_data *pnt, char const *str)
 	return (ret);
 }
 
+// void process_pipe_token(t_data *pnt)
+// {
+// 	pnt->tokens[++pnt->count_token - 1].type = PIPE;
+// 	pnt->n_pipes++;
+// }
+
+// int process_quotes_token(t_data *pnt, int *i) {
+//     int j = filling_quotes(pnt, &pnt->input[*i], pnt->input[*i]) - 1;
+//     if (j == -2) {
+//         return 1;
+//     }
+//     if (j == -1) {
+//         error_in_syntax(pnt->input[*i], pnt);
+//         return 1;
+//     }
+//     *i += j;
+//     return 0;
+// }
+
+// int process_word_token(t_data *pnt, int *i) {
+//     int j = word_filling(pnt, &pnt->input[*i]) - 1;
+//     if (j == -1) {
+//         error_out(pnt, "ft_calloc", 1);
+//         return 1;
+//     }
+//     *i += j;
+//     return 0;
+// }
+
 //the func parses the input & fills the array of tokens with the right types
 /**
  * @changes
@@ -105,9 +134,9 @@ int	filling_with_tokens(t_data *pnt, int *i, int j)
 			return (1);
 	if (pnt->input[*i] == '|')
 	{
-		// If the current character is '|', set the token type to PIPE
 		pnt->tokens[++pnt->count_token - 1].type = PIPE;
 		pnt->n_pipes++;
+		// process_pipe_token(pnt);
 	}
 	else if (pnt->input[*i] == '>' || pnt->input[*i] == '<')
 		*i += fill_redirection(pnt, &pnt->input[*i]) - 1;
@@ -119,6 +148,7 @@ int	filling_with_tokens(t_data *pnt, int *i, int j)
 		if (j == -1)
 			return (error_in_syntax(pnt->input[*i], pnt), 1);
 		*i += j;
+		// *i += process_quotes_token(pnt, i);
 	}
 	else if (pnt->input[*i] != ' ' && pnt->input[*i] != '\t') //
 	{
