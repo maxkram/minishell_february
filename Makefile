@@ -81,7 +81,6 @@ install_readline:
 		echo "Readline library is already installed."; \
 	fi
 
-
 libft:
 	$(MAKE) -C $(LIBFT_DIR)
 
