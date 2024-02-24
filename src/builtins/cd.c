@@ -6,13 +6,12 @@
 /*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:23:43 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/23 23:51:33 by device           ###   ########.fr       */
+/*   Updated: 2024/02/23 23:58:22 by device           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// @todo done cd with no args
 int	make_var(t_data *pnt, char *var_name, char *value)
 {
 	char	*tmp;

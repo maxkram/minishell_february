@@ -19,12 +19,11 @@ git push origin $FEATURE_BRANCH
 git checkout $MAIN_BRANCH
 git pull origin $MAIN_BRANCH
 
-# Merge feature branch into main
-git merge $FEATURE_BRANCH
-
-# Handle merge conflicts manually if they arise
+# Merge feature branch into main with a default message
+MERGE_MESSAGE="Merge branch '$FEATURE_BRANCH' into '$MAIN_BRANCH'"
+git merge $FEATURE_BRANCH --message "$MERGE_MESSAGE"
 
 # Push main branch to remote
 git push origin $MAIN_BRANCH
 
-echo "Feature branch '$FEATURE_BRANCH' has been merged into '$MAIN_BRANCH' and pushed to remote."
+echo "Feature branch '$FEATURE_BRANCH' has been merged into '$MAIN_BRANCH' and pushed to remote with the message: $MERGE_MESSAGE"
