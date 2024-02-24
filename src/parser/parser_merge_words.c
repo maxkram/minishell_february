@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_merge_words.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:27:26 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/23 20:16:54 by device           ###   ########.fr       */
+/*   Updated: 2024/02/24 12:17:38 by hezhukov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,14 +118,6 @@ int	copy_concat_create(t_data *data, t_token *new_tokens, \
 	return (0);
 }
 
-/**
- * @questions
- * What is the purpose of the token_copy function?
- * What is the purpose of ret % 2?
- * What is the purpose of copy_concat_create? When and why is it called?
- *
- * Why do we check only WORD DQUOTE and SQUOTE tokens? -> because
-*/
 int	token_copy(t_data *pnt, t_token *tokens_new, int *i, int *j)
 {
 	int	ret;

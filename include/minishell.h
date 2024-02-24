@@ -6,7 +6,7 @@
 /*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:43:52 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/24 11:10:40 by hezhukov         ###   ########.fr       */
+/*   Updated: 2024/02/24 12:14:18 by hezhukov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,7 +177,7 @@ void	print_export(char **env, int fd);
 int		built_export(t_data *data, t_tab_cmd *cmd);
 int		parser(t_data *pointer);
 int		redirections_fill(t_data *pointer, int i, int j);
-int		args_cmd_fill(t_data *pointer, int i, int j);
+// int		args_cmd_fill(t_data *pointer, int i, int j);
 int		words_merging(t_data *pointer);
 int		check_if_redirection(t_type_token type);
 int		check_arguments(t_type_token type);
@@ -244,5 +244,7 @@ int		handle_word(t_data *pnt, int *i);
 int		clean_token_array(t_token *array_tokens, \
 	int max_number_token, t_data *pnt);
 int		reallocate_tokens_if_max(t_data *pnt, int max_token);
+int		parse_and_fill_command(t_data *data, \
+	int command_index, int token_index);
 
 #endif

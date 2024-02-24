@@ -6,7 +6,7 @@
 /*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:27:36 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/22 18:27:38 by hezhukov         ###   ########.fr       */
+/*   Updated: 2024/02/24 11:54:42 by hezhukov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	cmdt_init(t_data *pnt, int j, int *i)
 	if (redirections_fill(pnt, j, *i) == 1)
 		return (1);
 	test_multiline(pnt, j);
-	*i = args_cmd_fill(pnt, j, *i - 1) + 1;
+	*i = parse_and_fill_command(pnt, j, *i - 1) + 1;
 	if (*i == 0)
 		return (1);
 	return (0);
