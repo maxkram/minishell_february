@@ -3,16 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   cleaning_2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:28:06 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/24 00:30:53 by device           ###   ########.fr       */
+/*   Updated: 2024/02/24 09:21:10 by hezhukov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-// @todo test with valgrind this new function
 void	free_cmdt_resources(t_tab_cmd *cmd)
 {
 	if (cmd->args)
@@ -48,34 +47,6 @@ void	cmdt_cleaning(t_data *pntr)
 		pntr->cmdt = NULL;
 	}
 }
-
-// @todo I refactored this new function.
-// void	cmdt_cleaning(t_data *pntr)
-// {
-// 	if (pntr->cmdt)
-// 	{
-// 		while (0 < pntr->cmdt_count--)
-// 		{
-// 			if (pntr->cmdt[pntr->cmdt_count].args)
-// 				while (0 < pntr->cmdt[pntr->cmdt_count].num_args--)
-// 					free(pntr->cmdt[pntr->cmdt_count].args[pntr->cmdt[pntr->cmdt_count].num_args]);
-// 			if (pntr->cmdt[pntr->cmdt_count].args)
-// 				free(pntr->cmdt[pntr->cmdt_count].args);
-// 			pntr->cmdt[pntr->cmdt_count].args = NULL;
-// 			if (pntr->cmdt[pntr->cmdt_count].redirections)
-// 				while (0 < pntr->cmdt[pntr->cmdt_count].num_redirections--)
-// 					free(pntr->cmdt[pntr->cmdt_count].redirections[pntr->cmdt[pntr->cmdt_count].num_redirections].value);
-// 			if (pntr->cmdt[pntr->cmdt_count].redirections)
-// 				free(pntr->cmdt[pntr->cmdt_count].redirections);
-// 			pntr->cmdt[pntr->cmdt_count].redirections = NULL;
-// 			if (pntr->cmdt[pntr->cmdt_count].cmd)
-// 				free(pntr->cmdt[pntr->cmdt_count].cmd);
-// 			pntr->cmdt[pntr->cmdt_count].cmd = NULL;
-// 		}
-// 		free(pntr->cmdt);
-// 		pntr->cmdt = NULL;
-// 	}
-// }
 
 void	pntr_cleaning(t_data *pnt)
 {
