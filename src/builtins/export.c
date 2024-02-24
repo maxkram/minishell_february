@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:26:14 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/22 18:43:04 by hezhukov         ###   ########.fr       */
+/*   Updated: 2024/02/23 19:11:00 by device           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,12 +101,10 @@ bool	is_valid_env_var_key(char *var)
 int	built_export(t_data *data, t_tab_cmd *cmd)
 {
 	int		i;
-	int		ret;
 	char	*key;
 	char	*value;
 	char	*equal_sign_pos;
 
-	ret = EXIT_SUCCESS;
 	i = 1;
 	while (cmd->args[i])
 	{

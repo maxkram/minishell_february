@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   multiline.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:28:36 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/22 19:13:42 by hezhukov         ###   ########.fr       */
+/*   Updated: 2024/02/23 17:09:34 by device           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,30 +79,25 @@ static char	*broaden_local_token(t_data *pnt, char *letter)
 
 static int	input_to_file_descriptor(t_data *pnt, int fd, char *delimiter)
 {
-	char			*string;
-	static int		i;
+	char			*buffer;
 
-	i = 0;
 	set_mode(pnt, MULTILINE);
 	while (1)
 	{
-		string = readline("> ");
+		buffer = readline("> ");
 		if (global_signal == 1)
-			return (free(string), 1);
-		if (string == NULL && ft_printf_fd(STDERR_FILENO, "minishell: warning: here-document at line %d delimited by end-of-file(wanted `%s')\n", i, delimiter))
+			return (free(buffer), 1);
+		if (ft_strcmp(buffer, delimiter) == 0)
 			break ;
-		if (ft_strcmp(string, delimiter) == 0)
-			break ;
-		string = broaden_local_token(pnt, string);
-		if (!string)
-			return (close(fd), 2);
-		ft_putendl_fd(string, fd);
-		free(string);
-		i++;
+		if (buffer[0] == '$')
+			buffer = broaden_local_token(pnt, buffer);
+		write(fd, buffer, ft_strlen(buffer));
+		write(fd, "\n", 1);
+		free(buffer);
 	}
 	set_mode(pnt, NON_INTERACT);
-	if (string != NULL)
-		free(string);
+	if (buffer != NULL)
+		free(buffer);
 	return (0);
 }
 

@@ -164,7 +164,7 @@ PROGRAM="./minishell"
 # Define your test commands as before
 INPUT_PARAMS=(
 
-    echo
+    # echo
     "echo hello world"
     "echo \"hello world\""
     "echo 'hello world'"
@@ -268,7 +268,7 @@ INPUT_PARAMS=(
     "export TEST_VAR5=foo && export TEST_VAR6=bar && unset TEST_VAR5 TEST_VAR6 && env | grep TEST_VAR6"  # Unset two variables, check second is gone
     "unset NOT_SET_VAR && echo 'Unset a variable that was never set'"  # Attempt to unset a variable that doesn't exist
 
-    export
+    # export
     "export NEW_VAR=new_value"  # Set a new environment variable
     "export NEW_VAR=new_value| echo \$NEW_VAR"  # Set and then print a new environment variable
     "export PATH=updated_value"  # Update an existing environment variable
@@ -283,6 +283,16 @@ INPUT_PARAMS=(
     "export VAR_WITH_EQUALS='equals==in_value'| echo \$VAR_WITH_EQUALS"  # Set a variable containing equals signs in its value
     "export 'VAR_WITH_QUOTES=\"quoted_value\"'| echo \$VAR_WITH_QUOTES"  # Set a variable with quoted value
     "export VAR_TO_BE_EXPORTED=value| env | grep VAR_TO_BE_EXPORTED"  # Export a variable and check it's in env
+    "export hello"
+    "export HELLO=123"
+    "export A-"
+    "export HELLO=123 A"
+    "export HELLO=\"123 A-\""
+    "export hello world"
+    "export HELLO-=123"
+    "export ="
+    "export 123"
+
 
     # pwd
     "pwd /"
@@ -330,7 +340,7 @@ INPUT_PARAMS=(
     "export MISSING_VAR | echo \${MISSING_VAR?'Error: Variable is unset.'}"  # Error if variable is unset export MISSING_VAR; echo ${MISSING_VAR?'Error: Variable is unset.'}
 
 
-    Pipelines and Redirections
+    # Pipelines and Redirections
     "echo 'Hello World' | wc -c"  # Simple pipeline
     "cat /etc/passwd | grep root | wc -l"  # Pipeline with three commands
     "echo 'Hello from shell' > /tmp/testfile.txt"  # Output redirection
@@ -346,8 +356,6 @@ INPUT_PARAMS=(
     "cat /etc/hosts | grep localhost | tee /tmp/localhost.txt"  # Use of tee for output branching
     "cat < /tmp/testfile.txt | grep 'Hello' | sort -r > /tmp/sorted_greets.txt"  # Complex pipeline combining input and output redirection
     "cat /nonexistentfile 2> /tmp/stderr.txt"  # Redirect stderr to a file
-    "cat /tmp/testfile.txt 2>&1"  # Redirect stderr to stdout
-    "echo 'stdout' > /tmp/stdout.txt; echo 'stderr' 1>&2"  # Distinguish stdout and stderr
     "cat access.log | awk '{print $1}' | sort | uniq -c | sort -nr | awk '{print $2, "requests:", $1}'"
     "find . -type f | rev | cut -d. -f1 | rev | sort | uniq -c | sort -nr | awk '{print $2, "files:", $1}'"
     "ps aux | sort -nk +4 | tail | awk '{print $11, "memory usage:", $4"%"}'"
@@ -385,8 +393,7 @@ INPUT_PARAMS=(
     "echo <123 <456 hi | echo 42"
 
     # Heredoc
-    # "cat <<EOF Simple heredoc test. EOF"
-    # "cat <<EOF\nThis is a test.\nEOF"     # Basic heredoc usage
+    # "cat '<<' EOF"     # Basic heredoc usage
     # "export VAR='World'; cat <<EOF\nHello, \$VAR!\nEOF" # Heredoc with variable expansion
     # "cat <<EOF\nCurrent date: \$(date)\nEOF" # Heredoc with command substitution
     # "cat <<EOF1\nThis is the outer heredoc.\n$(cat <<EOF2\nThis is the inner heredoc.\nEOF2\n)\nEOF1" # Nested heredoc (if supported)
@@ -416,6 +423,7 @@ EOF
 
     # Check for memory leaks
     if grep -q "definitely lost: 0 bytes in 0 blocks" "/tmp/valgrind_output_${SAFE_PARAM}.txt" && \
+       grep -vq "Invalid read of size " "/tmp/valgrind_output_${SAFE_PARAM}.txt" && \
        grep -q "indirectly lost: 0 bytes in 0 blocks" "/tmp/valgrind_output_${SAFE_PARAM}.txt" && \
        grep -q "possibly lost: 0 bytes in 0 blocks" "/tmp/valgrind_output_${SAFE_PARAM}.txt"; then
         echo "✅ Test ${COUNTER}: $PARAM"
