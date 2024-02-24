@@ -21,6 +21,15 @@ MAIN_BRANCH="main"
 git checkout $FEATURE_BRANCH
 git pull origin $FEATURE_BRANCH
 
+# Update feature branch with latest changes from main branch
+git checkout $MAIN_BRANCH
+git pull origin $MAIN_BRANCH
+git checkout $FEATURE_BRANCH
+git merge $MAIN_BRANCH
+
+# If there are merge conflicts, prompt the user to resolve them before proceeding
+# Note: Script does not automatically handle merge conflicts
+
 # Add, commit, and push changes in feature branch (optional, based on need)
 git add .
 echo "Enter your commit message for the feature branch:"
