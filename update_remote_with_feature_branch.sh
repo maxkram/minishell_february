@@ -1,10 +1,23 @@
 #!/bin/bash
 
-# Define branches
-FEATURE_BRANCH="execution-branch"
+# Fetch the latest branches information
+git fetch origin
+
+echo "Available branches:"
+# List all remote branches and remove 'origin/' prefix
+git branch -r | sed 's/origin\///' | nl
+
+echo "Enter the number of the feature branch you want to select:"
+read branch_num
+
+# Select the branch based on user input
+FEATURE_BRANCH=$(git branch -r | sed 's/origin\///' | sed -n "${branch_num}p")
+
+echo "You have selected the branch: $FEATURE_BRANCH"
+
 MAIN_BRANCH="main"
 
-# Ensure current branch is $FEATURE_BRANCH and it's up to date
+# Ensure the selected branch is checked out and up to date
 git checkout $FEATURE_BRANCH
 git pull origin $FEATURE_BRANCH
 
