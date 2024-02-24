@@ -6,7 +6,7 @@
 /*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:28:36 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/23 17:09:34 by device           ###   ########.fr       */
+/*   Updated: 2024/02/24 00:20:36 by device           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ static char	*broaden_local_token(t_data *pnt, char *letter)
 	return (free(buffer_value), result);
 }
 
-static int	input_to_file_descriptor(t_data *pnt, int fd, char *delimiter)
+static int	in_to_fd(t_data *pnt, int fd, char *delimiter)
 {
 	char			*buffer;
 
@@ -104,7 +104,7 @@ static int	input_to_file_descriptor(t_data *pnt, int fd, char *delimiter)
 int	create_heredoc(t_data *pnt, t_tab_cmd *tab_cmd, int i)
 {
 	char	*object;
-	int		status;
+	int		stat;
 	int		file_descriptor;
 
 	object = name_create_multiline(i);
@@ -113,8 +113,8 @@ int	create_heredoc(t_data *pnt, t_tab_cmd *tab_cmd, int i)
 	file_descriptor = open(object, O_CREAT | O_TRUNC | O_RDWR, 0666);
 	if (file_descriptor < 0)
 		return (free(object), error_out(pnt, "minishell: open: ", 1));
-	status = input_to_file_descriptor(pnt, file_descriptor, tab_cmd->redirections[i].value);
-	if (status == 1 || status == 2)
+	stat = in_to_fd(pnt, file_descriptor, tab_cmd->redirections[i].value);
+	if (stat == 1 || stat == 2)
 		return (unlink(object), free(object), 1);
 	close(file_descriptor);
 	if (tab_cmd->redirections[i].no_space != 3)
