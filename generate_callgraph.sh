@@ -3,10 +3,10 @@
 # Define modules or components
 declare -a modules=( \
     # "main.c" \
-    "tokenizer" \
+    # "tokenizer" \
     # "parser" \
     # "extender" \
-    # "execution" \
+    "execution" \
     # "utils" \
     # "builtins" \
     # "signals"

@@ -6,7 +6,7 @@
 /*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:43:52 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/24 12:20:53 by hezhukov         ###   ########.fr       */
+/*   Updated: 2024/02/24 14:57:59 by hezhukov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@
 # define ERROR -1
 //==================Structs===================//
 
-extern	int	g_global_signal;
+extern int	g_global_signal;
 
 typedef enum s_type_token
 {
@@ -155,7 +155,8 @@ typedef struct s_data
 void	prompt_create(t_data *data);
 void	build_pwd(t_data *pnt);
 int		if_builtin(t_tab_cmd *cmd_tab);
-void	shoot_builtin(t_data *pntr, t_tab_cmd *cmd_tab, int i, int *pipe_fd);
+// void	shoot_builtin(t_data *pntr, t_tab_cmd *cmd_tab, int i, int *pipe_fd);
+void	execute_builtin(t_data *pntr, t_tab_cmd *cmd_tab, int i, int *pipe_fd);
 void	exec_main(t_data *data);
 void	execution(t_data *pntr);
 char	*ft_get_env(char *str, char **env);
@@ -246,5 +247,10 @@ int		clean_token_array(t_token *array_tokens, \
 int		reallocate_tokens_if_max(t_data *pnt, int max_token);
 int		parse_and_fill_command(t_data *data, \
 	int command_index, int token_index);
-
+int		input_output_redirect(t_data *pnt, t_tab_cmd *tab_cmd);
+int		setup_pipes(int *pip, t_data *pnt);
+void	execute_command(t_data *pnt, int *pip, int i);
+void	handle_redirection(int fd, int std_channel);
+void	close_pipe_end(int *fd_pipe, int end);
+void	cleanup_heredoc(t_data *pntr, int i);
 #endif

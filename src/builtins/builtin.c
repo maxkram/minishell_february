@@ -6,7 +6,7 @@
 /*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:23:36 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/22 18:23:38 by hezhukov         ###   ########.fr       */
+/*   Updated: 2024/02/24 13:26:50 by hezhukov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	create_builtin_fd(t_tab_cmd *cmd_tab, int *pipe_fd)
 	close(pipe_fd[1]);
 }
 
-void	shoot_builtin(t_data *pntr, t_tab_cmd *cmd_tab, int i, int *pipe_fd)
+void	execute_builtin(t_data *pntr, t_tab_cmd *cmd_tab, int i, int *pipe_fd)
 {
 	create_builtin_fd(cmd_tab, pipe_fd);
 	if (ft_strcmp(cmd_tab->cmd, "echo") == 0)

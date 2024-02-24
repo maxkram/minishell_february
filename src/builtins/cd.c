@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:23:43 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/23 23:58:22 by device           ###   ########.fr       */
+/*   Updated: 2024/02/24 15:00:13 by hezhukov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ int	change_folder(t_data *pnt, char *path, char *pwd)
 	if (chdir(path) == -1)
 	{
 		ft_printf_fd(2, "minishell: cd: %s: ", path);
-		perror("");
 		pnt->code_exit = 1;
 		free(pwd);
 		return (1);
@@ -86,7 +85,6 @@ int	change_directory_and_update_pwd(t_data *pnt, char *path)
 	pwd = getcwd(NULL, 0);
 	if (!pwd || change_folder(pnt, path, pwd) != 0 || pnt->cmdt_count != 1)
 	{
-		free(pwd);
 		pnt->code_exit = 1;
 		error_out(pnt, "minishell: cd:", 1);
 		return (1);
