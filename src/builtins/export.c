@@ -6,7 +6,7 @@
 /*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:26:14 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/23 19:11:00 by device           ###   ########.fr       */
+/*   Updated: 2024/02/23 21:19:39 by device           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,8 @@ int	built_export(t_data *data, t_tab_cmd *cmd)
 	char	*value;
 	char	*equal_sign_pos;
 
+	if (cmd->args[1] == NULL)
+		print_env_vars(data);
 	i = 1;
 	while (cmd->args[i])
 	{
