@@ -6,7 +6,7 @@
 /*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:28:06 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/22 19:13:54 by hezhukov         ###   ########.fr       */
+/*   Updated: 2024/02/25 16:44:25 by hezhukov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,9 @@ void	cleanup_commands(t_data *data)
 	}
 }
 
-void	error_message(char *message, int exit_status)
+void	set_error_and_code(char *cmd_arg, int *code_exit)
 {
-	ft_putstr_fd(message, STDERR_FILENO);
-	if (exit_status != 0)
-		exit(exit_status);
+	ft_printf_fd(STDERR_FILENO, \
+		"minishell: export: `%s': not a valid identifier\n", cmd_arg);
+	*code_exit = 1;
 }

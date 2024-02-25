@@ -6,7 +6,7 @@
 /*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:23:43 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/24 17:05:40 by hezhukov         ###   ########.fr       */
+/*   Updated: 2024/02/25 15:56:52 by hezhukov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int	change_directory_and_update_pwd(t_data *pnt, char *path)
 	if (!pwd || change_folder(pnt, path, pwd) != 0 || pnt->cmdt_count != 1)
 	{
 		pnt->code_exit = 1;
-		error_out(pnt, "minishell: cd:", 1);
+		error_out(pnt, "", 1);
 		return (1);
 	}
 	free(pwd);

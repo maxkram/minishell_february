@@ -6,7 +6,7 @@
 /*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:26:14 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/24 08:30:25 by hezhukov         ###   ########.fr       */
+/*   Updated: 2024/02/25 16:57:41 by hezhukov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -226,20 +226,17 @@ void	built_export(t_data *data, t_tab_cmd *cmd_table)
 	i = 1;
 	while (i < cmd_table->num_args)
 	{
-		if (validity(cmd_table->args[i]))
+		if (!is_valid_env_var_key(cmd->args[i]))
+			set_error_and_code(cmd->args[i], &data->code_exit);
+		else if (ft_strchr(cmd->args[i], '='))
 		{
-			if (probel(cmd_table->args[i]) && !data->code_exit)
-				ft_putendl_fd("export: not valid in this context:", 2);
-			else if (!data->code_exit)
-			{
-				ft_putstr_fd("bash: export: `", STDERR_FILENO);
-				ft_putstr_fd(cmd_table->args[i], STDERR_FILENO);
-				ft_putendl_fd("': not a valid identifier", STDERR_FILENO);
-			}
-			data->code_exit = 1;
+			equal_sign_pos = ft_strchr(cmd->args[i], '=');
+			key = ft_strndup(cmd->args[i], equal_sign_pos - cmd->args[i]);
+			value = ft_strdup(equal_sign_pos + 1);
+			set_env_var(data, key, value);
+			free(key);
+			free(value);
 		}
-		else if (data->cmdt_count == 1)
-			check_norm(data, cmd_table->args[i]);
 		i++;
 	}
 }
