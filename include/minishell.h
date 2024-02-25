@@ -6,7 +6,7 @@
 /*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:43:52 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/24 17:19:35 by hezhukov         ###   ########.fr       */
+/*   Updated: 2024/02/25 16:39:56 by hezhukov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,7 +221,6 @@ void	total_clean(t_data *pntr);
 int		clean_tokens(t_token *tokens, int max, t_data *pnt);
 void	cleanup_tokens(t_data *data);
 void	cleanup_commands(t_data *pnt);
-void	error_message(char *message, int exit_status);
 t_data	*get_data(void);
 void	ft_error(char *str);
 void	my_error(char *str);
@@ -253,5 +252,6 @@ void	execute_command(t_data *pnt, int *pip, int i);
 void	handle_redirection(int fd, int std_channel);
 void	close_pipe_end(int *fd_pipe, int end);
 void	cleanup_heredoc(t_data *pntr, int i);
+void	set_error_and_code(char *cmd_arg, int *code_exit);
 
 #endif

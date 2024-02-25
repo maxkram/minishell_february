@@ -6,7 +6,7 @@
 /*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:28:49 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/24 12:36:39 by hezhukov         ###   ########.fr       */
+/*   Updated: 2024/02/25 15:53:05 by hezhukov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	main(int argc, char *argv[], char **env_p)
 	while (1)
 	{
 		set_mode(&pnt, INTERACT);
-		pnt.input = readline("minishell$ ");
+		pnt.input = readline("\033[31m\033[1mminishell$ \033[0m");
 		set_mode(&pnt, NON_INTERACT);
 		if (g_global_signal == 1 && g_global_signal--)
 			pnt.code_exit = 130;

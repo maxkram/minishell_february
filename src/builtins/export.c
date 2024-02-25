@@ -6,7 +6,7 @@
 /*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:26:14 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/24 08:30:25 by hezhukov         ###   ########.fr       */
+/*   Updated: 2024/02/25 16:44:55 by hezhukov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ int	built_export(t_data *data, t_tab_cmd *cmd)
 	while (cmd->args[i])
 	{
 		if (!is_valid_env_var_key(cmd->args[i]))
-			error_message(" not a valid identifier", EXIT_FAILURE);
+			set_error_and_code(cmd->args[i], &data->code_exit);
 		else if (ft_strchr(cmd->args[i], '='))
 		{
 			equal_sign_pos = ft_strchr(cmd->args[i], '=');
