@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:26:52 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/24 14:57:29 by hezhukov         ###   ########.fr       */
+/*   Updated: 2024/02/24 19:14:51 by device           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ int	find_path(t_data *pntr, t_tab_cmd *tab_cmd)
 		free(temporary);
 		return (0);
 	}
+	free(temporary);
 	free(result);
 	return (1);
 }
