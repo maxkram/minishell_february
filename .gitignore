@@ -16,6 +16,8 @@ test.c
 test.c
 -/libft_backup/
 ./minishell_tester
+test
+word
 
 # Prerequisites
 *.d

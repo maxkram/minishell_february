@@ -19,7 +19,8 @@ char	**path_getter(t_data *pnt, int i)
 
 	while (pnt->env[++i])
 	{
-		found = ft_strstr(pnt->env[i], "PATH=/home");
+		// found = ft_strstr(pnt->env[i], "PATH=/home");
+		found = ft_strstr(pnt->env[i], "PATH=");
 		if (found != NULL)
 			break ;
 	}
@@ -62,7 +63,7 @@ int	main(int argc, char *argv[], char **env_p)
 	while (1)
 	{
 		set_mode(&pnt, INTERACT);
-		pnt.input = readline("minishell$ ");
+		pnt.input = readline("\033[31m\033[1mminishell$ \033[0m");
 		set_mode(&pnt, NON_INTERACT);
 		if (g_global_signal == 1 && g_global_signal--)
 			pnt.code_exit = 130;
