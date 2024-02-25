@@ -1,4 +1,4 @@
-#!/bin/zsh
+#!/bin/bash
 
 PROGRAM="./minishell"
 # Define your test commands as before

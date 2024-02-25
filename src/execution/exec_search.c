@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_search.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:26:46 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/24 13:59:33 by hezhukov         ###   ########.fr       */
+/*   Updated: 2024/02/24 19:15:05 by device           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int	is_command(t_data *pntr, t_tab_cmd *tab_cmd)
 		pntr->code_exit = 126;
 		return (0);
 	}
+	free(temporary);
 	free(result);
 	return (1);
 }
