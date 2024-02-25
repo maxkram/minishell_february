@@ -6,7 +6,11 @@
 /*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:28:49 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/25 16:57:13 by hezhukov         ###   ########.fr       */
+<<<<<<<<< Temporary merge branch 1
+/*   Updated: 2024/02/24 18:44:25 by device           ###   ########.fr       */
+=========
+/*   Updated: 2024/02/25 15:53:05 by hezhukov         ###   ########.fr       */
+>>>>>>>>> Temporary merge branch 2
 /*                                                                            */
 /* ************************************************************************** */
 
