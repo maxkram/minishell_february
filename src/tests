@@ -1,0 +1,17 @@
+minishell$ cat << EOF
+> $USER
+> EOF
+hezhukov
+minishell$ cat << "EOF"
+> $USER
+> EOF
+hezhukov
+
+bash-3.2$ cat << EOF
+> $USER
+> EOF
+hezhukov
+bash-3.2$ cat << "EOF"
+> $USER
+> EOF
+$USER

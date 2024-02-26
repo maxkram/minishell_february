@@ -5,12 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/22 18:28:49 by hezhukov          #+#    #+#             */
-<<<<<<<<< Temporary merge branch 1
-/*   Updated: 2024/02/24 18:44:25 by device           ###   ########.fr       */
-=========
-/*   Updated: 2024/02/25 15:53:05 by hezhukov         ###   ########.fr       */
->>>>>>>>> Temporary merge branch 2
+/*   Created: 2024/02/26 13:25:05 by hezhukov          #+#    #+#             */
+/*   Updated: 2024/02/26 13:25:11 by hezhukov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +19,6 @@ char	**path_getter(t_data *pnt, int i)
 
 	while (pnt->env[++i])
 	{
-		// found = ft_strstr(pnt->env[i], "PATH=/home");
 		found = ft_strstr(pnt->env[i], "PATH=");
 		if (found != NULL)
 			break ;
