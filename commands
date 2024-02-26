@@ -1,0 +1,132 @@
+echo hello world
+echo hello     world
+echo "hello   world"
+echo $HOME
+echo "$HOME"
+echo '${HOME}'
+echo 'A quote "inside" a quote'
+echo "A quote 'inside' a quote"
+echo `date`
+echo $(date)
+echo $(ls)
+echo `ls`
+
+
+
+# echo hello world
+# echo "hello world"
+# echo 'hello world'
+# echo hello'world'
+# echo hello""world
+# echo ''
+# echo "$PWD"
+# echo '$PWD'
+# echo "aspas ->'"
+# echo "aspas -> ' "
+# echo 'aspas ->"'
+# echo 'aspas -> " '
+# echo "> >> < * ? [ ] | ; [ ] || && ( ) & # $  <<"
+# echo '> >> < * ? [ ] | ; [ ] || && ( ) & # $  <<'
+# echo "exit_code ->$? user ->$USER home -> $HOME"
+# echo 'exit_code ->$? user ->$USER home -> $HOME'
+# echo $
+# echo $?
+# echo $?HELLO
+# echo Hello, World!
+# echo 'Hello, World!'
+# echo "Hello, World!"
+# echo Hello\, World\!
+# echo 'Hello, '"World!"
+# echo $HOME
+# echo $((2 + 2))
+# echo Nested
+# echo Backticks
+# echo; echo Separate
+# echo 'Single quote -> '"'"' <- Single quote'
+# echo "Double quote -> '"'"' <- Double quote"
+# echo Text > /tmp/output.txt
+# cat < /tmp/output.txt
+# echo First && echo Second
+# echo First || echo Failed
+# echo "Nested -> $(echo command)"
+# echo 'A space -> '"\ "
+# echo "A new\nline"
+# echo -e "Tab\tcharacter"
+# echo "A quote ' inside a quote"
+# echo 'A quote " inside a quote'
+# exit
+# exit 0
+# exit 1
+# exit 255
+# exit 256
+# exit -1
+# exit 42
+# exit +42
+# exit 9999999999
+# exit -9999999999
+# exit abc
+# exit 42abc
+# exit 42 58
+# cd /
+# cd /tmp
+# cd /var/log
+# cd ..
+# cd ../..
+# cd ./
+# cd -
+# cd $HOME
+# cd $PWD
+# cd "Directory With Spaces"
+# cd Directory\ With\ Spaces
+# cd ./subdir
+# cd subdir/anotherdir
+# cd nonexistentdir
+# cd /root
+# cd
+# cd ~
+# cd ~/subdir
+# cd ///
+# cd ..//subdir
+# env
+# env | grep PATH
+# env | grep HOME
+# env -i
+# env -i ls
+# env | sort
+# env | wc -l
+# env -i env
+# env VAR1=test env
+# env VAR1=test VAR2=another_test env
+# env -i VAR1=test ls
+# env | grep VAR1
+# export TEST_VAR1=hello && unset TEST_VAR1 && env | grep TEST_VAR1
+# export TEST_VAR2=world && unset TEST_VAR2 && echo $TEST_VAR2
+# export TEST_VAR3=testing && unset TEST_VAR3 TEST_VAR4 && env | grep TEST_VAR3
+# export TEST_VAR4=anotherTest && unset TEST_VAR3 TEST_VAR4 && env | grep TEST_VAR4
+# unset PATH && echo $PATH
+# export TEST_VAR5=foo && export TEST_VAR6=bar && unset TEST_VAR5 TEST_VAR6 && env | grep TEST_VAR5
+# export TEST_VAR5=foo && export TEST_VAR6=bar && unset TEST_VAR5 TEST_VAR6 && env | grep TEST_VAR6
+# unset NOT_SET_VAR && echo 'Unset a variable that was never set'
+# export NEW_VAR=new_value
+# export NEW_VAR=new_value| echo $NEW_VAR
+# export PATH=updated_value
+# export PATH= | echo $EXISTING_VAR
+# export
+# export VAR_WITH_SPACES='value with spaces'| echo $VAR_WITH_SPACES
+# export NUM_VAR=123| echo $NUM_VAR
+# export VAR_WITH_SPECIAL_CHARS='!@#$%^&*()'| echo $VAR_WITH_SPECIAL_CHARS
+# export PATH=$PATH:/new/path
+# export -p
+# export VAR_TO_UNSET=to_be_unset| unset VAR_TO_UNSET| echo $VAR_TO_UNSET
+# export VAR_WITH_EQUALS='equals==in_value'| echo $VAR_WITH_EQUALS
+# export 'VAR_WITH_QUOTES="quoted_value"'| echo $VAR_WITH_QUOTES
+# export VAR_TO_BE_EXPORTED=value| env | grep VAR_TO_BE_EXPORTED
+# export hello
+# export HELLO=123
+# export A-
+# export HELLO=123 A
+# export HELLO="123 A-"
+# export hello world
+# export HELLO-=123
+# export =
+# export 123

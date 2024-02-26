@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 13:25:05 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/26 13:46:23 by hezhukov         ###   ########.fr       */
+/*   Updated: 2024/02/26 17:44:47 by device           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	**path_getter(t_data *pnt, int i)
 
 	while (pnt->env[++i])
 	{
-		found = ft_strstr(pnt->env[i], "PATH=");
+		found = ft_strstr(pnt->env[i], "PATH=/home");
 		if (found != NULL)
 			break ;
 	}
@@ -63,6 +63,7 @@ int	main(int argc, char *argv[], char **env_p)
 	{
 		set_mode(&pnt, INTERACT);
 		pnt.input = readline("\033[31m\033[1mminishell$ \033[0m");
+		// pnt.input = readline("$ "); // for testing on linux
 		set_mode(&pnt, NON_INTERACT);
 		if (g_global_signal == 1 && g_global_signal--)
 			pnt.code_exit = 130;
