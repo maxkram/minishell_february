@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:43:52 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/25 16:39:56 by hezhukov         ###   ########.fr       */
+/*   Updated: 2024/02/26 13:38:53 by device           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,8 +175,7 @@ void	index_sort(char **arr, int str_count, int *index);
 int		built_env(t_data *data);
 int		var_in_env(char *str);
 void	print_export(char **env, int fd);
-// int		built_export(t_data *data, t_tab_cmd *cmd);
-void	built_export(t_data *data, t_tab_cmd *cmd_table);
+int		built_export(t_data *data, t_tab_cmd *cmd);
 int		parser(t_data *pointer);
 int		redirections_fill(t_data *pointer, int i, int j);
 // int		args_cmd_fill(t_data *pointer, int i, int j);
