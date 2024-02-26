@@ -232,18 +232,18 @@ INPUT_PARAMS=(
     "cat <missing | cat <\"./test_files/infile\""
     "echo <123 <456 hi | echo 42"
 
-    # Heredoc
-    # "cat '<<' EOF"     # Basic heredoc usage
-    # "export VAR='World'; cat <<EOF\nHello, \$VAR!\nEOF" # Heredoc with variable expansion
-    # "cat <<EOF\nCurrent date: \$(date)\nEOF" # Heredoc with command substitution
-    # "cat <<EOF1\nThis is the outer heredoc.\n$(cat <<EOF2\nThis is the inner heredoc.\nEOF2\n)\nEOF1" # Nested heredoc (if supported)
-    # "cat <<EOF\nThis is a test with an escaped variable: \\\$VAR\nEOF" # Heredoc with escaping
-    # "cat <<EOF\nThis is a test without a trailing newlineEOF"     # Heredoc without trailing newline
-    # "cat <<EOF > /tmp/heredoc_test.txt\nThis content will be written to a file.\nEOF" # Heredoc with redirection
-    # "cat <<EOF | grep 'test'\nThis is a test line.\nThis line does not match.\nEOF" # Heredoc with pipe
-    # "export VAR='World'; cat <<'EOF'\nHello, \$VAR!\nEOF" # Heredoc with variable expansion disabled (using single quotes around the delimiter)
-    # "cat <<EOF > /tmp/heredoc_complex_test.txt\nThis file was generated on: \$(date)\nEOF" # Complex heredoc with redirection and command substitution
-    # "while read line; do echo \"Line: \$line\"; done <<EOF\nFirst line\nSecond line\nEOF" # Heredoc used with a loop
+    Heredoc
+    "cat '<<' EOF"     # Basic heredoc usage
+    "export VAR='World'; cat <<EOF\nHello, \$VAR!\nEOF" # Heredoc with variable expansion
+    "cat <<EOF\nCurrent date: \$(date)\nEOF" # Heredoc with command substitution
+    "cat <<EOF1\nThis is the outer heredoc.\n$(cat <<EOF2\nThis is the inner heredoc.\nEOF2\n)\nEOF1" # Nested heredoc (if supported)
+    "cat <<EOF\nThis is a test with an escaped variable: \\\$VAR\nEOF" # Heredoc with escaping
+    "cat <<EOF\nThis is a test without a trailing newlineEOF"     # Heredoc without trailing newline
+    "cat <<EOF > /tmp/heredoc_test.txt\nThis content will be written to a file.\nEOF" # Heredoc with redirection
+    "cat <<EOF | grep 'test'\nThis is a test line.\nThis line does not match.\nEOF" # Heredoc with pipe
+    "export VAR='World'; cat <<'EOF'\nHello, \$VAR!\nEOF" # Heredoc with variable expansion disabled (using single quotes around the delimiter)
+    "cat <<EOF > /tmp/heredoc_complex_test.txt\nThis file was generated on: \$(date)\nEOF" # Complex heredoc with redirection and command substitution
+    "while read line; do echo \"Line: \$line\"; done <<EOF\nFirst line\nSecond line\nEOF" # Heredoc used with a loop
 
 )
 

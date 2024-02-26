@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/02/22 18:28:49 by hezhukov          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2024/02/25 15:53:05 by hezhukov         ###   ########.fr       */
-=======
-/*   Updated: 2024/02/24 18:44:25 by device           ###   ########.fr       */
->>>>>>> be1f50c6f44b2f9656ea6389261df095f474c854
+/*   Created: 2024/02/25 17:13:51 by hezhukov          #+#    #+#             */
+/*   Updated: 2024/02/25 19:00:32 by hezhukov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +19,7 @@ char	**path_getter(t_data *pnt, int i)
 
 	while (pnt->env[++i])
 	{
-		found = ft_strstr(pnt->env[i], "PATH=/home");
+		found = ft_strstr(pnt->env[i], "PATH=");
 		if (found != NULL)
 			break ;
 	}
@@ -81,3 +77,8 @@ int	main(int argc, char *argv[], char **env_p)
 		pntr_cleaning(&pnt);
 	}
 }
+
+/*
+1. What is the purpose of this line if (g_global_signal == 1 && g_global_signal--)
+2.
+*/
