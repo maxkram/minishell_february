@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <termios.h>
 
 int	g_global_signal = 0;
 
@@ -37,15 +38,26 @@ void	manage_multiline(int status)
 	}
 }
 
+void	ft_setup_term(void)
+{
+	struct termios	t;
+
+	tcgetattr(0, &t);
+	t.c_lflag &= ~ECHOCTL;
+	tcsetattr(0, TCSANOW, &t);
+}
+
 void	start_signals(t_data *pnt)
 {
 	if (pnt->mode == INTERACT)
 	{
+		ft_setup_term();
 		signal(SIGINT, &sigint_manager);
 		signal(SIGQUIT, SIG_IGN);
 	}
 	else if (pnt->mode == NON_INTERACT)
 	{
+		ft_setup_term();
 		signal(SIGINT, SIG_IGN);
 		signal(SIGQUIT, SIG_IGN);
 	}
@@ -56,6 +68,7 @@ void	start_signals(t_data *pnt)
 	}
 	else if (pnt->mode == MULTILINE)
 	{
+		ft_setup_term();
 		signal(SIGINT, &manage_multiline);
 		signal(SIGQUIT, SIG_IGN);
 	}
