@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:43:52 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/27 14:04:35 by hezhukov         ###   ########.fr       */
+/*   Updated: 2024/02/27 18:05:47 by device           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@
 # define NO 0
 # define PROMPT_NAME "\033[35m\033[1mminiSHELL \033[0m\033[1m→ \033[0m"
 # define EXPORT_PREFIX "declare -x "
+# define WRITE_END 1
+# define READ_END 0
 //==================ERRORS===================//
 # define ERR_MAIN "\033[31m\033[1mERROR > \033[0m"
 # define ERR_EXP "\033[37m\033[1mREASON\033[0m"
@@ -167,7 +169,7 @@ int		change_fd_input_output(t_data *pntr, \
 int		find_path(t_data *pntr, t_tab_cmd *tab_cmd);
 int		built_cd(t_data *pnt, t_tab_cmd *tab_cmd);
 int		make_var(t_data *pnt, char *var_name, char *value);
-void	built_exit(t_data *pntr, t_tab_cmd *cmd_tab);
+void	built_exit(t_data *pntr, t_tab_cmd *cmd_tab, int *pipe_fd);
 void	built_echo(t_data *pnt, t_tab_cmd *tab_cmd);
 void	built_unset(t_data *pnt, t_tab_cmd *tab_cmd);
 void	index_sort(char **arr, int str_count, int *index);

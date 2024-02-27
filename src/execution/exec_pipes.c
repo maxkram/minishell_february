@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipes.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 13:57:10 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/24 14:59:54 by hezhukov         ###   ########.fr       */
+/*   Updated: 2024/02/27 17:41:58 by device           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,11 +104,11 @@ void	restore_standard_fds(t_data *pntr)
  * @return 1 to indicate success (because we return 1 for
  * execute_command function to continue with the next command)
  */
-int	pipelines_redirect(t_data *pntr, int i, int *pip)
+int	pipelines_redirect(t_data *pntr, int i, int *fd_pipe)
 {
 	handle_input_fd(pntr, i);
 	handle_output_fd(pntr, i);
-	manage_pipe_ends_and_fd_before(pntr, i, pip);
+	manage_pipe_ends_and_fd_before(pntr, i, fd_pipe);
 	restore_standard_fds(pntr);
 	cleanup_heredoc(pntr, i);
 	return (1);

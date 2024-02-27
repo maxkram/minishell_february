@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:25:17 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/25 15:20:31 by hezhukov         ###   ########.fr       */
+/*   Updated: 2024/02/27 18:08:37 by device           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,12 @@ long int	to_long_int(char *s)
 		ft_putstr_fd("exit\n", 2);
 */
 void	built_exit_annex(t_data *pntr, t_tab_cmd *tab_cmd,
-	long int exit_code, int cnt)
+	long int exit_code, int cnt, int *pipe_fd)
 {
 	if ((!tab_cmd || tab_cmd->num_args == 1) && cnt < 2)
 	{
+		close (pipe_fd[0]);
+		close (pipe_fd[1]);
 		total_clean(pntr);
 		exit(pntr->code_exit);
 	}
@@ -97,7 +99,7 @@ void	built_exit_annex(t_data *pntr, t_tab_cmd *tab_cmd,
  * - I commented the ft_printf_fd(2, "exit\n") to pass the test.
  * - I changed exit code from 2 to 255 to pass the test.
 */
-void	built_exit(t_data *pntr, t_tab_cmd *tab_cmd)
+void	built_exit(t_data *pntr, t_tab_cmd *tab_cmd, int *pipe_fd)
 {
 	int	cnt;
 
@@ -122,5 +124,5 @@ void	built_exit(t_data *pntr, t_tab_cmd *tab_cmd)
 	if (tab_cmd && tab_cmd->num_args > 2)
 		return (ft_printf_fd(2, "minishell: exit: too many arguments\n"),
 			(void)(pntr->code_exit = 1));
-	built_exit_annex(pntr, tab_cmd, 0, cnt);
+	built_exit_annex(pntr, tab_cmd, 0, cnt, pipe_fd);
 }

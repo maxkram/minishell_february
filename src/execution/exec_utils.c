@@ -6,13 +6,13 @@
 /*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:26:52 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/24 19:14:51 by device           ###   ########.fr       */
+/*   Updated: 2024/02/27 17:40:54 by device           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	change_fd_input_output(t_data *pntr, t_tab_cmd *tab_cmd, int *fd, int i)
+int	change_fd_input_output(t_data *pntr, t_tab_cmd *tab_cmd, int *fd_pipe, int i)
 {
 	if (tab_cmd->file_in != -1)
 		tab_cmd->in_fd = tab_cmd->file_in;
@@ -20,8 +20,8 @@ int	change_fd_input_output(t_data *pntr, t_tab_cmd *tab_cmd, int *fd, int i)
 		tab_cmd->in_fd = pntr->fd_before;
 	if (tab_cmd->file_out != -1)
 		tab_cmd->out_fd = tab_cmd->file_out;
-	else if (fd[1] != -1 && pntr->cmdt_count - 1 != i)
-		tab_cmd->out_fd = fd[1];
+	else if (fd_pipe[1] != -1 && pntr->cmdt_count - 1 != i)
+		tab_cmd->out_fd = fd_pipe[1];
 	return (0);
 }
 
@@ -61,7 +61,10 @@ void	handle_redirection(int fd, int std_channel)
 void	close_pipe_end(int *fd_pipe, int end)
 {
 	if (fd_pipe[end] != -1)
+	{
 		close(fd_pipe[end]);
+		fd_pipe[end] = -1;
+	}
 }
 
 /**

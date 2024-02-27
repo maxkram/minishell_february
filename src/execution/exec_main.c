@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_main.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 13:54:35 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/27 14:36:13 by hezhukov         ###   ########.fr       */
+/*   Updated: 2024/02/27 18:01:50 by device           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ int	setup_pipes(int *pip, t_data *pnt)
 		error_out(pnt, "pipe", 1);
 		return (-1);
 	}
-	// printf("pipe: %d %d\n", pip[0], pip[1]);
 	return (0);
 }
 
@@ -46,15 +45,15 @@ void	wait_for_childs(t_data *pnt)
 void	execution(t_data *pnt)
 {
 	int	i;
-	int	pip[2];
+	int	fd_pipe[2];
 
 	i = -1;
 	pnt->fd_before = -1;
 	while (++i < pnt->cmdt_count)
 	{
-		if (setup_pipes(pip, pnt) == -1)
+		if (setup_pipes(fd_pipe, pnt) == -1)
 			return ((void)error_out(pnt, "pipe", 1));
-		execute_command(pnt, pip, i);
+		execute_command(pnt, fd_pipe, i);
 	}
-	wait_for_childs(pnt);
+	// wait_for_childs(pnt);
 }
