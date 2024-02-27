@@ -6,7 +6,7 @@
 /*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 13:54:35 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/24 14:17:06 by hezhukov         ###   ########.fr       */
+/*   Updated: 2024/02/27 14:36:13 by hezhukov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ int	setup_pipes(int *pip, t_data *pnt)
 		error_out(pnt, "pipe", 1);
 		return (-1);
 	}
+	// printf("pipe: %d %d\n", pip[0], pip[1]);
 	return (0);
 }
 
