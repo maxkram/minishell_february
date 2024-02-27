@@ -2,18 +2,18 @@
 
 # Define modules or components
 declare -a modules=( \
-    # "main.c" \
-    # "tokenizer" \
+    "main.c" \
+    "tokenizer" \
     "parser" \
-    # "extender" \
-    # "execution" \
-    # "utils" \
-    # "builtins" \
-    # "signals"
+    "extender" \
+    "execution" \
+    "utils" \
+    "builtins" \
+    "signals"
     )
 
 # Option to delete .dot and .txt files after generation (1 = delete, 0 = keep)
-DELETE_FILES=0
+DELETE_FILES=1
 
 # Clear previous call graph
 > module_callgraph.txt
