@@ -6,7 +6,7 @@
 /*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:25:17 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/27 20:13:06 by device           ###   ########.fr       */
+/*   Updated: 2024/02/27 20:48:53 by device           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,8 @@ void	built_exit_annex(t_data *pntr, t_tab_cmd *tab_cmd,
 		pntr->code_exit = 2;
 		if (cnt != 1)
 			return ;
+		close (pipe_fd[0]);
+		close (pipe_fd[1]);
 		total_clean(pntr);
 		exit (pntr->code_exit);
 	}
@@ -87,7 +89,11 @@ void	built_exit_annex(t_data *pntr, t_tab_cmd *tab_cmd,
 	if (cnt == 1)
 		total_clean(pntr);
 	if (cnt == 1)
+	{
+		close (pipe_fd[0]);
+		close (pipe_fd[1]);
 		exit(pntr->code_exit);
+	}
 }
 
 //the function handles the "exit" command in a shell program
