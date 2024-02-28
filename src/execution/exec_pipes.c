@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipes.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 13:57:10 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/27 17:41:58 by device           ###   ########.fr       */
+/*   Updated: 2024/02/28 17:11:38 by hezhukov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,15 +63,15 @@ void	handle_output_fd(t_data *pntr, int i)
  * @param i Index of the current command being processed.
  * @param pip Array containing file descriptors for the current pipe.
  */
-void	manage_pipe_ends_and_fd_before(t_data *pntr, int i, int *pip)
+void	manage_pipe_ends_and_fd_before(t_data *pntr, int i)
 {
-	close(pip[1]);
+	close(pntr->fd_pipe[1]);
 	if (pntr->fd_before != -1)
 		close(pntr->fd_before);
 	if (pntr->cmdt_count - 1 != i)
-		pntr->fd_before = pip[0];
+		pntr->fd_before = pntr->fd_pipe[0];
 	else
-		close(pip[0]);
+		close(pntr->fd_pipe[0]);
 }
 
 /**
@@ -104,11 +104,11 @@ void	restore_standard_fds(t_data *pntr)
  * @return 1 to indicate success (because we return 1 for
  * execute_command function to continue with the next command)
  */
-int	pipelines_redirect(t_data *pntr, int i, int *fd_pipe)
+int	pipelines_redirect(t_data *pntr, int i)
 {
 	handle_input_fd(pntr, i);
 	handle_output_fd(pntr, i);
-	manage_pipe_ends_and_fd_before(pntr, i, fd_pipe);
+	manage_pipe_ends_and_fd_before(pntr, i);
 	restore_standard_fds(pntr);
 	cleanup_heredoc(pntr, i);
 	return (1);

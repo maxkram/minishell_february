@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:26:52 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/27 17:40:54 by device           ###   ########.fr       */
+/*   Updated: 2024/02/28 17:22:41 by hezhukov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	change_fd_input_output(t_data *pntr, t_tab_cmd *tab_cmd, int *fd_pipe, int i)
+int	change_fd_input_output(t_data *pntr, t_tab_cmd *tab_cmd, int i)
 {
 	if (tab_cmd->file_in != -1)
 		tab_cmd->in_fd = tab_cmd->file_in;
@@ -20,8 +20,8 @@ int	change_fd_input_output(t_data *pntr, t_tab_cmd *tab_cmd, int *fd_pipe, int i
 		tab_cmd->in_fd = pntr->fd_before;
 	if (tab_cmd->file_out != -1)
 		tab_cmd->out_fd = tab_cmd->file_out;
-	else if (fd_pipe[1] != -1 && pntr->cmdt_count - 1 != i)
-		tab_cmd->out_fd = fd_pipe[1];
+	else if (pntr->fd_pipe[1] != -1 && pntr->cmdt_count - 1 != i)
+		tab_cmd->out_fd = pntr->fd_pipe[1];
 	return (0);
 }
 

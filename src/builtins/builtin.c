@@ -3,24 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:23:36 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/27 22:16:07 by device           ###   ########.fr       */
+/*   Updated: 2024/02/28 17:21:07 by hezhukov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 void	recreate_file_descriptors(t_data *pntr, \
-	t_tab_cmd *cmd_tab, int i, int *fd_pipe)
+	t_tab_cmd *cmd_tab, int i)
 {
 	if (cmd_tab->out_fd != -1)
 		close(cmd_tab->out_fd);
 	if (pntr->cmdt_count - 1 != i)
-		pntr->fd_before = fd_pipe[0];
+		pntr->fd_before = pntr->fd_pipe[0];
 	else
-		close(fd_pipe[0]);
+		close(pntr->fd_pipe[0]);
 	dup2(pntr->first_stdout, STDOUT_FILENO);
 	dup2(pntr->first_stdin, STDIN_FILENO);
 	if (cmd_tab->in_fd != -1)
@@ -34,7 +34,7 @@ void	recreate_file_descriptors(t_data *pntr, \
 	}
 }
 
-void	create_builtin_fd(t_tab_cmd *cmd_tab, int *fd_pipe)
+void	create_builtin_fd(t_tab_cmd *cmd_tab, t_data *pntr)
 {
 	if (cmd_tab->in_fd != -1)
 	{
@@ -44,12 +44,12 @@ void	create_builtin_fd(t_tab_cmd *cmd_tab, int *fd_pipe)
 	}
 	if (cmd_tab->out_fd != -1)
 		dup2(cmd_tab->out_fd, STDOUT_FILENO);
-	close(fd_pipe[1]);
+	close(pntr->fd_pipe[1]);
 }
 
-void	execute_builtin(t_data *pntr, t_tab_cmd *cmd_tab, int i, int *fd_pipe)
+void	execute_builtin(t_data *pntr, t_tab_cmd *cmd_tab, int i)
 {
-	create_builtin_fd(cmd_tab, fd_pipe);
+	create_builtin_fd(cmd_tab, pntr);
 	if (ft_strcmp(cmd_tab->cmd, "echo") == 0)
 		built_echo(pntr, cmd_tab);
 	if (ft_strcmp(cmd_tab->cmd, "cd") == 0)
@@ -63,8 +63,8 @@ void	execute_builtin(t_data *pntr, t_tab_cmd *cmd_tab, int i, int *fd_pipe)
 	if (ft_strcmp(cmd_tab->cmd, "env") == 0)
 		built_env(pntr);
 	if (ft_strcmp(cmd_tab->cmd, "exit") == 0)
-		built_exit(pntr, cmd_tab, fd_pipe);
-	recreate_file_descriptors(pntr, cmd_tab, i, fd_pipe);
+		built_exit(pntr, cmd_tab);
+	recreate_file_descriptors(pntr, cmd_tab, i);
 }
 
 int	if_builtin(t_tab_cmd *tab_cmd)

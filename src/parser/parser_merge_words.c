@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_merge_words.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:27:26 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/26 14:51:10 by device           ###   ########.fr       */
+/*   Updated: 2024/02/28 18:22:52 by hezhukov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,48 @@ int	copy_concat_create(t_data *data, t_token *new_tokens, \
 	*dest_index += 1;
 	return (0);
 }
+
+// int copy_concat_create(t_data *data, t_token *new_tokens, \
+//     int *src_index, int *dest_index)
+// {
+//     char *new_value;
+//     char *temp_original_value = NULL; // Use for safe memory management
+
+//     // Check if concatenation is needed
+//     if (*src_index > 0 && new_tokens[*dest_index].no_space == 1)
+//     {
+//         *dest_index -= 1;
+//         temp_original_value = new_tokens[*dest_index].value; // Temporarily hold the original value
+
+//         // Attempt to concatenate
+//         new_value = ft_strjoin(new_tokens[*dest_index].value, data->tokens[*src_index].value);
+//         if (!new_value)
+//         {
+//             // If concatenation fails, do not free the original value; report error
+//             new_tokens[*dest_index].value = temp_original_value; // Avoid changing the pointer on failure
+//             return (error_out(data, "Memory allocation failed in ft_strjoin", 1));
+//         }
+//         else
+//         {
+//             // If concatenation succeeds, free the original value and update with the new
+//             new_tokens[*dest_index].value = new_value;
+//             // No need to free temp_original_value as it's the same as new_tokens[*dest_index].value which is now updated
+//         }
+//     }
+//     else
+//     {
+//         // If no concatenation, just copy
+//         // Safe to directly assign since the original value is either freed or never allocated
+//         new_tokens[*dest_index].value = ft_strdup(data->tokens[*src_index].value);
+//         if (!new_tokens[*dest_index].value)
+//         {
+//             return (error_out(data, "Memory allocation failed in ft_strdup", 1));
+//         }
+//     }
+//     *dest_index += 1;
+//     return (0);
+// }
+
 
 int	token_copy(t_data *pnt, t_token *tokens_new, int *i, int *j)
 {

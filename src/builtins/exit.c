@@ -6,7 +6,7 @@
 /*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:25:17 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/28 13:01:11 by hezhukov         ###   ########.fr       */
+/*   Updated: 2024/02/28 17:22:00 by hezhukov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,12 +61,12 @@ long int	to_long_int(char *s)
 		ft_putstr_fd("exit\n", 2);
 */
 void	built_exit_annex(t_data *pntr, t_tab_cmd *tab_cmd,
-	long int exit_code, int cnt, int *pipe_fd)
+	long int exit_code, int cnt)
 {
 	if ((!tab_cmd || tab_cmd->num_args == 1) && cnt < 2)
 	{
-		close (pipe_fd[0]);
-		close (pipe_fd[1]);
+		close (pntr->fd_pipe[0]);
+		close (pntr->fd_pipe[1]);
 		total_clean(pntr);
 		exit(pntr->code_exit);
 	}
@@ -77,8 +77,8 @@ void	built_exit_annex(t_data *pntr, t_tab_cmd *tab_cmd,
 		pntr->code_exit = 2;
 		if (cnt != 1)
 			return ;
-		close (pipe_fd[0]);
-		close (pipe_fd[1]);
+		close (pntr->fd_pipe[0]);
+		close (pntr->fd_pipe[1]);
 		total_clean(pntr);
 		exit (pntr->code_exit);
 	}
@@ -90,8 +90,8 @@ void	built_exit_annex(t_data *pntr, t_tab_cmd *tab_cmd,
 		total_clean(pntr);
 	if (cnt == 1)
 	{
-		close (pipe_fd[0]);
-		close (pipe_fd[1]);
+		close (pntr->fd_pipe[0]);
+		close (pntr->fd_pipe[1]);
 		exit(pntr->code_exit);
 	}
 }
@@ -105,7 +105,7 @@ void	built_exit_annex(t_data *pntr, t_tab_cmd *tab_cmd,
  * - I commented the ft_printf_fd(2, "exit\n") to pass the test.
  * - I changed exit code from 2 to 255 to pass the test.
 */
-void	built_exit(t_data *pntr, t_tab_cmd *tab_cmd, int *pipe_fd)
+void	built_exit(t_data *pntr, t_tab_cmd *tab_cmd)
 {
 	int	cnt;
 
@@ -127,10 +127,10 @@ void	built_exit(t_data *pntr, t_tab_cmd *tab_cmd, int *pipe_fd)
 		}
 		if (cnt < 2)
 		{
-			close (pipe_fd[0]);
-			pipe_fd[0] = -1;
-			close (pipe_fd[1]);
-			pipe_fd[1] = -1;
+			close (pntr->fd_pipe[0]);
+			pntr->fd_pipe[0] = -1;
+			close (pntr->fd_pipe[1]);
+			pntr->fd_pipe[1] = -1;
 			exit(pntr->code_exit);
 		}
 		return ;
@@ -138,5 +138,5 @@ void	built_exit(t_data *pntr, t_tab_cmd *tab_cmd, int *pipe_fd)
 	if (tab_cmd && tab_cmd->num_args > 2)
 		return (ft_printf_fd(2, "minishell: exit: too many arguments\n"),
 			(void)(pntr->code_exit = 1));
-	built_exit_annex(pntr, tab_cmd, 0, cnt, pipe_fd);
+	built_exit_annex(pntr, tab_cmd, 0, cnt);
 }
