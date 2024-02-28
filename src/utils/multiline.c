@@ -6,7 +6,7 @@
 /*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:28:36 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/27 22:17:04 by device           ###   ########.fr       */
+/*   Updated: 2024/02/28 14:31:53 by device           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,8 +115,10 @@ int	create_heredoc(t_data *pnt, t_tab_cmd *tab_cmd, int i)
 		return (free(object), error_out(pnt, "minishell: open: ", 1));
 	stat = in_to_fd(pnt, file_descriptor, tab_cmd->redirections[i].value);
 	if (stat == 1 || stat == 2)
+	{
 		return (unlink(object), free(object), 1);
-	close(file_descriptor);
+		close(file_descriptor);
+	}
 	if (tab_cmd->redirections[i].no_space != 3)
 		unlink(object);
 	else

@@ -6,7 +6,7 @@
 /*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 13:55:59 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/27 22:57:11 by device           ###   ########.fr       */
+/*   Updated: 2024/02/28 14:25:00 by device           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,8 +133,8 @@ void	execute_command(t_data *pnt, int *fd_pipe, int i)
 		{
 			// close(fd_pipe[0]);
 			// fd_pipe[0] = -1;
-			// close(fd_pipe[1]);
-			// fd_pipe[1] = -1;
+			close(fd_pipe[1]);
+			fd_pipe[1] = -1;
 			// // close_pipe_end(fd_pipe, READ_END);
 			// // close_pipe_end(fd_pipe, WRITE_END);
 			// close(pnt->fd_before);

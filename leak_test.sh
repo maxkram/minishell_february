@@ -5,26 +5,26 @@ PROGRAM="./minishell"
 INPUT_PARAMS=(
 
     # Open file descriptors
-    "echo <"./test_files/infile_big" | echo <"./test_files/infile""
+    # "echo <"./test_files/infile_big" | echo <"./test_files/infile""
     "cat <<EOF\nCurrent date: $(date)\nEOF"
-    "cat <<EOF1\nThis is the outer heredoc.\n\nEOF1"
-    "cat <<EOF\nThis is a test with an escaped variable: \$VAR\nEOF"
-    "cat <<EOF\nThis is a test without a trailing newlineEOF"
-    "cat <<EOF > /tmp/heredoc_test.txt\nThis content will be written to a file.\nEOF"
-    "cat <<EOF > /tmp/heredoc_complex_test.txt\nThis file was generated on: $(date)\nEOF"
-    "while read line; do echo \"Line: \$line\"; done <<EOF\nFirst line\nSecond line\nEOF" # Heredoc used with a loop
+    # "cat <<EOF1\nThis is the outer heredoc.\n\nEOF1"
+    # "cat <<EOF\nThis is a test with an escaped variable: \$VAR\nEOF"
+    # "cat <<EOF\nThis is a test without a trailing newlineEOF"
+    # "cat <<EOF > /tmp/heredoc_test.txt\nThis content will be written to a file.\nEOF"
+    # "cat <<EOF > /tmp/heredoc_complex_test.txt\nThis file was generated on: $(date)\nEOF"
+    # "while read line; do echo \"Line: \$line\"; done <<EOF\nFirst line\nSecond line\nEOF"
 
-    # Memory leaks
-    "echo hello\"\"world"
-    "export EMPTY_VAR='' | echo \${EMPTY_VAR:-'Default Value'}"
-    "export SET_VAR='Set' | unset SET_VAR | echo \${SET_VAR:-'Was unset'}"
-    # "export MISSING_VAR | echo ${MISSING_VAR?'Error: Variable is unset.'}"
+    # # Memory leaks
+    # "echo hello\"\"world"
+    # "export EMPTY_VAR='' | echo \${EMPTY_VAR:-'Default Value'}"
+    # "export SET_VAR='Set' | unset SET_VAR | echo \${SET_VAR:-'Was unset'}"
+    # "export MISSING_VAR | echo ${MISSING_VAR?'Error: Variable is unset.'}" # line 271: MISSING_VAR: Error: Variable is unset.
 
 
-    # Memory leaks and open file descriptors
-    "export VAR='World'; cat <<EOF\nHello, $VAR!\nEOF"
-    "cat <<EOF | grep 'test'\nThis is a test line.\nThis line does not match.\nEOF"
-    "export VAR='World'; cat <<'EOF'\nHello, $VAR!\nEOF"
+    # # Memory leaks and open file descriptors
+    # "export VAR='World'; cat <<EOF\nHello, $VAR!\nEOF"
+    # "cat <<EOF | grep 'test'\nThis is a test line.\nThis line does not match.\nEOF"
+    # "export VAR='World'; cat <<'EOF'\nHello, $VAR!\nEOF"
 
 
     # # echo

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 13:25:05 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/28 12:19:00 by hezhukov         ###   ########.fr       */
+/*   Updated: 2024/02/28 14:34:11 by device           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@ char	**path_getter(t_data *pnt, int i)
 
 	while (pnt->env[++i])
 	{
-		found = ft_strstr(pnt->env[i], "PATH=");
+		// found = ft_strstr(pnt->env[i], "PATH=");
+		found = ft_strstr(pnt->env[i], "PATH=/home");
 		if (found != NULL)
 			break ;
 	}
@@ -74,7 +75,7 @@ int	main(int argc, char *argv[], char **env_p)
 		pnt.path = path_getter(&pnt, -1);
 		if (tokener(&pnt) == 0 && extender(&pnt) == 0 && parser(&pnt) == 0)
 			execution(&pnt);
-		// close(pnt.fd_before);
+		close(pnt.fd_before);
 		cmdt_cleaning(&pnt);
 		pntr_cleaning(&pnt);
 	}
