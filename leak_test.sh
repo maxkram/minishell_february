@@ -1,12 +1,18 @@
 #!/bin/bash
 
+# Define ANSI color codes
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+NO_COLOR='\033[0m' # No Color
+
+
 PROGRAM="./minishell"
 # Define your test commands as before
 INPUT_PARAMS=(
 
     # Open file descriptors
     # "echo <"./test_files/infile_big" | echo <"./test_files/infile""
-    "cat <<EOF\nCurrent date: $(date)\nEOF"
+    # "cat <<EOF\nCurrent date: $(date)\nEOF"
     # "cat <<EOF1\nThis is the outer heredoc.\n\nEOF1"
     # "cat <<EOF\nThis is a test with an escaped variable: \$VAR\nEOF"
     # "cat <<EOF\nThis is a test without a trailing newlineEOF"
@@ -18,7 +24,7 @@ INPUT_PARAMS=(
     # "echo hello\"\"world"
     # "export EMPTY_VAR='' | echo \${EMPTY_VAR:-'Default Value'}"
     # "export SET_VAR='Set' | unset SET_VAR | echo \${SET_VAR:-'Was unset'}"
-    # "export MISSING_VAR | echo ${MISSING_VAR?'Error: Variable is unset.'}" # line 271: MISSING_VAR: Error: Variable is unset.
+    # # "export MISSING_VAR | echo ${MISSING_VAR?'Error: Variable is unset.'}" # line 271: MISSING_VAR: Error: Variable is unset.
 
 
     # # Memory leaks and open file descriptors
@@ -27,103 +33,103 @@ INPUT_PARAMS=(
     # "export VAR='World'; cat <<'EOF'\nHello, $VAR!\nEOF"
 
 
-    # # echo
-    # "echo hello world"
-    # "echo \"hello world\""
-    # "echo 'hello world'"
-    # "echo hello'world'"
-    # "echo hello\"\"world" # ❌
-    # "echo ''"
-    # "echo \"\$PWD\""
-    # "echo '\$PWD'"
-    # "echo \"aspas ->'\""
-    # "echo \"aspas -> ' \""
-    # "echo 'aspas ->\"'"
-    # "echo 'aspas -> \" '"
-    # "echo \"> >> < * ? [ ] | ; [ ] || && ( ) & # \$  <<\""
-    # "echo '> >> < * ? [ ] | ; [ ] || && ( ) & # \$  <<'"
-    # "echo \"exit_code ->\$? user ->\$USER home -> \$HOME\""
-    # "echo 'exit_code ->\$? user ->\$USER home -> \$HOME'"
-    # "echo \$"
-    # "echo \$?"
-    # "echo \$?HELLO"
-    # "echo Hello, World!"  # Basic command
-    # "echo 'Hello, World!'"  # Single quotes
-    # "echo \"Hello, World!\""  # Double quotes
-    # "echo Hello\, World\!"  # Escape characters
-    # "echo 'Hello, '\"World!\""  # Mixed quotes
-    # "echo \$HOME"  # Variable expansion
-    # "echo \$((2 + 2))"  # Arithmetic expansion
-    # "echo $(echo Nested)"  # Command substitution
-    # "echo `echo Backticks`"  # Command substitution with backticks
-    # "echo; echo Separate"  # Semicolon separator
-    # "echo 'Single quote -> '\"'\"' <- Single quote'"  # Single quotes inside double quotes
-    # "echo \"Double quote -> '\"'\"' <- Double quote\""  # Double quotes inside single quotes
-    # "echo Text > /tmp/output.txt"  # Redirection
-    # "cat < /tmp/output.txt"  # Input redirection
-    # "echo First && echo Second"  # AND list
-    # "echo First || echo Failed"  # OR list
-    # "echo \"Nested -> \$(echo command)\""  # Nested command substitution
-    # "echo 'A space -> '\"\ \""  # Escaped space
-    # "echo \"A new\nline\""  # Escaped new line
-    # "echo -e \"Tab\tcharacter\""  # Tab character with -e option
-    # "echo \"A quote ' inside a quote\""  # Quote inside quote
-    # "echo 'A quote \" inside a quote'"  # Quote inside quote reversed
+    # echo
+    "echo hello world" # Test 1
+    "echo \"hello world\"" # Test 2
+    "echo 'hello world'" # Test 3
+    "echo hello'world'" # Test 4
+    # "echo hello\"\"world" # Test 5
+    # "echo ''" # Test 6
+    # "echo \"\$PWD\"" # Test 7
+    # "echo '\$PWD'" # Test 8
+    # "echo \"aspas ->'\"" # Test 9
+    # "echo \"aspas -> ' \"" # Test 10
+    # "echo 'aspas ->\"'" # Test 11
+    # "echo 'aspas -> \" '" # Test 12
+    # "echo \"> >> < * ? [ ] | ; [ ] || && ( ) & # \$  <<\"" # Test 13
+    # "echo '> >> < * ? [ ] | ; [ ] || && ( ) & # \$  <<'" # Test 14
+    # "echo \"exit_code ->\$? user ->\$USER home -> \$HOME\"" # Test 15
+    # "echo 'exit_code ->\$? user ->\$USER home -> \$HOME'" # Test 16
+    # "echo \$" # Test 17
+    # "echo \$?" # Test 18
+    # "echo \$?HELLO" # Test 19
+    # "echo Hello, World!" # Test 20 (no quotes)
+    # "echo 'Hello, World!'" # Test 21 (single quotes)
+    # "echo \"Hello, World!\""  # Test 22 (double quotes)
+    # "echo Hello\, World\!"  # Test 23 (escaped characters)
+    # "echo 'Hello, '\"World!\"" # Test 24 (single quotes with escaped double quotes)
+    # "echo \$HOME" # Test 25 (variable expansion)
+    # "echo \$((2 + 2))"  # Test 26 (arithmetic expansion)
+    # "echo $(echo Nested)"  # Test 27 (command substitution)
+    # "echo `echo Backticks`"  # Test 28 (backticks)
+    # "echo; echo Separate"  # Test 29 (multiple commands)
+    # "echo 'Single quote -> '\"'\"' <- Single quote'" # Test 30 (single quotes inside single quotes)
+    # "echo \"Double quote -> '\"'\"' <- Double quote\"" # Test 31 (single quotes inside double quotes)
+    # "echo Text > /tmp/output.txt" # Test 32 (output redirection)
+    # "cat < /tmp/output.txt" # Test 33 (input redirection)
+    # "echo First && echo Second" # Test 34 (AND list)
+    # "echo First || echo Failed" # Test 35 (OR list)
+    # "echo \"Nested -> \$(echo command)\"" # Test 36 (nested command substitution)
+    # "echo 'A space -> '\"\ \"" # Test 37 (space inside quotes)
+    # "echo \"A new\nline\"" # Test 38 (newline inside double quotes)
+    # "echo -e \"Tab\tcharacter\"" # Test 39 (tab character)
+    # "echo \"A quote ' inside a quote\"" # Test 40 (quote inside double quotes)
+    # "echo 'A quote \" inside a quote'" # Test 41 (quote inside single quotes)
 
     # # exit
-    # "exit"
-    # "exit 0"
-    # "exit 1"
-    # "exit 255"
-    # "exit 256" # Depending on your shell, this might wrap around or be treated as an error
-    # "exit -1"
-    # "exit 42"
-    # "exit +42"
-    # "exit 9999999999" # Large number, potentially out-of-range
-    # "exit -9999999999" # Large negative number
-    # "exit abc" # Non-numeric argument
-    # "exit 42abc" # Numeric followed by characters
-    # "exit 42 58" # Multiple arguments, which should be invalid for exit
+    # "exit" # Test 42 (no arguments)
+    # "exit 0" # Test 43 (numeric argument)
+    # "exit 1" # Test 44 (numeric argument)
+    # "exit 255" # Test 45 (numeric argument)
+    # "exit 256" # Test 46 (numeric argument)
+    # "exit -1" # Test 47 (negative argument)
+    # "exit 42" # Test 48 (numeric argument)
+    # "exit +42" # Test 49 (positive argument)
+    # "exit 9999999999" # Test 50 (large positive number)
+    # "exit -9999999999" # Test 51 (large negative number)
+    # "exit abc" # Test 52 (non-numeric argument)
+    # "exit 42abc" # Test 53 (non-numeric argument)
+    # "exit 42 58" # Test 54 (too many arguments)
 
     # # cd
-    # "cd /"  # Change to the root directory
-    # "cd /tmp"  # Change to the /tmp directory
-    # "cd /var/log"  # Change to the /var/log directory
-    # "cd .."  # Move up one directory
-    # "cd ../.."  # Move up two directories
-    # "cd ./"  # Stay in the current directory
-    # "cd -"  # Switch to the previous directory
-    # "cd \$HOME"  # Change to the user's home directory
-    # "cd \$PWD"  # Change to the current directory using PWD variable
-    # "cd \"Directory With Spaces\""  # Quotes around directory name with spaces
-    # "cd Directory\\ With\\ Spaces"  # Escape spaces within directory name
-    # "cd ./subdir"  # Change to a subdirectory
-    # "cd subdir/anotherdir"  # Change to a nested directory via relative path
-    # "cd nonexistentdir"  # Attempt to change to a directory that does not exist
-    # "cd /root"  # Attempt to change to a directory where the user likely lacks permissions
-    # "cd"  # Without any arguments, should change to the home directory
-    # "cd ~"  # Change to the home directory using tilde
-    # "cd ~/subdir"  # Change to a subdirectory within the home directory
-    # "cd ///"  # Multiple slashes, should resolve to root
-    # "cd ..//subdir"  # Use of multiple slashes in a relative path
+    # "cd /"  # Test 55 (root directory)
+    # "cd /tmp"  # Test 56 (existing directory)
+    # "cd /var/log"  # Test 57 (existing directory)
+    # "cd .."  # Test 58 (parent directory)
+    # "cd ../.."  # Test 59 (grandparent directory)
+    # "cd ./"  # Test 60 (current directory)
+    # "cd -"  # Test 61 (previous directory)
+    # "cd \$HOME"  # Test 62 (home directory)
+    # "cd \$PWD"  # Test 63 (current directory)
+    # "cd \"Directory With Spaces\""  # Test 64 (directory with spaces)
+    # "cd Directory\\ With\\ Spaces"  # Test 65 (directory with spaces)
+    # "cd ./subdir"  # Test 66 (subdirectory)
+    # "cd subdir/anotherdir"  # Test 67 (subdirectory)
+    # "cd nonexistentdir"  # Test 68 (nonexistent directory)
+    # "cd /root"  # Test 69 (directory with restricted access)
+    # "cd"  # Test 70 (no arguments)
+    # "cd ~"  # Test 71 (home directory)
+    # "cd ~/subdir"  # Test 72 (subdirectory)
+    # "cd ///"  # Test 73 (redundant slashes)
+    # "cd ..//subdir"  # Test 74 (redundant slashes)
 
     # # env
-    # "env"  # Display all environment variables
-    # "env | grep PATH"  # Display the PATH environment variable
-    # "env | grep HOME"  # Display the HOME environment variable
-    # "env -i"  # Run env with an empty environment
-    # "env -i ls"  # Run a command (ls) with an empty environment
-    # "env | sort"  # Display all environment variables sorted alphabetically
-    # "env | wc -l"  # Count the number of environment variables
-    # "env -i env"  # Display environment variables after resetting to empty
-    # "env VAR1=test env"  # Set VAR1 and display environment variables
-    # "env VAR1=test VAR2=another_test env"  # Set multiple variables and display environment
-    # "env -i VAR1=test ls"  # Run a command with a single environment variable set
-    # "env | grep VAR1"  # Check if VAR1 is set in the environment
+    # "env"  # Test 75 (no arguments)
+    # "env | grep PATH"  # Test 76 (display PATH variable)
+    # "env | grep HOME"  # Test 77 (display HOME variable)
+    # "env -i"  # Test 78 (reset environment)
+    # "env -i ls"  # Test 79 (reset environment and run command)
+    # "env | sort"  # Test 80 (sort environment variables)
+    # "env | wc -l"  # Test 81 (count environment variables)
+    # "env -i env" # Test 82 (reset environment and display environment variables)
+    # "env VAR1=test env"  # Test 83 (set variable and display environment)
+    # "env VAR1=test VAR2=another_test env" # Test 84 (set multiple variables and display environment)
+    # "env -i VAR1=test ls"  # Test 85 (reset environment and set variable for command)
+    # "env | grep VAR1"  # Test 86 (display variable set in previous command)
 
     # # unset
-    # "export TEST_VAR1=hello && unset TEST_VAR1 && env | grep TEST_VAR1"  # Unset a variable and check it's gone
-    # "export TEST_VAR2=world && unset TEST_VAR2 && echo \$TEST_VAR2"  # Unset a variable and attempt to echo its value
+    # "export TEST_VAR1=hello && unset TEST_VAR1 && env | grep TEST_VAR1"  # Test 87 (unset variable and check it's gone)
+    # "export TEST_VAR2=world && unset TEST_VAR2 && echo \$TEST_VAR2"  # Test 88 (unset variable and check it's gone)
     # "export TEST_VAR3=testing && unset TEST_VAR3 TEST_VAR4 && env | grep TEST_VAR3"  # Unset multiple variables, check first is gone
     # "export TEST_VAR4=anotherTest && unset TEST_VAR3 TEST_VAR4 && env | grep TEST_VAR4"  # Unset multiple variables, check second is gone
     # "unset PATH && echo \$PATH"  # Unset PATH and check it's gone
@@ -270,10 +276,15 @@ INPUT_PARAMS=(
 
 )
 
-# Use a counter to create unique filenames
+# Initialize counters
 COUNTER=0
+SUCCESS_COUNT=0
+TOTAL_COUNT=0
 
 for PARAM in "${INPUT_PARAMS[@]}"; do
+    # Increment the total test count
+    TOTAL_COUNT=$((TOTAL_COUNT + 1))
+
     # Use a simpler scheme for filenames
     SAFE_PARAM="test_${COUNTER}"
     COUNTER=$((COUNTER + 1))
@@ -285,9 +296,7 @@ exit
 EOF
 
     # Check for memory leaks
-    if
-    #    ! grep -q "file descriptor" "/tmp/valgrind_output_${SAFE_PARAM}.txt" && \
-       ! grep "file descriptor" "/tmp/valgrind_output_${SAFE_PARAM}.txt" | awk '/file descriptor [34567]:/ {print; f=1} END {exit !f}' && \
+    if ! grep "file descriptor" "/tmp/valgrind_output_${SAFE_PARAM}.txt" | awk '/file descriptor [34567]:/ {print; f=1} END {exit !f}' && \
        ! grep -q "Invalid read of size " "/tmp/valgrind_output_${SAFE_PARAM}.txt" && \
        ! grep -q "Invalid write of size " "/tmp/valgrind_output_${SAFE_PARAM}.txt" && \
        ! grep -q "invalid file descriptor" "/tmp/valgrind_output_${SAFE_PARAM}.txt" && \
@@ -296,11 +305,12 @@ EOF
        grep -q "indirectly lost: 0 bytes in 0 blocks" "/tmp/valgrind_output_${SAFE_PARAM}.txt" && \
        grep -q "possibly lost: 0 bytes in 0 blocks" "/tmp/valgrind_output_${SAFE_PARAM}.txt"; then
         echo "✅ Test ${COUNTER}: $PARAM"
+        # Increment the success test count
+        SUCCESS_COUNT=$((SUCCESS_COUNT + 1))
     else
         echo "❌ Test ${COUNTER}: $PARAM"
         # Uncomment the following lines to print debugging output
         echo "Debugging output for Test ${COUNTER}:"
-        # grep "file descriptor" "/tmp/valgrind_output_${SAFE_PARAM}.txt"
         grep "file descriptor" "/tmp/valgrind_output_${SAFE_PARAM}.txt" | awk '/file descriptor [34567]:/'
         grep "invalid file descriptor" "/tmp/valgrind_output_${SAFE_PARAM}.txt"
         grep "Invalid read of size" "/tmp/valgrind_output_${SAFE_PARAM}.txt"
@@ -310,3 +320,13 @@ EOF
         grep "possibly lost:" "/tmp/valgrind_output_${SAFE_PARAM}.txt"
     fi
 done
+
+# Check if all tests passed
+if [ "$SUCCESS_COUNT" -eq "$TOTAL_COUNT" ]; then
+    # If all tests passed, print the result in green
+    echo -e "${GREEN}Final Result: ${SUCCESS_COUNT}/${TOTAL_COUNT}${NO_COLOR}"
+else
+    # If any test failed, print the result in red
+    echo -e "${RED}Final Result: ${SUCCESS_COUNT}/${TOTAL_COUNT}${NO_COLOR}"
+fi
+

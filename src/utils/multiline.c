@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   multiline.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:28:36 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/28 14:31:53 by device           ###   ########.fr       */
+/*   Updated: 2024/02/28 16:28:50 by hezhukov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ static char	*name_create_multiline(int i)
 	if (with_itoa == NULL)
 		return (NULL);
 	file_name = ft_strcat(".tmp_hdoc", with_itoa);
+	// file_name = ft_strcat("/tmp/.tmp_hdoc", with_itoa);
 	free(with_itoa);
 	return (file_name);
 }
