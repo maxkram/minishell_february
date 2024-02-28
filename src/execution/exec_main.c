@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_main.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 13:54:35 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/27 18:01:50 by device           ###   ########.fr       */
+/*   Updated: 2024/02/27 18:10:52 by hezhukov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,5 +55,5 @@ void	execution(t_data *pnt)
 			return ((void)error_out(pnt, "pipe", 1));
 		execute_command(pnt, fd_pipe, i);
 	}
-	// wait_for_childs(pnt);
+	wait_for_childs(pnt);
 }

@@ -6,7 +6,7 @@
 /*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:28:36 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/24 10:21:57 by hezhukov         ###   ########.fr       */
+/*   Updated: 2024/02/27 19:11:56 by hezhukov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ int	create_heredoc(t_data *pnt, t_tab_cmd *tab_cmd, int i)
 	object = name_create_multiline(i);
 	if (!object)
 		return (error_out(pnt, "malloc issue", 1), 1);
-	file_descriptor = open(object, O_CREAT | O_TRUNC | O_RDWR, 0666);
+	file_descriptor = open(object, O_CREAT | O_TRUNC | O_RDWR | O_CLOEXEC, 0666);
 	if (file_descriptor < 0)
 		return (free(object), error_out(pnt, "minishell: open: ", 1));
 	stat = in_to_fd(pnt, file_descriptor, tab_cmd->redirections[i].value);

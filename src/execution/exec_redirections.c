@@ -6,7 +6,7 @@
 /*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 13:56:30 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/24 15:04:14 by hezhukov         ###   ########.fr       */
+/*   Updated: 2024/02/27 19:10:12 by hezhukov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	redirects_cmd_tab(t_data *pnt, t_tab_cmd *tab_cmd, int i)
 		if (tab_cmd->file_out != -1)
 			close(tab_cmd->file_out);
 		tab_cmd->file_out = open(tab_cmd->redirections[i].value,
-				O_WRONLY | O_CREAT | O_TRUNC, 0644);
+				O_WRONLY | O_CREAT | O_TRUNC | O_CLOEXEC, 0644);
 		if (tab_cmd->file_out == -1)
 			return (error_out(pnt, tab_cmd->redirections[i].value, 1));
 	}
@@ -28,7 +28,7 @@ int	redirects_cmd_tab(t_data *pnt, t_tab_cmd *tab_cmd, int i)
 		if (tab_cmd->file_out != -1)
 			close(tab_cmd->file_out);
 		tab_cmd->file_out = open(tab_cmd->redirections[i].value,
-				O_WRONLY | O_CREAT | O_APPEND, 0644);
+				O_WRONLY | O_CREAT | O_APPEND | O_CLOEXEC, 0644);
 		if (tab_cmd->file_out == -1)
 			return (error_out(pnt, tab_cmd->redirections[i].value, 1));
 	}
@@ -53,7 +53,7 @@ int	handle_input_redirection(t_data *pnt, t_tab_cmd *tab_cmd, int i)
 {
 	if (tab_cmd->file_in != -1)
 		close(tab_cmd->file_in);
-	tab_cmd->file_in = open(tab_cmd->redirections[i].value, O_RDONLY);
+	tab_cmd->file_in = open(tab_cmd->redirections[i].value, O_RDONLY | O_CLOEXEC);
 	if (tab_cmd->file_in == -1)
 		return (error_out(pnt, tab_cmd->redirections[i].value, 1));
 	return (EXIT_SUCCESS);

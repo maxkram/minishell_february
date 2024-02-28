@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 13:25:05 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/27 15:50:47 by device           ###   ########.fr       */
+/*   Updated: 2024/02/27 18:12:50 by hezhukov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	**path_getter(t_data *pnt, int i)
 
 	while (pnt->env[++i])
 	{
-		found = ft_strstr(pnt->env[i], "PATH=/home");
+		found = ft_strstr(pnt->env[i], "PATH=");
 		if (found != NULL)
 			break ;
 	}
@@ -68,7 +68,7 @@ int	main(int argc, char *argv[], char **env_p)
 		if (g_global_signal == 1 && g_global_signal--)
 			pnt.code_exit = 130;
 		if (!pnt.input)
-			built_exit(&pnt, NULL);
+			built_exit(&pnt, NULL, 0);
 		if (pnt.input[0] != '\0')
 			add_history(pnt.input);
 		pnt.path = path_getter(&pnt, -1);
