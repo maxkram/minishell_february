@@ -4,6 +4,43 @@ PROGRAM="./minishell"
 # Define your test commands as before
 INPUT_PARAMS=(
 
+    # open file descriptors
+    # "exit 0"
+    # "exit 1"
+    # "exit 255"
+    # "exit 256"
+    # "exit -1"
+    # "exit 42"
+    # "exit +42"
+    # "exit 9999999999"
+    # "exit -9999999999"
+    # "grep shell < /tmp/testfile.txt | sort > /tmp/sorted.txt"
+    # "cat < /tmp/testfile.txt | grep 'Hello' | sort -r > /tmp/sorted_greets.txt"
+    # "echo <"./test_files/infile_big" | echo <"./test_files/infile""
+    # "cat <"./test_files/infile" | echo hi"
+    # "cat <"./test_files/infile" | grep hello"
+    # "export VAR='World'; cat <<EOF\nHello, $VAR!\nEOF"
+    # "cat <<EOF\nCurrent date: $(date)\nEOF"
+    # "cat <<EOF1\nThis is the outer heredoc.\n\nEOF1"
+    # "cat <<EOF\nThis is a test with an escaped variable: \$VAR\nEOF"
+    # "cat <<EOF\nThis is a test without a trailing newlineEOF"
+    # "cat <<EOF > /tmp/heredoc_test.txt\nThis content will be written to a file.\nEOF"
+    # "cat <<EOF | grep 'test'\nThis is a test line.\nThis line does not match.\nEOF"
+    # "export VAR='World'; cat <<'EOF'\nHello, $VAR!\nEOF"
+    # "cat <<EOF | grep 'test'\nThis is a test line.\nThis line does not match.\nEOF"
+    # "cat <<EOF > /tmp/heredoc_complex_test.txt\nThis file was generated on: $(date)\nEOF"
+    # "while read line; do echo "Line: $line"; done <<EOF\nFirst line\nSecond line\nEOF"
+
+
+    # # memory leaks
+    # "export EMPTY_VAR='' | echo ${EMPTY_VAR:-'Default Value'}"
+    # "export SET_VAR='Set' | unset SET_VAR | echo ${SET_VAR:-'Was unset'}"
+    # "export VAR='World'; cat <<EOF\nHello, $VAR!\nEOF"
+    # "export VAR='World'; cat <<'EOF'\nHello, $VAR!\nEOF"
+
+    # # segfaults
+    # "cat '<<' EOF"
+
     # # echo
     "echo hello world"
     "echo \"hello world\""
