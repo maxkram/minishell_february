@@ -4,44 +4,30 @@ PROGRAM="./minishell"
 # Define your test commands as before
 INPUT_PARAMS=(
 
-    # open file descriptors
-    "exit 0"
-    "exit 1"
-    "exit 255"
-    "exit 256"
-    "exit -1"
-    "exit 42"
-    "exit +42"
-    "exit 9999999999"
-    "exit -9999999999"
-    "grep shell < /tmp/testfile.txt | sort > /tmp/sorted.txt"
-    "cat < /tmp/testfile.txt | grep 'Hello' | sort -r > /tmp/sorted_greets.txt"
+    # Open file descriptors
     "echo <"./test_files/infile_big" | echo <"./test_files/infile""
-    "cat <"./test_files/infile" | echo hi"
-    "cat <"./test_files/infile" | grep hello"
-    "export VAR='World'; cat <<EOF\nHello, $VAR!\nEOF"
     "cat <<EOF\nCurrent date: $(date)\nEOF"
     "cat <<EOF1\nThis is the outer heredoc.\n\nEOF1"
     "cat <<EOF\nThis is a test with an escaped variable: \$VAR\nEOF"
     "cat <<EOF\nThis is a test without a trailing newlineEOF"
     "cat <<EOF > /tmp/heredoc_test.txt\nThis content will be written to a file.\nEOF"
-    "cat <<EOF | grep 'test'\nThis is a test line.\nThis line does not match.\nEOF"
-    "export VAR='World'; cat <<'EOF'\nHello, $VAR!\nEOF"
-    "cat <<EOF | grep 'test'\nThis is a test line.\nThis line does not match.\nEOF"
     "cat <<EOF > /tmp/heredoc_complex_test.txt\nThis file was generated on: $(date)\nEOF"
-    "while read line; do echo "Line: $line"; done <<EOF\nFirst line\nSecond line\nEOF"
+    "while read line; do echo \"Line: \$line\"; done <<EOF\nFirst line\nSecond line\nEOF" # Heredoc used with a loop
+
+    # Memory leaks
+    "echo hello\"\"world"
+    "export EMPTY_VAR='' | echo \${EMPTY_VAR:-'Default Value'}"
+    "export SET_VAR='Set' | unset SET_VAR | echo \${SET_VAR:-'Was unset'}"
+    # "export MISSING_VAR | echo ${MISSING_VAR?'Error: Variable is unset.'}"
 
 
-    # memory leaks
-    "export EMPTY_VAR='' | echo ${EMPTY_VAR:-'Default Value'}"
-    "export SET_VAR='Set' | unset SET_VAR | echo ${SET_VAR:-'Was unset'}"
+    # Memory leaks and open file descriptors
     "export VAR='World'; cat <<EOF\nHello, $VAR!\nEOF"
+    "cat <<EOF | grep 'test'\nThis is a test line.\nThis line does not match.\nEOF"
     "export VAR='World'; cat <<'EOF'\nHello, $VAR!\nEOF"
 
-    # segfaults
-    "cat '<<' EOF"
 
-    # # # echo
+    # # echo
     # "echo hello world"
     # "echo \"hello world\""
     # "echo 'hello world'"
@@ -293,7 +279,7 @@ for PARAM in "${INPUT_PARAMS[@]}"; do
     COUNTER=$((COUNTER + 1))
 
     # Run valgrind with the current command, redirecting output to a file
-    valgrind --track-fds=yes $PROGRAM <<EOF > "/tmp/valgrind_output_${SAFE_PARAM}.txt" 2>&1
+    valgrind --leak-check=full --track-fds=yes $PROGRAM <<EOF > "/tmp/valgrind_output_${SAFE_PARAM}.txt" 2>&1
 $PARAM
 exit
 EOF
@@ -301,7 +287,7 @@ EOF
     # Check for memory leaks
     if
     #    ! grep -q "file descriptor" "/tmp/valgrind_output_${SAFE_PARAM}.txt" && \
-       ! grep "file descriptor" "/tmp/valgrind_output_${SAFE_PARAM}.txt" | awk '/file descriptor [4567]:/ {print; f=1} END {exit !f}' && \
+       ! grep "file descriptor" "/tmp/valgrind_output_${SAFE_PARAM}.txt" | awk '/file descriptor [34567]:/ {print; f=1} END {exit !f}' && \
        ! grep -q "Invalid read of size " "/tmp/valgrind_output_${SAFE_PARAM}.txt" && \
        ! grep -q "Invalid write of size " "/tmp/valgrind_output_${SAFE_PARAM}.txt" && \
        ! grep -q "invalid file descriptor" "/tmp/valgrind_output_${SAFE_PARAM}.txt" && \
@@ -315,7 +301,7 @@ EOF
         # Uncomment the following lines to print debugging output
         echo "Debugging output for Test ${COUNTER}:"
         # grep "file descriptor" "/tmp/valgrind_output_${SAFE_PARAM}.txt"
-        grep "file descriptor" "/tmp/valgrind_output_${SAFE_PARAM}.txt" | awk '/file descriptor [4567]:/'
+        grep "file descriptor" "/tmp/valgrind_output_${SAFE_PARAM}.txt" | awk '/file descriptor [34567]:/'
         grep "invalid file descriptor" "/tmp/valgrind_output_${SAFE_PARAM}.txt"
         grep "Invalid read of size" "/tmp/valgrind_output_${SAFE_PARAM}.txt"
         grep "Invalid write of size" "/tmp/valgrind_output_${SAFE_PARAM}.txt"

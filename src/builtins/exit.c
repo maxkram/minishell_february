@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:25:17 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/27 20:48:53 by device           ###   ########.fr       */
+/*   Updated: 2024/02/28 13:01:11 by hezhukov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,13 @@ void	built_exit(t_data *pntr, t_tab_cmd *tab_cmd, int *pipe_fd)
 			total_clean(pntr);
 		}
 		if (cnt < 2)
+		{
+			close (pipe_fd[0]);
+			pipe_fd[0] = -1;
+			close (pipe_fd[1]);
+			pipe_fd[1] = -1;
 			exit(pntr->code_exit);
+		}
 		return ;
 	}
 	if (tab_cmd && tab_cmd->num_args > 2)

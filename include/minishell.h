@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:43:52 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/27 21:06:09 by device           ###   ########.fr       */
+/*   Updated: 2024/02/28 13:50:27 by hezhukov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,7 +152,7 @@ typedef struct s_data
 	int			first_stdout;
 	int			n_pipes;
 	t_set_mode	mode;
-	int			fd_pipe[2];
+	// int			fd_pipe[2];
 }	t_data;
 
 void	prompt_create(t_data *data);

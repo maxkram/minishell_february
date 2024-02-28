@@ -1,206 +1,24 @@
-✅ Test 1: exit 0
-✅ Test 2: exit 1
-✅ Test 3: exit 255
-✅ Test 4: exit 256
-✅ Test 5: exit -1
-✅ Test 6: exit 42
-✅ Test 7: exit +42
-✅ Test 8: exit 9999999999
-✅ Test 9: exit -9999999999
-✅ Test 10: grep shell < /tmp/testfile.txt | sort > /tmp/sorted.txt
-✅ Test 11: cat < /tmp/testfile.txt | grep 'Hello' | sort -r > /tmp/sorted_greets.txt
-==470258== Open file descriptor 5:
-❌ Test 12: echo <./test_files/infile_big | echo <./test_files/infile
-Debugging output for Test 12:
-==470258== Open file descriptor 5:
-==470258==    definitely lost: 0 bytes in 0 blocks
-==470258==    indirectly lost: 0 bytes in 0 blocks
-==470258==      possibly lost: 0 bytes in 0 blocks
-✅ Test 13: cat <./test_files/infile | echo hi
-✅ Test 14: cat <./test_files/infile | grep hello
-==470294== Open file descriptor 7: .tmp_hdoc0
-==470294== Open file descriptor 6:
-==470294== Open file descriptor 5:
-==470294== Open file descriptor 4:
-❌ Test 15: export VAR='World'; cat <<EOF\nHello, !\nEOF
-Debugging output for Test 15:
-==470294== Open file descriptor 7: .tmp_hdoc0
-==470294== Open file descriptor 6:
-==470294== Open file descriptor 5:
-==470294== Open file descriptor 4:
-> ==470294== Invalid read of size 1
-==470294==    definitely lost: 10 bytes in 1 blocks
-==470294==    indirectly lost: 0 bytes in 0 blocks
-==470294==      possibly lost: 0 bytes in 0 blocks
-==470309== Open file descriptor 7: .tmp_hdoc0
-==470309== Open file descriptor 6:
-==470309== Open file descriptor 5:
-==470309== Open file descriptor 4:
-❌ Test 16: cat <<EOF\nCurrent date: Tue Feb 27 09:19:53 PM EST 2024\nEOF
-Debugging output for Test 16:
-==470309== Open file descriptor 7: .tmp_hdoc0
-==470309== Open file descriptor 6:
-==470309== Open file descriptor 5:
-==470309== Open file descriptor 4:
-> ==470309== Invalid read of size 1
-==470309==    definitely lost: 0 bytes in 0 blocks
-==470309==    indirectly lost: 0 bytes in 0 blocks
-==470309==      possibly lost: 0 bytes in 0 blocks
-==470352== Open file descriptor 7: .tmp_hdoc0
-==470352== Open file descriptor 6:
-==470352== Open file descriptor 5:
-==470352== Open file descriptor 4:
-❌ Test 17: cat <<EOF1\nThis is the outer heredoc.\n\nEOF1
-Debugging output for Test 17:
-==470352== Open file descriptor 7: .tmp_hdoc0
-==470352== Open file descriptor 6:
-==470352== Open file descriptor 5:
-==470352== Open file descriptor 4:
-> ==470352== Invalid read of size 1
-==470352==    definitely lost: 0 bytes in 0 blocks
-==470352==    indirectly lost: 0 bytes in 0 blocks
-==470352==      possibly lost: 0 bytes in 0 blocks
-==470378== Open file descriptor 7: .tmp_hdoc0
-==470378== Open file descriptor 6:
-==470378== Open file descriptor 5:
-==470378== Open file descriptor 4:
-❌ Test 18: cat <<EOF\nThis is a test with an escaped variable: $VAR\nEOF
-Debugging output for Test 18:
-==470378== Open file descriptor 7: .tmp_hdoc0
-==470378== Open file descriptor 6:
-==470378== Open file descriptor 5:
-==470378== Open file descriptor 4:
-> ==470378== Invalid read of size 1
-==470378==    definitely lost: 0 bytes in 0 blocks
-==470378==    indirectly lost: 0 bytes in 0 blocks
-==470378==      possibly lost: 0 bytes in 0 blocks
-==470398== Open file descriptor 7: .tmp_hdoc0
-==470398== Open file descriptor 6:
-==470398== Open file descriptor 5:
-==470398== Open file descriptor 4:
-❌ Test 19: cat <<EOF\nThis is a test without a trailing newlineEOF
-Debugging output for Test 19:
-==470398== Open file descriptor 7: .tmp_hdoc0
-==470398== Open file descriptor 6:
-==470398== Open file descriptor 5:
-==470398== Open file descriptor 4:
-> ==470398== Invalid read of size 1
-==470398==    definitely lost: 0 bytes in 0 blocks
-==470398==    indirectly lost: 0 bytes in 0 blocks
-==470398==      possibly lost: 0 bytes in 0 blocks
-==470448== Open file descriptor 7: .tmp_hdoc0
-==470448== Open file descriptor 6:
-==470448== Open file descriptor 5:
-==470448== Open file descriptor 4:
-❌ Test 20: cat <<EOF > /tmp/heredoc_test.txt\nThis content will be written to a file.\nEOF
-Debugging output for Test 20:
-==470448== Open file descriptor 7: .tmp_hdoc0
-==470448== Open file descriptor 6:
-==470448== Open file descriptor 5:
-==470448== Open file descriptor 4:
-> ==470448== Invalid read of size 1
-==470448==    definitely lost: 0 bytes in 0 blocks
-==470448==    indirectly lost: 0 bytes in 0 blocks
-==470448==      possibly lost: 0 bytes in 0 blocks
-==470467== Open file descriptor 7: .tmp_hdoc0
-==470467== Open file descriptor 6:
-==470467== Open file descriptor 5:
-==470467== Open file descriptor 4:
-❌ Test 21: cat <<EOF | grep 'test'\nThis is a test line.\nThis line does not match.\nEOF
-Debugging output for Test 21:
-==470467== Open file descriptor 7: .tmp_hdoc0
-==470467== Open file descriptor 6:
-==470467== Open file descriptor 5:
-==470467== Open file descriptor 4:
-> ==470467== Invalid read of size 1
-==470467==    definitely lost: 5 bytes in 1 blocks
-==470467==    indirectly lost: 0 bytes in 0 blocks
-==470467==      possibly lost: 0 bytes in 0 blocks
-==470501== Open file descriptor 7: .tmp_hdoc0
-==470501== Open file descriptor 6:
-==470501== Open file descriptor 5:
-==470501== Open file descriptor 4:
-❌ Test 22: export VAR='World'; cat <<'EOF'\nHello, !\nEOF
-Debugging output for Test 22:
-==470501== Open file descriptor 7: .tmp_hdoc0
-==470501== Open file descriptor 6:
-==470501== Open file descriptor 5:
-==470501== Open file descriptor 4:
-> ==470501== Invalid read of size 1
-==470501==    definitely lost: 14 bytes in 2 blocks
-==470501==    indirectly lost: 0 bytes in 0 blocks
-==470501==      possibly lost: 0 bytes in 0 blocks
-==470535== Open file descriptor 7: .tmp_hdoc0
-==470535== Open file descriptor 6:
-==470535== Open file descriptor 5:
-==470535== Open file descriptor 4:
-❌ Test 23: cat <<EOF | grep 'test'\nThis is a test line.\nThis line does not match.\nEOF
-Debugging output for Test 23:
-==470535== Open file descriptor 7: .tmp_hdoc0
-==470535== Open file descriptor 6:
-==470535== Open file descriptor 5:
-==470535== Open file descriptor 4:
-> ==470535== Invalid read of size 1
-==470535==    definitely lost: 5 bytes in 1 blocks
-==470535==    indirectly lost: 0 bytes in 0 blocks
-==470535==      possibly lost: 0 bytes in 0 blocks
-==470555== Open file descriptor 7: .tmp_hdoc0
-==470555== Open file descriptor 6:
-==470555== Open file descriptor 5:
-==470555== Open file descriptor 4:
-❌ Test 24: cat <<EOF > /tmp/heredoc_complex_test.txt\nThis file was generated on: Tue Feb 27 09:19:53 PM EST 2024\nEOF
-Debugging output for Test 24:
-==470555== Open file descriptor 7: .tmp_hdoc0
-==470555== Open file descriptor 6:
-==470555== Open file descriptor 5:
-==470555== Open file descriptor 4:
-> ==470555== Invalid read of size 1
-==470555==    definitely lost: 0 bytes in 0 blocks
-==470555==    indirectly lost: 0 bytes in 0 blocks
-==470555==      possibly lost: 0 bytes in 0 blocks
-✅ Test 25: while read line; do echo Line:
-==470616== Open file descriptor 7: .tmp_hdoc0
-==470616== Open file descriptor 6:
-==470616== Open file descriptor 5:
-==470616== Open file descriptor 4:
-❌ Test 26: ; done <<EOF\nFirst line\nSecond line\nEOF
-Debugging output for Test 26:
-==470616== Open file descriptor 7: .tmp_hdoc0
-==470616== Open file descriptor 6:
-==470616== Open file descriptor 5:
-==470616== Open file descriptor 4:
-> ==470616== Invalid read of size 1
-==470616==    definitely lost: 0 bytes in 0 blocks
-==470616==    indirectly lost: 0 bytes in 0 blocks
-==470616==      possibly lost: 0 bytes in 0 blocks
-✅ Test 27: export EMPTY_VAR='' | echo 'Default Value'
-✅ Test 28: export SET_VAR='Set' | unset SET_VAR | echo 'Was unset'
-==470665== Open file descriptor 7: .tmp_hdoc0
-==470665== Open file descriptor 6:
-==470665== Open file descriptor 5:
-==470665== Open file descriptor 4:
-❌ Test 29: export VAR='World'; cat <<EOF\nHello, !\nEOF
-Debugging output for Test 29:
-==470665== Open file descriptor 7: .tmp_hdoc0
-==470665== Open file descriptor 6:
-==470665== Open file descriptor 5:
-==470665== Open file descriptor 4:
-> ==470665== Invalid read of size 1
-==470665==    definitely lost: 10 bytes in 1 blocks
-==470665==    indirectly lost: 0 bytes in 0 blocks
-==470665==      possibly lost: 0 bytes in 0 blocks
-==470699== Open file descriptor 7: .tmp_hdoc0
-==470699== Open file descriptor 6:
-==470699== Open file descriptor 5:
-==470699== Open file descriptor 4:
-❌ Test 30: export VAR='World'; cat <<'EOF'\nHello, !\nEOF
-Debugging output for Test 30:
-==470699== Open file descriptor 7: .tmp_hdoc0
-==470699== Open file descriptor 6:
-==470699== Open file descriptor 5:
-==470699== Open file descriptor 4:
-> ==470699== Invalid read of size 1
-==470699==    definitely lost: 14 bytes in 2 blocks
-==470699==    indirectly lost: 0 bytes in 0 blocks
-==470699==      possibly lost: 0 bytes in 0 blocks
-✅ Test 31: cat '<<' EOF
+
+# This version passes 145/146 of minishell tester tests
+
+# Open file descriptors
+❌ Test 194: echo <"./test_files/infile_big" | echo <"./test_files/infile"
+❌ Test 207: cat <<EOF\nCurrent date: $(date)\nEOF
+❌ Test 208: cat <<EOF1\nThis is the outer heredoc.\n\nEOF1
+❌ Test 209: cat <<EOF\nThis is a test with an escaped variable: \$VAR\nEOF
+❌ Test 210: cat <<EOF\nThis is a test without a trailing newlineEOF
+❌ Test 211: cat <<EOF > /tmp/heredoc_test.txt\nThis content will be written to a file.\nEOF
+❌ Test 214: cat <<EOF > /tmp/heredoc_complex_test.txt\nThis file was generated on: $(date)\nEOF
+❌ Test 215: while read line; do echo "Line: $line"; done <<EOF\nFirst line\nSecond line\nEOF
+
+# Memory leaks
+❌ Test 5: echo hello""world
+❌ Test 145: export EMPTY_VAR='' | echo ${EMPTY_VAR:-'Default Value'}
+❌ Test 146: export SET_VAR='Set' | unset SET_VAR | echo ${SET_VAR:-'Was unset'}
+❌ Test 155: export MISSING_VAR | echo ${MISSING_VAR?'Error: Variable is unset.'}
+
+
+# Memory leaks and open file descriptors
+❌ Test 206: export VAR='World'; cat <<EOF\nHello, $VAR!\nEOF
+❌ Test 212: cat <<EOF | grep 'test'\nThis is a test line.\nThis line does not match.\nEOF
+❌ Test 213: export VAR='World'; cat <<'EOF'\nHello, $VAR!\nEOF
