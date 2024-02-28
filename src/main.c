@@ -6,7 +6,7 @@
 /*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 13:25:05 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/28 16:40:57 by hezhukov         ###   ########.fr       */
+/*   Updated: 2024/02/28 18:24:49 by hezhukov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	main(int argc, char *argv[], char **env_p)
 		if (g_global_signal == 1 && g_global_signal--)
 			pnt.code_exit = 130;
 		if (!pnt.input)
-			built_exit(&pnt, NULL, 0);
+			built_exit(&pnt, NULL);
 		if (pnt.input[0] != '\0')
 			add_history(pnt.input);
 		pnt.path = path_getter(&pnt, -1);
