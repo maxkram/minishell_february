@@ -28,7 +28,7 @@ int	make_var(t_data *pnt, char *var_name, char *value)
 	free(tmp);
 	free(pnt->env[i]);
 	pnt->env[i] = nvar;
-	return (0);
+	return (EXIT_SUCCESS);
 }
 
 int	change_folder(t_data *pnt, char *path, char *pwd)
@@ -51,11 +51,11 @@ int	change_folder(t_data *pnt, char *path, char *pwd)
 			return (1);
 		}
 		free(pwd);
-		return (0);
+		return (EXIT_SUCCESS);
 	}
 	if (make_var(pnt, "OLDPWD", pwd) != 0 && ++pnt->code_exit)
 		return (free(pwd), 1);
-	return (0);
+	return (EXIT_SUCCESS);
 }
 
 char	*get_target_path(t_tab_cmd *tab_cmd)
@@ -98,7 +98,7 @@ int	change_directory_and_update_pwd(t_data *pnt, char *path)
 		return (1);
 	}
 	free(pwd);
-	return (0);
+	return (EXIT_SUCCESS);
 }
 
 int	built_cd(t_data *pnt, t_tab_cmd *tab_cmd)

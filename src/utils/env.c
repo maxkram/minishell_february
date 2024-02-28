@@ -38,7 +38,7 @@ int	create_env_var(t_data *pntr, char *key, char *keep)
 	new_env_array[i] = NULL;
 	free(pntr->env);
 	pntr->env = new_env_array;
-	return (0);
+	return (EXIT_SUCCESS);
 }
 
 int	increase_shlvl(t_data *pntr)
@@ -63,7 +63,7 @@ int	increase_shlvl(t_data *pntr)
 		return (1);
 	free(pntr->env[shlvl]);
 	pntr->env[shlvl] = new_shlvl;
-	return (0);
+	return (EXIT_SUCCESS);
 }
 
 int	print_env_vars(t_data *data)

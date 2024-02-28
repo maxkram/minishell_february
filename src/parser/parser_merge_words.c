@@ -36,7 +36,7 @@ int	copy_normalization(t_token *new_tokens_array, int *i, int *j, char **tmp)
 			return (1);
 		*j = *j + 1;
 	}
-	return (0);
+	return (EXIT_SUCCESS);
 }
 
 void	clean_double_pointer(char **pnt)
@@ -76,7 +76,7 @@ int	words_splitting(t_data *pnt, t_token *new_tkns, int *i, int *j)
 		return (error_out(pnt, "malloc", 1));
 	}
 	clean_double_pointer(temp);
-	return (0);
+	return (EXIT_SUCCESS);
 }
 
 /**
@@ -115,7 +115,7 @@ int	copy_concat_create(t_data *data, t_token *new_tokens, \
 				"Memory allocation failed in ft_strdup", 1));
 	}
 	*dest_index += 1;
-	return (0);
+	return (EXIT_SUCCESS);
 }
 
 
@@ -173,5 +173,5 @@ int	token_copy(t_data *pnt, t_token *tokens_new, int *i, int *j)
 	else
 		// *j = *j + 1;
 		(*j)++;
-	return (0);
+	return (EXIT_SUCCESS);
 }

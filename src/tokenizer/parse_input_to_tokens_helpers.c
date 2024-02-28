@@ -69,7 +69,7 @@ int	filling_quotes(t_data *pnt, char const *str, char tmp)
 	str++;
 	i = get_length_of_quotes(str, tmp);
 	if (i == -1)
-		return (0);
+		return (EXIT_SUCCESS);
 	pnt->tokens[++pnt->count_token - 1].value = ft_calloc(i + 1, sizeof(char));
 	if (!pnt->tokens[pnt->count_token - 1].value)
 		return (error_out(pnt, "ft_calloc", 1) - 2);

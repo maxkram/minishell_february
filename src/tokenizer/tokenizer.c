@@ -29,7 +29,7 @@ int	check_syntax_redirection(t_data *pnt, int i)
 	// else if (pnt->tokens[i].type == REDIRECT_OUT
 	// 	&& (check_if_redirection(pnt->tokens[i + 1].type) == 0))
 	// 	return (error_in_syntax(pnt->tokens[i + 1].type, pnt), 1);
-	return (0);
+	return (EXIT_SUCCESS);
 }
 
 int	syntax_checking(t_data *pnt)
@@ -58,7 +58,7 @@ int	syntax_checking(t_data *pnt)
 		else if (check_syntax_redirection(pnt, i) == 1)
 			return (1);
 	}
-	return (0);
+	return (EXIT_SUCCESS);
 }
 
 int	parse_input_to_tokens(t_data *pnt, int *i)
@@ -73,7 +73,7 @@ int	parse_input_to_tokens(t_data *pnt, int *i)
 		return (handle_quotes(pnt, i));
 	else if (pnt->input[*i] != ' ' && pnt->input[*i] != '\t')
 		return (handle_word(pnt, i));
-	return (0);
+	return (EXIT_SUCCESS);
 }
 
 int	tokener(t_data *pnt)

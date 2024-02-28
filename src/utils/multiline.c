@@ -98,7 +98,7 @@ static int	in_to_fd(t_data *pnt, int fd, char *delimiter)
 	set_mode(pnt, NON_INTERACT);
 	if (buffer != NULL)
 		free(buffer);
-	return (0);
+	return (EXIT_SUCCESS);
 }
 
 int	create_heredoc(t_data *pnt, t_tab_cmd *tab_cmd, int i)
@@ -127,5 +127,5 @@ int	create_heredoc(t_data *pnt, t_tab_cmd *tab_cmd, int i)
 		tab_cmd->last_multiline = ft_strdup_fd(object);
 	}
 	free(object);
-	return (0);
+	return (EXIT_SUCCESS);
 }

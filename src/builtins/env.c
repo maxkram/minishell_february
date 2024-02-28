@@ -73,5 +73,5 @@ int	built_env(t_data *data)
 	data->code_exit = 0;
 	while (data->env[++i])
 		ft_putendl_fd(data->env[i], STDOUT_FILENO);
-	return (0);
+	return (EXIT_SUCCESS);
 }

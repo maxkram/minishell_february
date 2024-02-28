@@ -42,7 +42,7 @@ int	add_argument(t_data *data, int command_index, \
 		ft_strdup_fd(data->tokens[token_index].value);
 	if (!data->cmdt[command_index].args[argument_count])
 		return (error_out(data, "ft_strdup_fd", 1) - 2);
-	return (0);
+	return (EXIT_SUCCESS);
 }
 
 void	finalize_arguments(t_data *data, int command_index, int argument_count)
@@ -68,7 +68,7 @@ int	process_token(t_data *data, int token_index, \
 	int command_index, int *argument_count)
 {
 	if (data->tokens[token_index].type == PIPE)
-		return (0);
+		return (EXIT_SUCCESS);
 	if (check_arguments(data->tokens[token_index].type) && \
 		(token_index == 0 || \
 		check_if_redirection(data->tokens[token_index - 1].type)))

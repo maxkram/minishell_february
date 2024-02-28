@@ -38,14 +38,14 @@ int	realloc_and_check(t_data *pnt)
 	if (pnt->count_token == pnt->max_token)
 		if (reallocate_tokens_if_max(pnt, pnt->max_token) == 1)
 			return (1);
-	return (0);
+	return (EXIT_SUCCESS);
 }
 
 int	handle_pipe(t_data *pnt)
 {
 	pnt->tokens[++pnt->count_token - 1].type = PIPE;
 	pnt->n_pipes++;
-	return (0);
+	return (EXIT_SUCCESS);
 }
 
 int	handle_quotes(t_data *pnt, int *i)
@@ -61,7 +61,7 @@ int	handle_quotes(t_data *pnt, int *i)
 		return (1);
 	}
 	*i += j;
-	return (0);
+	return (EXIT_SUCCESS);
 }
 
 int	handle_word(t_data *pnt, int *i)
@@ -72,5 +72,5 @@ int	handle_word(t_data *pnt, int *i)
 	if (j == -1)
 		return (error_out(pnt, "ft_calloc", 1));
 	*i += j;
-	return (0);
+	return (EXIT_SUCCESS);
 }
