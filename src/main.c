@@ -6,7 +6,7 @@
 /*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 13:25:05 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/27 20:13:26 by device           ###   ########.fr       */
+/*   Updated: 2024/02/27 22:22:23 by device           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ int	main(int argc, char *argv[], char **env_p)
 		pnt.path = path_getter(&pnt, -1);
 		if (tokener(&pnt) == 0 && extender(&pnt) == 0 && parser(&pnt) == 0)
 			execution(&pnt);
+		// close(pnt.fd_before);
 		cmdt_cleaning(&pnt);
 		pntr_cleaning(&pnt);
 	}

@@ -6,7 +6,7 @@
 /*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:28:06 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/27 17:27:20 by device           ###   ########.fr       */
+/*   Updated: 2024/02/27 22:09:42 by device           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,15 +80,33 @@ void	fd_cleaning(t_data *pntr, t_tab_cmd *tab_cmd, int i)
 		close(tab_cmd->out_fd);
 		tab_cmd->out_fd = -1;
 	}
-	else if (tab_cmd->in_fd != -1)
+	if (tab_cmd->in_fd != -1)
 	{
 		close(tab_cmd->in_fd);
-
+		tab_cmd->in_fd = -1;
+	}
+	if (tab_cmd->in_fd == -1 && tab_cmd->out_fd == -1)
+	{
+		if (pntr->fd_before != -1)
+		{
+			close(pntr->fd_before);
+			pntr->fd_before = -1;
+		}
 	}
 	if (pntr->cmdt[i].last_multiline)
 	{
 		unlink(pntr->cmdt[i].last_multiline);
 		free(pntr->cmdt[i].last_multiline);
+	}
+	if (tab_cmd->file_in != -1)
+	{
+		close(tab_cmd->file_in);
+		tab_cmd->file_in = -1;
+	}
+	if (pntr->fd_before != -1)
+	{
+		close(pntr->fd_before);
+		pntr->fd_before = -1;
 	}
 }
 

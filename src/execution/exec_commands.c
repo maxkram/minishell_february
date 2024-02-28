@@ -6,7 +6,7 @@
 /*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 13:55:59 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/27 17:41:52 by device           ###   ########.fr       */
+/*   Updated: 2024/02/27 22:57:11 by device           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,17 @@ void	execute_command(t_data *pnt, int *fd_pipe, int i)
 {
 	if (input_output_redirect(pnt, &pnt->cmdt[i]) == 1 && \
 		pipelines_redirect(pnt, i, fd_pipe))
-		return ;
+		{
+			// close(fd_pipe[0]);
+			// fd_pipe[0] = -1;
+			// close(fd_pipe[1]);
+			// fd_pipe[1] = -1;
+			// // close_pipe_end(fd_pipe, READ_END);
+			// // close_pipe_end(fd_pipe, WRITE_END);
+			// close(pnt->fd_before);
+			// pnt->fd_before = -1;
+			return ;
+		}
 	change_fd_input_output(pnt, &pnt->cmdt[i], fd_pipe, i);
 	if (if_builtin(&pnt->cmdt[i]))
 		execute_builtin(pnt, &pnt->cmdt[i], i, fd_pipe);

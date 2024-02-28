@@ -305,6 +305,7 @@ EOF
        ! grep -q "Invalid read of size " "/tmp/valgrind_output_${SAFE_PARAM}.txt" && \
        ! grep -q "Invalid write of size " "/tmp/valgrind_output_${SAFE_PARAM}.txt" && \
        ! grep -q "invalid file descriptor" "/tmp/valgrind_output_${SAFE_PARAM}.txt" && \
+       ! grep -q "Warning: invalid file descriptor" "/tmp/valgrind_output_${SAFE_PARAM}.txt" && \
        grep -q "definitely lost: 0 bytes in 0 blocks" "/tmp/valgrind_output_${SAFE_PARAM}.txt" && \
        grep -q "indirectly lost: 0 bytes in 0 blocks" "/tmp/valgrind_output_${SAFE_PARAM}.txt" && \
        grep -q "possibly lost: 0 bytes in 0 blocks" "/tmp/valgrind_output_${SAFE_PARAM}.txt"; then
@@ -315,6 +316,7 @@ EOF
         echo "Debugging output for Test ${COUNTER}:"
         # grep "file descriptor" "/tmp/valgrind_output_${SAFE_PARAM}.txt"
         grep "file descriptor" "/tmp/valgrind_output_${SAFE_PARAM}.txt" | awk '/file descriptor [4567]:/'
+        grep "invalid file descriptor" "/tmp/valgrind_output_${SAFE_PARAM}.txt"
         grep "Invalid read of size" "/tmp/valgrind_output_${SAFE_PARAM}.txt"
         grep "Invalid write of size" "/tmp/valgrind_output_${SAFE_PARAM}.txt"
         grep "definitely lost:" "/tmp/valgrind_output_${SAFE_PARAM}.txt"

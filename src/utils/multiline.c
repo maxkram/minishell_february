@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   multiline.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:28:36 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/27 19:11:56 by hezhukov         ###   ########.fr       */
+/*   Updated: 2024/02/27 22:17:04 by device           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,7 @@ int	create_heredoc(t_data *pnt, t_tab_cmd *tab_cmd, int i)
 			return (free(object), error_out(pnt, "minishell: open: ", 1));
 		tab_cmd->last_multiline = ft_strdup_fd(object);
 	}
+	close(file_descriptor);
 	free(object);
 	return (0);
 }
