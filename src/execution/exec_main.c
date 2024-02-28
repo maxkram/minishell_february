@@ -3,18 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   exec_main.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 13:54:35 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/27 18:10:52 by hezhukov         ###   ########.fr       */
+/*   Updated: 2024/02/27 19:58:51 by device           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	setup_pipes(int *pip, t_data *pnt)
+int	setup_pipes(int *fd_pipe, t_data *pnt)
 {
-	if (pipe(pip) == -1)
+	if (pipe(fd_pipe) == -1)
 	{
 		error_out(pnt, "pipe", 1);
 		return (-1);

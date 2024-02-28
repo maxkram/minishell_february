@@ -6,7 +6,7 @@
 /*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:25:17 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/27 18:08:37 by device           ###   ########.fr       */
+/*   Updated: 2024/02/27 19:39:20 by device           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,11 @@ void	built_exit(t_data *pntr, t_tab_cmd *tab_cmd, int *pipe_fd)
 			tab_cmd->args[1]);
 		pntr->code_exit = 255;
 		if (cnt < 2)
+		{
+			close(pipe_fd[0]);
+			close(pipe_fd[1]);
 			total_clean(pntr);
+		}
 		if (cnt < 2)
 			exit(pntr->code_exit);
 		return ;

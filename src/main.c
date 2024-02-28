@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 13:25:05 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/27 18:12:50 by hezhukov         ###   ########.fr       */
+/*   Updated: 2024/02/27 19:35:09 by device           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ char	**path_getter(t_data *pnt, int i)
 
 	while (pnt->env[++i])
 	{
-		found = ft_strstr(pnt->env[i], "PATH=");
+		found = ft_strstr(pnt->env[i], "PATH=/home");
 		if (found != NULL)
 			break ;
 	}

@@ -6,7 +6,7 @@
 /*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:43:52 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/27 18:05:47 by device           ###   ########.fr       */
+/*   Updated: 2024/02/27 19:56:16 by device           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,6 +152,7 @@ typedef struct s_data
 	int			first_stdout;
 	int			n_pipes;
 	t_set_mode	mode;
+	int			fd_pipe[2];
 }	t_data;
 
 void	prompt_create(t_data *data);
@@ -255,6 +256,5 @@ void	handle_redirection(int fd, int std_channel);
 void	close_pipe_end(int *fd_pipe, int end);
 void	cleanup_heredoc(t_data *pntr, int i);
 void	set_error_and_code(char *cmd_arg, int *code_exit);
-void	close_all_fds();
 
 #endif
