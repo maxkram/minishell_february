@@ -6,7 +6,7 @@
 /*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 13:55:59 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/24 17:10:05 by hezhukov         ###   ########.fr       */
+/*   Updated: 2024/02/28 17:16:15 by hezhukov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,12 @@
  * @param tab_cmd Pointer to the command table structure (t_tab_cmd).
  * @param fd_pipe Array of two integers representing the pipe file descriptors.
  */
-void	execute_child_process(t_data *pnt, t_tab_cmd *tab_cmd, int *fd_pipe)
+void	execute_child_process(t_data *pnt, t_tab_cmd *tab_cmd)
 {
 	handle_redirection(tab_cmd->in_fd, STDIN_FILENO);
 	handle_redirection(tab_cmd->out_fd, STDOUT_FILENO);
-	close_pipe_end(fd_pipe, 0);
+	close_pipe_end(pnt->fd_pipe, READ_END);
+	pnt->fd_pipe[READ_END] = -1;
 	set_mode(pnt, CHILD);
 	if (execve(tab_cmd->cmd, tab_cmd->args, pnt->env) == -1)
 	{
@@ -59,23 +60,23 @@ void	execute_child_process(t_data *pnt, t_tab_cmd *tab_cmd, int *fd_pipe)
  * @param i Index of the current command, used for managing fd_before.
  * @param fd_pipe Array containing the pipe file descriptors for IPC.
  */
-void	command_execution(t_data *pnt, t_tab_cmd *tab_cmd, int i, int *fd_pipe)
+void	command_execution(t_data *pnt, t_tab_cmd *tab_cmd, int i)
 {
 	tab_cmd->pid = fork();
 	if (tab_cmd->pid < 0)
 		return ((void)error_out(pnt, "fork", 1));
 	if (tab_cmd->pid == 0)
-		execute_child_process(pnt, tab_cmd, fd_pipe);
+		execute_child_process(pnt, tab_cmd);
 	else
 	{
-		close_pipe_end(fd_pipe, 1);
+		close_pipe_end(pnt->fd_pipe, WRITE_END);
 		if (pnt->fd_before != -1)
 			close(pnt->fd_before);
 		if (pnt->cmdt_count - 1 != i)
-			pnt->fd_before = fd_pipe[0];
+			pnt->fd_before = pnt->fd_pipe[READ_END];
 		else
 		{
-			close_pipe_end(fd_pipe, 0);
+			close_pipe_end(pnt->fd_pipe, READ_END);
 			pnt->fd_before = -1;
 		}
 		fd_cleaning(pnt, tab_cmd, i);
@@ -99,15 +100,15 @@ void	command_execution(t_data *pnt, t_tab_cmd *tab_cmd, int i, int *fd_pipe)
  * @param pip Pipe file descriptors array
  */
 void	execute_external_command(t_data *pnt, t_tab_cmd *cmd, \
-	int index, int *pip)
+	int index)
 {
 	if (find_exec(pnt, cmd) == 0)
 	{
 		cmd->is_child_process++;
-		command_execution(pnt, cmd, index, pip);
+		command_execution(pnt, cmd, index);
 	}
 	else
-		pipelines_redirect(pnt, index, pip);
+		pipelines_redirect(pnt, index);
 }
 
 /**
@@ -125,14 +126,24 @@ void	execute_external_command(t_data *pnt, t_tab_cmd *cmd, \
  * @param pip Pipe file descriptors array.
  * @param i Command index in the command table.
  */
-void	execute_command(t_data *pnt, int *pip, int i)
+void	execute_command(t_data *pnt, int i)
 {
 	if (input_output_redirect(pnt, &pnt->cmdt[i]) == 1 && \
-		pipelines_redirect(pnt, i, pip))
-		return ;
-	change_fd_input_output(pnt, &pnt->cmdt[i], pip, i);
+		pipelines_redirect(pnt, i))
+		{
+			// close(fd_pipe[0]);
+			// fd_pipe[0] = -1;
+			close(pnt->fd_pipe[1]);
+			pnt->fd_pipe[1] = -1;
+			// // close_pipe_end(fd_pipe, READ_END);
+			// // close_pipe_end(fd_pipe, WRITE_END);
+			// close(pnt->fd_before);
+			// pnt->fd_before = -1;
+			return ;
+		}
+	change_fd_input_output(pnt, &pnt->cmdt[i], i);
 	if (if_builtin(&pnt->cmdt[i]))
-		execute_builtin(pnt, &pnt->cmdt[i], i, pip);
+		execute_builtin(pnt, &pnt->cmdt[i], i);
 	else
-		execute_external_command(pnt, &pnt->cmdt[i], i, pip);
+		execute_external_command(pnt, &pnt->cmdt[i], i);
 }

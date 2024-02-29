@@ -6,7 +6,7 @@
 /*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:27:26 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/27 12:43:19 by hezhukov         ###   ########.fr       */
+/*   Updated: 2024/02/29 11:31:56 by hezhukov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ int	words_splitting(t_data *pnt, t_token *new_tkns, int *i, int *j)
  * 5. If concat is not needed, copy the current token's value to the new token
  * 6. Move to the next destination token (*dest_index += 1)
 */
-int	copy_concat_create(t_data *data, t_token *new_tokens, \
+int	copy_concat_create(t_data *pnt, t_token *new_tokens, \
 	int *src_index, int *dest_index)
 {
 	char	*new_value;
@@ -98,9 +98,9 @@ int	copy_concat_create(t_data *data, t_token *new_tokens, \
 	{
 		*dest_index -= 1;
 		new_value = ft_strjoin(new_tokens[*dest_index].value, \
-			data->tokens[*src_index].value);
+			pnt->tokens[*src_index].value);
 		if (!new_value)
-			return (error_out(data, \
+			return (error_out(pnt, \
 				"Memory allocation failed in ft_strjoin", 1));
 		free(new_tokens[*dest_index].value);
 		new_tokens[*dest_index].value = new_value;
@@ -109,9 +109,9 @@ int	copy_concat_create(t_data *data, t_token *new_tokens, \
 	{
 		free(new_tokens[*dest_index].value);
 		new_tokens[*dest_index].value = \
-			ft_strdup(data->tokens[*src_index].value);
+			ft_strdup(pnt->tokens[*src_index].value);
 		if (!new_tokens[*dest_index].value)
-			return (error_out(data, \
+			return (error_out(pnt, \
 				"Memory allocation failed in ft_strdup", 1));
 	}
 	*dest_index += 1;

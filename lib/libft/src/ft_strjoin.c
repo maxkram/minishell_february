@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/18 17:30:26 by hezhukov          #+#    #+#             */
-/*   Updated: 2023/10/30 18:24:17 by hezhukov         ###   ########.fr       */
+/*   Updated: 2024/02/28 19:15:14 by device           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ function: allocates (with malloc(3)) and returns a new string, which is the
   output: "HelloWorld"
 */
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*ft_strjoin(char *s1, char *s2)
 {
 	size_t	len1;
 	size_t	len2;

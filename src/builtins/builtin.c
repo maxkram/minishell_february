@@ -3,38 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:23:36 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/24 13:26:50 by hezhukov         ###   ########.fr       */
+/*   Updated: 2024/02/28 19:51:17 by device           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	recreate_file_descriptors(t_data *pntr, \
-	t_tab_cmd *cmd_tab, int i, int *pipe_fd)
+void	recreate_file_descriptors(t_data *pnt, \
+	t_tab_cmd *cmd_tab, int i)
 {
 	if (cmd_tab->out_fd != -1)
 		close(cmd_tab->out_fd);
-	if (pntr->cmdt_count - 1 != i)
-		pntr->fd_before = pipe_fd[0];
+	if (pnt->cmdt_count - 1 != i)
+		pnt->fd_before = pnt->fd_pipe[0];
 	else
-		close(pipe_fd[0]);
-	dup2(pntr->first_stdout, STDOUT_FILENO);
-	dup2(pntr->first_stdin, STDIN_FILENO);
+		close(pnt->fd_pipe[0]);
+	dup2(pnt->first_stdout, STDOUT_FILENO);
+	dup2(pnt->first_stdin, STDIN_FILENO);
 	if (cmd_tab->in_fd != -1)
 		close(cmd_tab->in_fd);
 	if (cmd_tab->out_fd != -1)
 		close(cmd_tab->out_fd);
-	if (pntr->cmdt[i].last_multiline)
+	if (pnt->cmdt[i].last_multiline)
 	{
-		unlink(pntr->cmdt[i].last_multiline);
-		free(pntr->cmdt[i].last_multiline);
+		unlink(pnt->cmdt[i].last_multiline);
+		free(pnt->cmdt[i].last_multiline);
 	}
 }
 
-void	create_builtin_fd(t_tab_cmd *cmd_tab, int *pipe_fd)
+void	create_builtin_fd(t_tab_cmd *cmd_tab, t_data *pnt)
 {
 	if (cmd_tab->in_fd != -1)
 	{
@@ -44,27 +44,27 @@ void	create_builtin_fd(t_tab_cmd *cmd_tab, int *pipe_fd)
 	}
 	if (cmd_tab->out_fd != -1)
 		dup2(cmd_tab->out_fd, STDOUT_FILENO);
-	close(pipe_fd[1]);
+	close(pnt->fd_pipe[1]);
 }
 
-void	execute_builtin(t_data *pntr, t_tab_cmd *cmd_tab, int i, int *pipe_fd)
+void	execute_builtin(t_data *pnt, t_tab_cmd *cmd_tab, int i)
 {
-	create_builtin_fd(cmd_tab, pipe_fd);
+	create_builtin_fd(cmd_tab, pnt);
 	if (ft_strcmp(cmd_tab->cmd, "echo") == 0)
-		built_echo(pntr, cmd_tab);
+		built_echo(pnt, cmd_tab);
 	if (ft_strcmp(cmd_tab->cmd, "cd") == 0)
-		built_cd(pntr, cmd_tab);
+		built_cd(pnt, cmd_tab);
 	if (ft_strcmp(cmd_tab->cmd, "pwd") == 0)
-		build_pwd(pntr);
+		build_pwd(pnt);
 	if (ft_strcmp(cmd_tab->cmd, "export") == 0)
-		built_export(pntr, cmd_tab);
+		built_export(pnt, cmd_tab);
 	if (ft_strcmp(cmd_tab->cmd, "unset") == 0)
-		built_unset(pntr, cmd_tab);
+		built_unset(pnt, cmd_tab);
 	if (ft_strcmp(cmd_tab->cmd, "env") == 0)
-		built_env(pntr);
+		built_env(pnt);
 	if (ft_strcmp(cmd_tab->cmd, "exit") == 0)
-		built_exit(pntr, cmd_tab);
-	recreate_file_descriptors(pntr, cmd_tab, i, pipe_fd);
+		built_exit(pnt, cmd_tab);
+	recreate_file_descriptors(pnt, cmd_tab, i);
 }
 
 int	if_builtin(t_tab_cmd *tab_cmd)

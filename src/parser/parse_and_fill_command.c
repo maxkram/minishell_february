@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_and_fill_command.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 11:55:49 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/24 12:16:21 by hezhukov         ###   ########.fr       */
+/*   Updated: 2024/02/28 19:46:05 by device           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@
  * @param token_index - The index of the token that contains the command
  * @return int - Returns 0 on success or an error code if an error occurred
  */
-int	set_command(t_data *data, int command_index, int token_index)
+int	set_command(t_data *pnt, int command_index, int token_index)
 {
-	data->cmdt[command_index].cmd = ft_strdup(data->tokens[token_index].value);
-	if (!data->cmdt[command_index].cmd)
-		return (error_out(data, "ft_strdup", 1) - 2);
+	pnt->cmdt[command_index].cmd = ft_strdup(pnt->tokens[token_index].value);
+	if (!pnt->cmdt[command_index].cmd)
+		return (error_out(pnt, "ft_strdup", 1) - 2);
 	return (EXIT_SUCCESS);
 }
 
@@ -35,20 +35,20 @@ int	set_command(t_data *data, int command_index, int token_index)
  * @param token_index - The index of the token that contains the argument value
  * @return int - Returns 0 on success or an error code if an error occurred
  */
-int	add_argument(t_data *data, int command_index, \
+int	add_argument(t_data *pnt, int command_index, \
 	int argument_count, int token_index)
 {
-	data->cmdt[command_index].args[argument_count] = \
-		ft_strdup_fd(data->tokens[token_index].value);
-	if (!data->cmdt[command_index].args[argument_count])
-		return (error_out(data, "ft_strdup_fd", 1) - 2);
-	return (EXIT_SUCCESS);
+	pnt->cmdt[command_index].args[argument_count] = \
+		ft_strdup_fd(pnt->tokens[token_index].value);
+	if (!pnt->cmdt[command_index].args[argument_count])
+		return (error_out(pnt, "ft_strdup_fd", 1) - 2);
+	return (0);
 }
 
-void	finalize_arguments(t_data *data, int command_index, int argument_count)
+void	finalize_arguments(t_data *pnt, int command_index, int argument_count)
 {
-	if (data->cmdt[command_index].cmd != NULL)
-		data->cmdt[command_index].args[argument_count] = NULL;
+	if (pnt->cmdt[command_index].cmd != NULL)
+		pnt->cmdt[command_index].args[argument_count] = NULL;
 }
 
 /**
@@ -64,23 +64,23 @@ void	finalize_arguments(t_data *data, int command_index, int argument_count)
  * @return 1  to continue
  * @return -1 for an error
  */
-int	process_token(t_data *data, int token_index, \
+int	process_token(t_data *pnt, int token_index, \
 	int command_index, int *argument_count)
 {
-	if (data->tokens[token_index].type == PIPE)
-		return (EXIT_SUCCESS);
-	if (check_arguments(data->tokens[token_index].type) && \
+	if (pnt->tokens[token_index].type == PIPE)
+		return (0);
+	if (check_arguments(pnt->tokens[token_index].type) && \
 		(token_index == 0 || \
-		check_if_redirection(data->tokens[token_index - 1].type)))
+		check_if_redirection(pnt->tokens[token_index - 1].type)))
 	{
-		if (data->tokens[token_index].value[0] == '\0' && \
-			data->tokens[token_index].type == WORD && \
-			data->cmdt[command_index].num_args-- > 0)
+		if (pnt->tokens[token_index].value[0] == '\0' && \
+			pnt->tokens[token_index].type == WORD && \
+			pnt->cmdt[command_index].num_args-- > 0)
 			return (1);
-		if (!data->cmdt[command_index].cmd)
-			if (set_command(data, command_index, token_index) != 0)
+		if (!pnt->cmdt[command_index].cmd)
+			if (set_command(pnt, command_index, token_index) != 0)
 				return (-1);
-		if (add_argument(data, command_index, \
+		if (add_argument(pnt, command_index, \
 			*argument_count, token_index) != 0)
 			return (-1);
 		(*argument_count)++;
@@ -95,16 +95,16 @@ int	process_token(t_data *data, int token_index, \
  * @param token_index - Initial token index for current command processing.
  * @return token_index of the last token processed for potential continuation.
  */
-int	parse_and_fill_command(t_data *data, int command_index, int token_index)
+int	parse_and_fill_command(t_data *pnt, int command_index, int token_index)
 {
 	int	argument_count;
 	int	process_result;
 
 	token_index += 1;
 	argument_count = 0;
-	while (token_index < data->count_token)
+	while (token_index < pnt->count_token)
 	{
-		process_result = process_token(data, token_index, \
+		process_result = process_token(pnt, token_index, \
 			command_index, &argument_count);
 		if (process_result == 0)
 			break ;
@@ -112,6 +112,6 @@ int	parse_and_fill_command(t_data *data, int command_index, int token_index)
 			return (token_index - 1);
 		token_index++;
 	}
-	finalize_arguments(data, command_index, argument_count);
+	finalize_arguments(pnt, command_index, argument_count);
 	return (token_index);
 }

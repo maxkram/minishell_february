@@ -2,7 +2,7 @@ NAME = minishell
 CC = gcc
 CFLAGS = -Wall -Werror -Wextra -g
 # LIBS = -Llib/libft -lft -L$(READLINE_PATH)/lib -lreadline
-LIBS = -Llib/libft -lft -Lvendor/readline/lib -lreadline -lncurses
+LIBS = -Llib/libft -lft -L vendor/readline/lib -lreadline -lncurses
 INCLUDES = -Iinclude -I$(READLINE_PATH)/include
 
 SCRIPT_URL=https://gist.githubusercontent.com/GlaceCoding/febe3306c2a9ec2b0f8df44fc35aecdd/raw/2aeef98aa0adbb305c1768ae29a842081372dd7a/install_readline.sh

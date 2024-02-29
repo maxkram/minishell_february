@@ -6,7 +6,7 @@
 /*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:28:36 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/24 10:21:57 by hezhukov         ###   ########.fr       */
+/*   Updated: 2024/02/28 16:28:50 by hezhukov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ static char	*name_create_multiline(int i)
 	if (with_itoa == NULL)
 		return (NULL);
 	file_name = ft_strcat(".tmp_hdoc", with_itoa);
+	// file_name = ft_strcat("/tmp/.tmp_hdoc", with_itoa);
 	free(with_itoa);
 	return (file_name);
 }
@@ -110,13 +111,15 @@ int	create_heredoc(t_data *pnt, t_tab_cmd *tab_cmd, int i)
 	object = name_create_multiline(i);
 	if (!object)
 		return (error_out(pnt, "malloc issue", 1), 1);
-	file_descriptor = open(object, O_CREAT | O_TRUNC | O_RDWR, 0666);
+	file_descriptor = open(object, O_CREAT | O_TRUNC | O_RDWR | O_CLOEXEC, 0666);
 	if (file_descriptor < 0)
 		return (free(object), error_out(pnt, "minishell: open: ", 1));
 	stat = in_to_fd(pnt, file_descriptor, tab_cmd->redirections[i].value);
 	if (stat == 1 || stat == 2)
+	{
 		return (unlink(object), free(object), 1);
-	close(file_descriptor);
+		close(file_descriptor);
+	}
 	if (tab_cmd->redirections[i].no_space != 3)
 		unlink(object);
 	else
@@ -126,6 +129,7 @@ int	create_heredoc(t_data *pnt, t_tab_cmd *tab_cmd, int i)
 			return (free(object), error_out(pnt, "minishell: open: ", 1));
 		tab_cmd->last_multiline = ft_strdup_fd(object);
 	}
+	close(file_descriptor);
 	free(object);
 	return (EXIT_SUCCESS);
 }

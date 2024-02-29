@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:43:52 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/26 13:38:53 by device           ###   ########.fr       */
+/*   Updated: 2024/02/28 17:23:54 by hezhukov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@
 # define NO 0
 # define PROMPT_NAME "\033[35m\033[1mminiSHELL \033[0m\033[1m→ \033[0m"
 # define EXPORT_PREFIX "declare -x "
+# define WRITE_END 1
+# define READ_END 0
 //==================ERRORS===================//
 # define ERR_MAIN "\033[31m\033[1mERROR > \033[0m"
 # define ERR_EXP "\033[37m\033[1mREASON\033[0m"
@@ -150,20 +152,20 @@ typedef struct s_data
 	int			first_stdout;
 	int			n_pipes;
 	t_set_mode	mode;
+	int			fd_pipe[2];
 }	t_data;
 
 void	prompt_create(t_data *data);
 void	build_pwd(t_data *pnt);
 int		if_builtin(t_tab_cmd *cmd_tab);
-// void	shoot_builtin(t_data *pntr, t_tab_cmd *cmd_tab, int i, int *pipe_fd);
-void	execute_builtin(t_data *pntr, t_tab_cmd *cmd_tab, int i, int *pipe_fd);
+void	execute_builtin(t_data *pntr, t_tab_cmd *cmd_tab, int i);
 void	exec_main(t_data *data);
 void	execution(t_data *pntr);
 char	*ft_get_env(char *str, char **env);
 char	*cmd_fullpath(t_data *data, char *cmd);
 void	ft_dup2(int fd, int std);
 int		change_fd_input_output(t_data *pntr, \
-	t_tab_cmd *tab_cmd, int *fd, int i);
+	t_tab_cmd *tab_cmd, int i);
 int		find_path(t_data *pntr, t_tab_cmd *tab_cmd);
 int		built_cd(t_data *pnt, t_tab_cmd *tab_cmd);
 int		make_var(t_data *pnt, char *var_name, char *value);
@@ -200,7 +202,7 @@ int		variable_index(char **env, char *n);
 int		length_of_variable(const char *n);
 int		if_has(const char *n, char c);
 int		substring_concatenation(char *string, char **pntr);
-int		pipelines_redirect(t_data *pntr, int i, int *pip);
+int		pipelines_redirect(t_data *pntr, int i);
 int		create_heredoc(t_data *pntr, t_tab_cmd *tab_cmd, int i);
 void	set_mode(t_data *pntr, t_set_mode mode);
 int		find_exec(t_data *pntr, t_tab_cmd *cmd_tab);
@@ -247,8 +249,8 @@ int		reallocate_tokens_if_max(t_data *pnt, int max_token);
 int		parse_and_fill_command(t_data *data, \
 	int command_index, int token_index);
 int		input_output_redirect(t_data *pnt, t_tab_cmd *tab_cmd);
-int		setup_pipes(int *pip, t_data *pnt);
-void	execute_command(t_data *pnt, int *pip, int i);
+int		setup_pipes(t_data *pnt);
+void	execute_command(t_data *pnt, int i);
 void	handle_redirection(int fd, int std_channel);
 void	close_pipe_end(int *fd_pipe, int end);
 void	cleanup_heredoc(t_data *pntr, int i);

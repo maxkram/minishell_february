@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:25:17 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/25 15:20:31 by hezhukov         ###   ########.fr       */
+/*   Updated: 2024/02/28 19:52:48 by device           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,32 +60,40 @@ long int	to_long_int(char *s)
  * 	if (cnt < 2)
 		ft_putstr_fd("exit\n", 2);
 */
-void	built_exit_annex(t_data *pntr, t_tab_cmd *tab_cmd,
+void	built_exit_annex(t_data *pnt, t_tab_cmd *tab_cmd,
 	long int exit_code, int cnt)
 {
 	if ((!tab_cmd || tab_cmd->num_args == 1) && cnt < 2)
 	{
-		total_clean(pntr);
-		exit(pntr->code_exit);
+		close (pnt->fd_pipe[0]);
+		close (pnt->fd_pipe[1]);
+		total_clean(pnt);
+		exit(pnt->code_exit);
 	}
 	exit_code = to_long_int(tab_cmd->args[1]);
 	if (exit_code == 9999999999 && ft_printf_fd(2, "minishell: exit: \
 		 %s: numeric argument required\n", tab_cmd->args[1]))
 	{
-		pntr->code_exit = 2;
+		pnt->code_exit = 2;
 		if (cnt != 1)
 			return ;
-		total_clean(pntr);
-		exit (pntr->code_exit);
+		close (pnt->fd_pipe[0]);
+		close (pnt->fd_pipe[1]);
+		total_clean(pnt);
+		exit (pnt->code_exit);
 	}
 	if (exit_code < 0)
-		pntr->code_exit = 256 + exit_code % 256;
+		pnt->code_exit = 256 + exit_code % 256;
 	else
-		pntr->code_exit = exit_code % 256;
+		pnt->code_exit = exit_code % 256;
 	if (cnt == 1)
-		total_clean(pntr);
+		total_clean(pnt);
 	if (cnt == 1)
-		exit(pntr->code_exit);
+	{
+		close (pnt->fd_pipe[0]);
+		close (pnt->fd_pipe[1]);
+		exit(pnt->code_exit);
+	}
 }
 
 //the function handles the "exit" command in a shell program
@@ -97,30 +105,38 @@ void	built_exit_annex(t_data *pntr, t_tab_cmd *tab_cmd,
  * - I commented the ft_printf_fd(2, "exit\n") to pass the test.
  * - I changed exit code from 2 to 255 to pass the test.
 */
-void	built_exit(t_data *pntr, t_tab_cmd *tab_cmd)
+void	built_exit(t_data *pnt, t_tab_cmd *tab_cmd)
 {
 	int	cnt;
 
-	cnt = pntr->cmdt_count;
+	cnt = pnt->cmdt_count;
 	if (!tab_cmd)
 	{
-		total_clean(pntr);
-		exit(pntr->code_exit);
+		total_clean(pnt);
+		exit(pnt->code_exit);
 	}
 	if (tab_cmd && tab_cmd->num_args > 1
 		&& ok_for_numeric(tab_cmd->args[1]) == 1)
 	{
 		ft_printf_fd(2, "minishell: exit: %s: numeric argument required\n",
 			tab_cmd->args[1]);
-		pntr->code_exit = 255;
+		pnt->code_exit = 255;
 		if (cnt < 2)
-			total_clean(pntr);
+		{
+			total_clean(pnt);
+		}
 		if (cnt < 2)
-			exit(pntr->code_exit);
+		{
+			close (pnt->fd_pipe[0]);
+			pnt->fd_pipe[0] = -1;
+			close (pnt->fd_pipe[1]);
+			pnt->fd_pipe[1] = -1;
+			exit(pnt->code_exit);
+		}
 		return ;
 	}
 	if (tab_cmd && tab_cmd->num_args > 2)
 		return (ft_printf_fd(2, "minishell: exit: too many arguments\n"),
-			(void)(pntr->code_exit = 1));
-	built_exit_annex(pntr, tab_cmd, 0, cnt);
+			(void)(pnt->code_exit = 1));
+	built_exit_annex(pnt, tab_cmd, 0, cnt);
 }

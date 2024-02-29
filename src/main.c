@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 13:25:05 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/26 17:44:47 by device           ###   ########.fr       */
+/*   Updated: 2024/02/29 11:36:40 by hezhukov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ char	**path_getter(t_data *pnt, int i)
 
 	while (pnt->env[++i])
 	{
-		// found = ft_strstr(pnt->env[i], "PATH=/home");
-		found = ft_strstr(pnt->env[i], "PATH=");
+		// found = ft_strstr(pnt->env[i], "PATH=");
+		found = ft_strstr(pnt->env[i], "PATH=/home");
 		if (found != NULL)
 			break ;
 	}
@@ -35,18 +35,18 @@ char	**path_getter(t_data *pnt, int i)
 	return (result);
 }
 
-void	env_init(t_data *data, char **env)
+void	env_init(t_data *pnt, char **env)
 {
 	int	i;
 
 	i = 0;
 	while (env[i])
 		i++;
-	data->env = ft_calloc(i + 1, sizeof(char *));
+	pnt->env = ft_calloc(i + 1, sizeof(char *));
 	i = 0;
 	while (env[i])
 	{
-		data->env[i] = ft_strdup_fd(env[i]);
+		pnt->env[i] = ft_strdup_fd(env[i]);
 		i++;
 	}
 }
@@ -64,7 +64,6 @@ int	main(int argc, char *argv[], char **env_p)
 	{
 		set_mode(&pnt, INTERACT);
 		pnt.input = readline("\033[31m\033[1mminishell$ \033[0m");
-		// pnt.input = readline("$ "); // for testing on linux
 		set_mode(&pnt, NON_INTERACT);
 		if (g_global_signal == 1 && g_global_signal--)
 			pnt.code_exit = 130;
@@ -75,6 +74,8 @@ int	main(int argc, char *argv[], char **env_p)
 		pnt.path = path_getter(&pnt, -1);
 		if (tokener(&pnt) == 0 && extender(&pnt) == 0 && parser(&pnt) == 0)
 			execution(&pnt);
+		if (pnt.fd_before != -1)
+			close(pnt.fd_before);
 		cmdt_cleaning(&pnt);
 		pntr_cleaning(&pnt);
 	}

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+         #
+#    By: device <device@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/10/17 17:24:38 by hezhukov          #+#    #+#              #
-#    Updated: 2024/02/07 19:22:17 by hezhukov         ###   ########.fr        #
+#    Updated: 2024/02/28 18:57:51 by device           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,8 +20,8 @@ SRCS = $(shell find $(SRCDIR) -name "*.c")
 OBJS = $(SRCS:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 
 INCLUDES = -I.
-CC = clang
-CFLAGS = -Wall -Wextra -Werror
+CC = gcc
+CFLAGS = -Wall -Wextra -Werror -g
 RM = /bin/rm -f
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c

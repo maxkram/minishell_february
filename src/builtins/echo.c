@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:24:10 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/22 18:24:14 by hezhukov         ###   ########.fr       */
+/*   Updated: 2024/02/28 19:39:24 by device           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	is_flag(char *arg)
 	return (EXIT_SUCCESS);
 }
 
-void	built_echo(t_data *data, t_tab_cmd *tab_cmd)
+void	built_echo(t_data *pnt, t_tab_cmd *tab_cmd)
 {
 	int	new_line;
 	int	i;
@@ -44,5 +44,5 @@ void	built_echo(t_data *data, t_tab_cmd *tab_cmd)
 	}
 	if (new_line)
 		ft_putstr_fd("\n", STDOUT_FILENO);
-	data->code_exit = 0;
+	pnt->code_exit = 0;
 }

@@ -6,7 +6,7 @@
 /*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:24:22 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/23 17:29:48 by device           ###   ########.fr       */
+/*   Updated: 2024/02/28 19:46:24 by device           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,13 +65,13 @@ void	index_sort(char **arr, int str_count, int *index)
 	}
 }
 
-int	built_env(t_data *data)
+int	built_env(t_data *pnt)
 {
 	int	i;
 
 	i = -1;
-	data->code_exit = 0;
-	while (data->env[++i])
-		ft_putendl_fd(data->env[i], STDOUT_FILENO);
-	return (EXIT_SUCCESS);
+	pnt->code_exit = 0;
+	while (pnt->env[++i])
+		ft_putendl_fd(pnt->env[i], STDOUT_FILENO);
+	return (0);
 }
