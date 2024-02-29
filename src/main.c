@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 13:25:05 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/28 18:24:49 by hezhukov         ###   ########.fr       */
+/*   Updated: 2024/02/28 19:47:45 by device           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ char	**path_getter(t_data *pnt, int i)
 
 	while (pnt->env[++i])
 	{
-		found = ft_strstr(pnt->env[i], "PATH=");
-		// found = ft_strstr(pnt->env[i], "PATH=/home");
+		// found = ft_strstr(pnt->env[i], "PATH=");
+		found = ft_strstr(pnt->env[i], "PATH=/home");
 		if (found != NULL)
 			break ;
 	}
@@ -35,18 +35,18 @@ char	**path_getter(t_data *pnt, int i)
 	return (result);
 }
 
-void	env_init(t_data *data, char **env)
+void	env_init(t_data *pnt, char **env)
 {
 	int	i;
 
 	i = 0;
 	while (env[i])
 		i++;
-	data->env = ft_calloc(i + 1, sizeof(char *));
+	pnt->env = ft_calloc(i + 1, sizeof(char *));
 	i = 0;
 	while (env[i])
 	{
-		data->env[i] = ft_strdup_fd(env[i]);
+		pnt->env[i] = ft_strdup_fd(env[i]);
 		i++;
 	}
 }

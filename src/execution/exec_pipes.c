@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_pipes.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 13:57:10 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/28 17:11:38 by hezhukov         ###   ########.fr       */
+/*   Updated: 2024/02/28 19:54:00 by device           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@
  * @param pntr Pointer to the main program data structure (t_data).
  * @param i Index of the current command being processed.
  */
-void	handle_input_fd(t_data *pntr, int i)
+void	handle_input_fd(t_data *pnt, int i)
 {
-	if (pntr->cmdt[i].in_fd > -1)
+	if (pnt->cmdt[i].in_fd > -1)
 	{
-		if (dup2(pntr->cmdt[i].in_fd, STDIN_FILENO) > -1)
-			close(pntr->cmdt[i].in_fd);
+		if (dup2(pnt->cmdt[i].in_fd, STDIN_FILENO) > -1)
+			close(pnt->cmdt[i].in_fd);
 	}
 }
 
@@ -41,12 +41,12 @@ void	handle_input_fd(t_data *pntr, int i)
  * @param pntr Pointer to the main program data structure (t_data).
  * @param i Index of the current command being processed.
  */
-void	handle_output_fd(t_data *pntr, int i)
+void	handle_output_fd(t_data *pnt, int i)
 {
-	if (pntr->cmdt[i].out_fd > -1)
+	if (pnt->cmdt[i].out_fd > -1)
 	{
-		dup2(pntr->cmdt[i].out_fd, STDOUT_FILENO);
-		close(pntr->cmdt[i].out_fd);
+		dup2(pnt->cmdt[i].out_fd, STDOUT_FILENO);
+		close(pnt->cmdt[i].out_fd);
 	}
 }
 
@@ -63,15 +63,15 @@ void	handle_output_fd(t_data *pntr, int i)
  * @param i Index of the current command being processed.
  * @param pip Array containing file descriptors for the current pipe.
  */
-void	manage_pipe_ends_and_fd_before(t_data *pntr, int i)
+void	manage_pipe_ends_and_fd_before(t_data *pnt, int i)
 {
-	close(pntr->fd_pipe[1]);
-	if (pntr->fd_before != -1)
-		close(pntr->fd_before);
-	if (pntr->cmdt_count - 1 != i)
-		pntr->fd_before = pntr->fd_pipe[0];
+	close(pnt->fd_pipe[1]);
+	if (pnt->fd_before != -1)
+		close(pnt->fd_before);
+	if (pnt->cmdt_count - 1 != i)
+		pnt->fd_before = pnt->fd_pipe[0];
 	else
-		close(pntr->fd_pipe[0]);
+		close(pnt->fd_pipe[0]);
 }
 
 /**
@@ -83,10 +83,10 @@ void	manage_pipe_ends_and_fd_before(t_data *pntr, int i)
  *
  * @param pntr Pointer to the main program data structure (t_data).
  */
-void	restore_standard_fds(t_data *pntr)
+void	restore_standard_fds(t_data *pnt)
 {
-	dup2(pntr->first_stdout, STDOUT_FILENO);
-	dup2(pntr->first_stdin, STDIN_FILENO);
+	dup2(pnt->first_stdout, STDOUT_FILENO);
+	dup2(pnt->first_stdin, STDIN_FILENO);
 }
 
 /**
@@ -104,12 +104,12 @@ void	restore_standard_fds(t_data *pntr)
  * @return 1 to indicate success (because we return 1 for
  * execute_command function to continue with the next command)
  */
-int	pipelines_redirect(t_data *pntr, int i)
+int	pipelines_redirect(t_data *pnt, int i)
 {
-	handle_input_fd(pntr, i);
-	handle_output_fd(pntr, i);
-	manage_pipe_ends_and_fd_before(pntr, i);
-	restore_standard_fds(pntr);
-	cleanup_heredoc(pntr, i);
+	handle_input_fd(pnt, i);
+	handle_output_fd(pnt, i);
+	manage_pipe_ends_and_fd_before(pnt, i);
+	restore_standard_fds(pnt);
+	cleanup_heredoc(pnt, i);
 	return (1);
 }

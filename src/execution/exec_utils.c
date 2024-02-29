@@ -3,43 +3,43 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:26:52 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/28 17:22:41 by hezhukov         ###   ########.fr       */
+/*   Updated: 2024/02/28 19:59:15 by device           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	change_fd_input_output(t_data *pntr, t_tab_cmd *tab_cmd, int i)
+int	change_fd_input_output(t_data *pnt, t_tab_cmd *tab_cmd, int i)
 {
 	if (tab_cmd->file_in != -1)
 		tab_cmd->in_fd = tab_cmd->file_in;
-	else if (pntr->fd_before != -1 && i != 0)
-		tab_cmd->in_fd = pntr->fd_before;
+	else if (pnt->fd_before != -1 && i != 0)
+		tab_cmd->in_fd = pnt->fd_before;
 	if (tab_cmd->file_out != -1)
 		tab_cmd->out_fd = tab_cmd->file_out;
-	else if (pntr->fd_pipe[1] != -1 && pntr->cmdt_count - 1 != i)
-		tab_cmd->out_fd = pntr->fd_pipe[1];
+	else if (pnt->fd_pipe[1] != -1 && pnt->cmdt_count - 1 != i)
+		tab_cmd->out_fd = pnt->fd_pipe[1];
 	return (0);
 }
 
-int	find_path(t_data *pntr, t_tab_cmd *tab_cmd)
+int	find_path(t_data *pnt, t_tab_cmd *tab_cmd)
 {
 	char	*temporary;
 	char	*result;
 
-	if (pntr->path != NULL)
+	if (pnt->path != NULL)
 		return (1);
 	if (tab_cmd->cmd[0] == '\0')
 		return (1);
 	temporary = ft_strdup_fd("./");
 	if (!temporary)
-		return (error_out(pntr, "ft_strdup", 1) + 1);
+		return (error_out(pnt, "ft_strdup", 1) + 1);
 	result = ft_strjoin(temporary, tab_cmd->cmd);
 	if (!result)
-		return (error_out(pntr, "ft_strjoin", 1) + 1);
+		return (error_out(pnt, "ft_strjoin", 1) + 1);
 	if (access(result, X_OK) == 0)
 	{
 		temporary = tab_cmd->cmd;
@@ -78,12 +78,12 @@ void	close_pipe_end(int *fd_pipe, int end)
  * @param pntr Pointer to the main program data structure (t_data).
  * @param i Index of the current command being processed.
  */
-void	cleanup_heredoc(t_data *pntr, int i)
+void	cleanup_heredoc(t_data *pnt, int i)
 {
-	if (pntr->cmdt[i].last_multiline)
+	if (pnt->cmdt[i].last_multiline)
 	{
-		unlink(pntr->cmdt[i].last_multiline);
-		free(pntr->cmdt[i].last_multiline);
-		pntr->cmdt[i].last_multiline = NULL;
+		unlink(pnt->cmdt[i].last_multiline);
+		free(pnt->cmdt[i].last_multiline);
+		pnt->cmdt[i].last_multiline = NULL;
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:28:21 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/22 18:28:24 by hezhukov         ###   ########.fr       */
+/*   Updated: 2024/02/28 19:58:21 by device           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,11 @@ void	free_string_array(char **pnt)
 	}
 }
 
-void	fd_exit(t_data *pntr, int code_exit)
+void	fd_exit(t_data *pnt, int code_exit)
 {
 	if (code_exit == 1)
 		perror("An error!");
-	total_clean(pntr);
+	total_clean(pnt);
 	exit(1);
 }
 

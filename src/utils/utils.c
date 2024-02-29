@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:28:43 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/28 16:29:56 by hezhukov         ###   ########.fr       */
+/*   Updated: 2024/02/28 19:58:30 by device           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,9 @@ void	safe_free(void **ptr)
 	}
 }
 
-void	error_in_syntax(int type, t_data *pntr)
+void	error_in_syntax(int type, t_data *pnt)
 {
-	pntr->code_exit = 2;
+	pnt->code_exit = 2;
 	ft_putstr_fd("minishell: syntax error near unexpected token ", 2);
 	if (type == 39)
 		ft_putstr_fd("`''\n", 2);

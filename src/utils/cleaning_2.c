@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleaning_2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:28:06 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/28 13:15:35 by hezhukov         ###   ########.fr       */
+/*   Updated: 2024/02/28 19:59:02 by device           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,16 +35,16 @@ void	free_cmdt_resources(t_tab_cmd *cmd)
 	}
 }
 
-void	cmdt_cleaning(t_data *pntr)
+void	cmdt_cleaning(t_data *pnt)
 {
-	if (pntr->cmdt)
+	if (pnt->cmdt)
 	{
-		while (pntr->cmdt_count--)
+		while (pnt->cmdt_count--)
 		{
-			free_cmdt_resources(&pntr->cmdt[pntr->cmdt_count]);
+			free_cmdt_resources(&pnt->cmdt[pnt->cmdt_count]);
 		}
-		free(pntr->cmdt);
-		pntr->cmdt = NULL;
+		free(pnt->cmdt);
+		pnt->cmdt = NULL;
 	}
 }
 
@@ -72,8 +72,10 @@ void	pntr_cleaning(t_data *pnt)
 	}
 	pnt->path = NULL;
 }
-
-// void	fd_cleaning(t_data *pntr, t_tab_cmd *tab_cmd, int i)
+/*
+	this is old version of fd_cleaning
+*/
+// void	fd_cleaning(t_data *pnt, t_tab_cmd *tab_cmd, int i)
 // {
 // 	if (tab_cmd->out_fd != -1)
 // 		close(tab_cmd->out_fd);
@@ -81,12 +83,12 @@ void	pntr_cleaning(t_data *pnt)
 // 		close(tab_cmd->in_fd);
 // 	if (pntr->cmdt[i].last_multiline)
 // 	{
-// 		unlink(pntr->cmdt[i].last_multiline);
-// 		free(pntr->cmdt[i].last_multiline);
+// 		unlink(pnt->cmdt[i].last_multiline);
+// 		free(pnt->cmdt[i].last_multiline);
 // 	}
 // }
 
-void	fd_cleaning(t_data *pntr, t_tab_cmd *tab_cmd, int i)
+void	fd_cleaning(t_data *pnt, t_tab_cmd *tab_cmd, int i)
 {
 	if (tab_cmd->out_fd != -1)
 	{
@@ -116,19 +118,19 @@ void	fd_cleaning(t_data *pntr, t_tab_cmd *tab_cmd, int i)
 	// 	close(pntr->fd_before);
 	// 	pntr->fd_before = -1;
 	// }
-	if (pntr->cmdt[i].last_multiline)
+	if (pnt->cmdt[i].last_multiline)
 	{
-		unlink(pntr->cmdt[i].last_multiline);
-		free(pntr->cmdt[i].last_multiline);
+		unlink(pnt->cmdt[i].last_multiline);
+		free(pnt->cmdt[i].last_multiline);
 	}
 }
 
-void	total_clean(t_data *pntr)
+void	total_clean(t_data *pnt)
 {
-	clean_double_pointer(pntr->env);
-	pntr_cleaning(pntr);
-	close(pntr->first_stdout);
-	pntr->first_stdout = -1;
-	close(pntr->first_stdin);
-	pntr->first_stdin = -1;
+	clean_double_pointer(pnt->env);
+	pntr_cleaning(pnt);
+	close(pnt->first_stdout);
+	pnt->first_stdout = -1;
+	close(pnt->first_stdin);
+	pnt->first_stdin = -1;
 }

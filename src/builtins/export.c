@@ -6,13 +6,13 @@
 /*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:26:14 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/26 13:37:50 by device           ###   ########.fr       */
+/*   Updated: 2024/02/28 19:47:04 by device           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static char	**realloc_env_vars(t_data *data, int size)
+static char	**realloc_env_vars(t_data *pnt, int size)
 {
 	char	**new_env;
 	int		i;
@@ -21,13 +21,13 @@ static char	**realloc_env_vars(t_data *data, int size)
 	if (!new_env)
 		return (NULL);
 	i = 0;
-	while (data->env[i] && i < size)
+	while (pnt->env[i] && i < size)
 	{
-		new_env[i] = ft_strdup(data->env[i]);
-		free_ptr(data->env[i]);
+		new_env[i] = ft_strdup(pnt->env[i]);
+		free_ptr(pnt->env[i]);
 		i++;
 	}
-	free(data->env);
+	free(pnt->env);
 	return (new_env);
 }
 
@@ -53,29 +53,29 @@ int	get_env_var_index(char **env, char *var)
 	return (-1);
 }
 
-bool	set_env_var(t_data *data, char *key, char *value)
+bool	set_env_var(t_data *pnt, char *key, char *value)
 {
 	int		idx;
 	char	*tmp;
 
-	idx = get_env_var_index(data->env, key);
+	idx = get_env_var_index(pnt->env, key);
 	if (value == NULL)
 		value = "";
 	tmp = ft_strjoin("=", value);
 	if (!tmp)
 		return (false);
-	if (idx != -1 && data->env[idx])
+	if (idx != -1 && pnt->env[idx])
 	{
-		free_ptr(data->env[idx]);
-		data->env[idx] = ft_strjoin(key, tmp);
+		free_ptr(pnt->env[idx]);
+		pnt->env[idx] = ft_strjoin(key, tmp);
 	}
 	else
 	{
-		idx = env_var_count(data->env);
-		data->env = realloc_env_vars(data, idx + 1);
-		if (!data->env)
+		idx = env_var_count(pnt->env);
+		pnt->env = realloc_env_vars(pnt, idx + 1);
+		if (!pnt->env)
 			return (false);
-		data->env[idx] = ft_strjoin(key, tmp);
+		pnt->env[idx] = ft_strjoin(key, tmp);
 	}
 	free_ptr(tmp);
 	return (true);
@@ -98,7 +98,7 @@ bool	is_valid_env_var_key(char *var)
 	return (true);
 }
 
-int	built_export(t_data *data, t_tab_cmd *cmd)
+int	built_export(t_data *pnt, t_tab_cmd *cmd)
 {
 	int		i;
 	char	*key;
@@ -106,18 +106,18 @@ int	built_export(t_data *data, t_tab_cmd *cmd)
 	char	*equal_sign_pos;
 
 	if (cmd->args[1] == NULL)
-		print_env_vars(data);
+		print_env_vars(pnt);
 	i = 1;
 	while (cmd->args[i])
 	{
 		if (!is_valid_env_var_key(cmd->args[i]))
-			set_error_and_code(cmd->args[i], &data->code_exit);
+			set_error_and_code(cmd->args[i], &pnt->code_exit);
 		else if (ft_strchr(cmd->args[i], '='))
 		{
 			equal_sign_pos = ft_strchr(cmd->args[i], '=');
 			key = ft_strndup(cmd->args[i], equal_sign_pos - cmd->args[i]);
 			value = ft_strdup(equal_sign_pos + 1);
-			set_env_var(data, key, value);
+			set_env_var(pnt, key, value);
 			free(key);
 			free(value);
 		}
