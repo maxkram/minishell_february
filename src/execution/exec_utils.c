@@ -22,7 +22,7 @@ int	change_fd_input_output(t_data *pntr, t_tab_cmd *tab_cmd, int *fd, int i)
 		tab_cmd->out_fd = tab_cmd->file_out;
 	else if (fd[1] != -1 && pntr->cmdt_count - 1 != i)
 		tab_cmd->out_fd = fd[1];
-	return (0);
+	return (EXIT_SUCCESS);
 }
 
 int	find_path(t_data *pntr, t_tab_cmd *tab_cmd)
@@ -45,7 +45,7 @@ int	find_path(t_data *pntr, t_tab_cmd *tab_cmd)
 		temporary = tab_cmd->cmd;
 		tab_cmd->cmd = result;
 		free(temporary);
-		return (0);
+		return (EXIT_SUCCESS);
 	}
 	free(temporary);
 	free(result);

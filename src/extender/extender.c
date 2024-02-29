@@ -18,7 +18,7 @@ int	substring_beginning(char *word, char *start)
 
 	i = 0;
 	if (!word)
-		return (0);
+		return (EXIT_SUCCESS);
 	while (start[i] && word[i] && start[i] == word[i])
 		i++;
 	return (start[i] == '\0');
@@ -85,7 +85,7 @@ static int	token_expansion(char *var, t_data *pnt, int i, int j)
 	}
 	free(buffer_value);
 	pnt->tokens[i].value = result;
-	return (0);
+	return (EXIT_SUCCESS);
 }
 
 int	extender(t_data *pnt)
@@ -113,5 +113,5 @@ int	extender(t_data *pnt)
 		}
 		i++;
 	}
-	return (0);
+	return (EXIT_SUCCESS);
 }

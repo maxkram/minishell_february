@@ -14,16 +14,18 @@
 
 int	check_arguments(t_type_token type)
 {
-	if (type == WORD || type == DQUOTE || type == SQUOTE)
-		return (1);
-	return (0);
+// 	if (type == WORD || type == DQUOTE || type == SQUOTE)
+// 		return (1);
+	return (type == WORD || type == DQUOTE || type == SQUOTE);
+	// return (0);
 }
 
 int	check_if_redirection(t_type_token type)
 {
-	if (type == WORD || type == SQUOTE || type == DQUOTE || type == PIPE)
-		return (1);
-	return (0);
+	// if (type == WORD || type == SQUOTE || type == DQUOTE || type == PIPE)
+	// 	return (1);
+	// return (0);
+	return (type == WORD || type == SQUOTE || type == DQUOTE || type == PIPE);
 }
 
 int	count_pipes(t_data *pnt)

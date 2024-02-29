@@ -32,7 +32,7 @@ int	is_command(t_data *pntr, t_tab_cmd *tab_cmd)
 		free(temporary);
 		ft_printf_fd(2, "minishell: %s: Permission denied\n", tab_cmd->cmd);
 		pntr->code_exit = 126;
-		return (0);
+		return (EXIT_SUCCESS);
 	}
 	free(temporary);
 	free(result);
@@ -53,7 +53,7 @@ int	check_valid_execution(t_tab_cmd *tab_cmd, t_data *pntr)
 			closedir(directory);
 		}
 		else if (access(tab_cmd->cmd, X_OK) == 0)
-			return (0);
+			return (EXIT_SUCCESS);
 		else
 		{
 			ft_printf_fd(2, "minishell: %s: Permission denied\n",
@@ -89,7 +89,7 @@ int	is_exist(t_data *pntr, t_tab_cmd *tab_cmd, int i)
 			ft_printf_fd(2, "minishell: %s: Permission denied\n",
 				tab_cmd->cmd);
 			pntr->code_exit = 126;
-			return (0);
+			return (EXIT_SUCCESS);
 		}
 		free(temporary);
 		free(result);
@@ -115,7 +115,7 @@ int	find_exec(t_data *pntr, t_tab_cmd *tab_cmd)
 		return (check_valid_execution(tab_cmd, pntr));
 	result = path_searching(pntr, tab_cmd);
 	if (result == 0)
-		return (0);
+		return (EXIT_SUCCESS);
 	else if (result == 2)
 		return (1);
 	if (is_exist(pntr, tab_cmd, i) == 1)
