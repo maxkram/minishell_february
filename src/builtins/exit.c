@@ -6,7 +6,7 @@
 /*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:25:17 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/03/01 14:11:40 by device           ###   ########.fr       */
+/*   Updated: 2024/03/01 17:41:27 by device           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,6 @@ void	built_exit_annex(t_data *pnt, t_tab_cmd *tab_cmd,
 {
 	if ((!tab_cmd || tab_cmd->num_args == 1) && cnt < 2)
 	{
-		// close (pnt->fd_pipe[0]);
-		// close (pnt->fd_pipe[1]);
 		total_clean(pnt);
 		exit(pnt->code_exit);
 	}
@@ -71,8 +69,6 @@ void	built_exit_annex(t_data *pnt, t_tab_cmd *tab_cmd,
 		pnt->code_exit = 2;
 		if (cnt != 1)
 			return ;
-		// close (pnt->fd_pipe[0]);
-		// close (pnt->fd_pipe[1]);
 		total_clean(pnt);
 		exit (pnt->code_exit);
 	}
@@ -82,8 +78,6 @@ void	built_exit_annex(t_data *pnt, t_tab_cmd *tab_cmd,
 		pnt->code_exit = exit_code % 256;
 	if (cnt == 1)
 	{
-		// close (pnt->fd_pipe[1]);
-		// close (pnt->fd_pipe[0]);
 		total_clean(pnt);
 		exit(pnt->code_exit);
 	}

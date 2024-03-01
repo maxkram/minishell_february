@@ -6,7 +6,7 @@
 /*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 13:25:05 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/03/01 13:38:34 by device           ###   ########.fr       */
+/*   Updated: 2024/03/01 17:40:47 by device           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	**path_getter(t_data *pnt, int i)
 	while (pnt->env[++i])
 	{
 		// found = ft_strstr(pnt->env[i], "PATH=");
-		found = ft_strstr(pnt->env[i], "PATH=");
+		found = ft_strstr(pnt->env[i], "PATH=/home");
 		if (found != NULL)
 			break ;
 	}

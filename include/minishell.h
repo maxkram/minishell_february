@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:43:52 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/28 17:23:54 by hezhukov         ###   ########.fr       */
+/*   Updated: 2024/03/01 17:49:26 by device           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -255,5 +255,6 @@ void	handle_redirection(int fd, int std_channel);
 void	close_pipe_end(int *fd_pipe, int end);
 void	cleanup_heredoc(t_data *pntr, int i);
 void	set_error_and_code(char *cmd_arg, int *code_exit);
+int		in_to_fd(t_data *pnt, int fd, char *delimiter);
 
 #endif
