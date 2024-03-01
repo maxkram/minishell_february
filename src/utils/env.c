@@ -6,7 +6,7 @@
 /*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:28:12 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/28 19:58:14 by device           ###   ########.fr       */
+/*   Updated: 2024/03/01 17:26:57 by device           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,40 @@ int	increase_shlvl(t_data *pnt)
 	return (0);
 }
 
+void	bubble_sort(char **array, int n)
+{
+	int		i;
+	int		sorted;
+	char	*temp;
+
+	sorted = 0;
+	while (!sorted)
+	{
+		sorted = 1;
+		i = 0;
+		while (i < n - 1)
+		{
+			if (strcmp(array[i], array[i + 1]) > 0)
+			{
+				temp = array[i];
+				array[i] = array[i + 1];
+				array[i + 1] = temp;
+				sorted = 0;
+			}
+			i++;
+		}
+		n--;
+	}
+}
+
 int	print_env_vars(t_data *pnt)
 {
 	int	i;
 
+	i = 0;
+	while (pnt->env[i])
+		i++;
+	bubble_sort(pnt->env, i);
 	i = 0;
 	while (pnt->env[i])
 	{
