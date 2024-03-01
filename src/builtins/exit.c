@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:25:17 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/03/01 17:41:27 by device           ###   ########.fr       */
+/*   Updated: 2024/03/01 18:38:22 by hezhukov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,13 +111,6 @@ void	built_exit(t_data *pnt, t_tab_cmd *tab_cmd)
 		if (cnt < 2)
 		{
 			total_clean(pnt);
-		}
-		if (cnt < 2)
-		{
-			close (pnt->fd_pipe[0]);
-			pnt->fd_pipe[0] = -1;
-			close (pnt->fd_pipe[1]);
-			pnt->fd_pipe[1] = -1;
 			exit(pnt->code_exit);
 		}
 		return ;

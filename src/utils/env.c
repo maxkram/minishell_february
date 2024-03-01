@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:28:12 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/03/01 17:26:57 by device           ###   ########.fr       */
+/*   Updated: 2024/03/01 18:14:57 by hezhukov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	bubble_sort(char **array, int n)
 		i = 0;
 		while (i < n - 1)
 		{
-			if (strcmp(array[i], array[i + 1]) > 0)
+			if (ft_strcmp(array[i], array[i + 1]) > 0)
 			{
 				temp = array[i];
 				array[i] = array[i + 1];

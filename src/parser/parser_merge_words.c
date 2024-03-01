@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_merge_words.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:27:26 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/03/01 13:36:35 by device           ###   ########.fr       */
+/*   Updated: 2024/03/01 18:10:53 by hezhukov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	copy_normalization(t_token *new_tokens, int *i, int *j, char **tmp)
 {
-	int	k;
-	char *new_value;
+	int		k;
+	char	*new_value;
 
 	k = -1;
 	if (*i > 0 && new_tokens[*j].no_space == 1)
@@ -99,7 +99,8 @@ int	copy_concat_create(t_data *pnt, t_token *new_tokens, \
 	if (*src_index > 0 && new_tokens[*dest_index].no_space == 1)
 	{
 		*dest_index -= 1;
-		new_value = ft_strjoin(new_tokens[*dest_index].value, pnt->tokens[*src_index].value);
+		new_value = ft_strjoin(new_tokens[*dest_index].value, \
+			pnt->tokens[*src_index].value);
 		if (!new_value)
 			return (error_out(pnt, \
 				"Memory allocation failed in ft_strjoin", 1));
@@ -138,7 +139,6 @@ int	token_copy(t_data *pnt, t_token *new_tokens, int *i, int *j)
 		new_tokens[*j].no_space = pnt->tokens[*i].no_space;
 	}
 	else
-		// *j = *j + 1;
 		(*j)++;
 	return (EXIT_SUCCESS);
 }

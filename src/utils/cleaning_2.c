@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cleaning_2.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:28:06 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/03/01 13:57:21 by device           ###   ########.fr       */
+/*   Updated: 2024/03/01 18:19:16 by hezhukov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,12 +96,24 @@ void	total_clean(t_data *pnt)
 {
 	clean_double_pointer(pnt->env);
 	pntr_cleaning(pnt);
-	close(pnt->first_stdout);
-	pnt->first_stdout = -1;
-	close(pnt->first_stdin);
-	pnt->first_stdin = -1;
+	if (pnt->first_stdout != -1)
+	{
+		close(pnt->first_stdout);
+		pnt->first_stdout = -1;
+	}
+	if (pnt->first_stdin != -1)
+	{
+		close(pnt->first_stdin);
+		pnt->first_stdin = -1;
+	}
 	if (pnt->fd_pipe[0] != -1)
+	{
 		close(pnt->fd_pipe[0]);
+		pnt->fd_pipe[0] = -1;
+	}
 	if (pnt->fd_pipe[1] != -1)
+	{
 		close(pnt->fd_pipe[1]);
+		pnt->fd_pipe[1] = -1;
+	}
 }

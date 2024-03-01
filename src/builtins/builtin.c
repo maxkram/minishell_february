@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:23:36 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/28 19:51:17 by device           ###   ########.fr       */
+/*   Updated: 2024/03/01 18:38:04 by hezhukov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,19 +84,4 @@ int	if_builtin(t_tab_cmd *tab_cmd)
 	if (ft_strcmp(tab_cmd->cmd, "echo") == 0)
 		return (1);
 	return (EXIT_SUCCESS);
-
-	//     const char *builtin_cmds[] = {
-    //     "exit", "cd", "env", "unset", "export", "pwd", "echo"
-    // };
-    // const int num_builtins = sizeof(builtin_cmds) / sizeof(builtin_cmds[0]);
-
-    // int i = 0;
-    // while (i < num_builtins)
-    // {
-    //     if (ft_strcmp(tab_cmd->cmd, builtin_cmds[i]) == 0)
-    //         return 1;
-    //     i++;
-    // }
-
-    // return EXIT_SUCCESS;
 }

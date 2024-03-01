@@ -6,7 +6,7 @@
 /*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:23:43 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/25 15:56:52 by hezhukov         ###   ########.fr       */
+/*   Updated: 2024/03/01 18:15:22 by hezhukov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ char	*get_target_path(t_tab_cmd *tab_cmd)
 	char	*path;
 
 	if (tab_cmd->num_args <= 1 || !tab_cmd->args[1]
-			|| tab_cmd->args[1][0] == 0 || tab_cmd->args[1][0] == '~')
+		|| tab_cmd->args[1][0] == 0 || tab_cmd->args[1][0] == '~')
 	{
 		path = getenv("HOME");
 		if (!path)

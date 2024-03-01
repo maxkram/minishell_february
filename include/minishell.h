@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:43:52 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/03/01 17:49:26 by device           ###   ########.fr       */
+/*   Updated: 2024/03/01 18:48:47 by hezhukov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,11 @@
 # define EXPORT_PREFIX "declare -x "
 # define WRITE_END 1
 # define READ_END 0
+# define ERROR_TOO_MANY_ARGS "Error: too many arguments\n"
+# define PROMPT "\033[31m\033[1mminishell$ \033[0m"
+# define EXIT_CODE_SIGNAL 130
+# define NON_INTERACTIVE_MODE 0
+# define INTERACTIVE_MODE 1
 //==================ERRORS===================//
 # define ERR_MAIN "\033[31m\033[1mERROR > \033[0m"
 # define ERR_EXP "\033[37m\033[1mREASON\033[0m"
@@ -256,5 +261,7 @@ void	close_pipe_end(int *fd_pipe, int end);
 void	cleanup_heredoc(t_data *pntr, int i);
 void	set_error_and_code(char *cmd_arg, int *code_exit);
 int		in_to_fd(t_data *pnt, int fd, char *delimiter);
+char	**path_getter(t_data *pnt, int i);
+void	env_init(t_data *pnt, char **env);
 
 #endif
