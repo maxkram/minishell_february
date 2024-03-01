@@ -6,7 +6,7 @@
 /*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:28:06 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/28 19:59:02 by device           ###   ########.fr       */
+/*   Updated: 2024/03/01 13:57:21 by device           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,21 +72,6 @@ void	pntr_cleaning(t_data *pnt)
 	}
 	pnt->path = NULL;
 }
-/*
-	this is old version of fd_cleaning
-*/
-// void	fd_cleaning(t_data *pnt, t_tab_cmd *tab_cmd, int i)
-// {
-// 	if (tab_cmd->out_fd != -1)
-// 		close(tab_cmd->out_fd);
-// 	else if (tab_cmd->in_fd != -1)
-// 		close(tab_cmd->in_fd);
-// 	if (pntr->cmdt[i].last_multiline)
-// 	{
-// 		unlink(pnt->cmdt[i].last_multiline);
-// 		free(pnt->cmdt[i].last_multiline);
-// 	}
-// }
 
 void	fd_cleaning(t_data *pnt, t_tab_cmd *tab_cmd, int i)
 {
@@ -100,24 +85,6 @@ void	fd_cleaning(t_data *pnt, t_tab_cmd *tab_cmd, int i)
 		close(tab_cmd->in_fd);
 		tab_cmd->in_fd = -1;
 	}
-	// if (tab_cmd->in_fd == -1 && tab_cmd->out_fd == -1)
-	// {
-	// 	if (pntr->fd_before != -1)
-	// 	{
-	// 		close(pntr->fd_before);
-	// 		pntr->fd_before = -1;
-	// 	}
-	// }
-	// if (tab_cmd->file_in != -1)
-	// {
-	// 	close(tab_cmd->file_in);
-	// 	tab_cmd->file_in = -1;
-	// }
-	// if (pntr->fd_before != -1)
-	// {
-	// 	close(pntr->fd_before);
-	// 	pntr->fd_before = -1;
-	// }
 	if (pnt->cmdt[i].last_multiline)
 	{
 		unlink(pnt->cmdt[i].last_multiline);
@@ -133,4 +100,8 @@ void	total_clean(t_data *pnt)
 	pnt->first_stdout = -1;
 	close(pnt->first_stdin);
 	pnt->first_stdin = -1;
+	if (pnt->fd_pipe[0] != -1)
+		close(pnt->fd_pipe[0]);
+	if (pnt->fd_pipe[1] != -1)
+		close(pnt->fd_pipe[1]);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   multiline.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:28:36 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/03/01 13:28:05 by hezhukov         ###   ########.fr       */
+/*   Updated: 2024/03/01 14:11:07 by device           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ static char	*name_create_multiline(int i)
 	with_itoa = ft_itoa(i);
 	if (with_itoa == NULL)
 		return (NULL);
-	// file_name = ft_strcat(".tmp_hdoc", with_itoa);
 	file_name = ft_strcat("/tmp/.tmp_hdoc", with_itoa);
 	free(with_itoa);
 	return (file_name);
@@ -78,59 +77,39 @@ static char	*broaden_local_token(t_data *pnt, char *letter)
 	return (free(buffer_value), result);
 }
 
-// static int	in_to_fd(t_data *pnt, int fd, char *delimiter)
-// {
-// 	char			*buffer;
+static int	in_to_fd(t_data *pnt, int fd, char *delimiter)
+{
+	char	*buffer;
+	char	*temp;
 
-// 	set_mode(pnt, MULTILINE);
-// 	while (1)
-// 	{
-// 		buffer = readline("> ");
-// 		if (g_global_signal == 1)
-// 			return (free(buffer), 1);
-// 		if (ft_strcmp(buffer, delimiter) == 0)
-// 			break ;
-// 		if (buffer[0] == '$')
-// 			buffer = broaden_local_token(pnt, buffer);
-// 		write(fd, buffer, ft_strlen(buffer));
-// 		write(fd, "\n", 1);
-// 		free(buffer);
-// 	}
-// 	set_mode(pnt, NON_INTERACT);
-// 	if (buffer != NULL)
-// 		free(buffer);
-// 	return (0);
-// }
-
-static int in_to_fd(t_data *pnt, int fd, char *delimiter) {
-    char *buffer;
-
-    set_mode(pnt, MULTILINE);
-    while (1) {
-        buffer = readline("> ");
-        if (buffer == NULL || g_global_signal == 1) { // Check if buffer is NULL or if a signal was received
-            close(fd);
-            if (buffer != NULL) {
-                free(buffer); // Free buffer if it's not NULL
-            }
-            return 1;
-        }
-        if (ft_strcmp(buffer, delimiter) == 0) {
-            free(buffer); // Free buffer to prevent memory leak
-            break;
-        }
-        if (buffer[0] == '$') {
-            char *temp = buffer;
-            buffer = broaden_local_token(pnt, buffer);
-            free(temp); // Ensure the original buffer is freed if it's replaced
-        }
-        write(fd, buffer, ft_strlen(buffer));
-        write(fd, "\n", 1);
-        free(buffer);
-    }
-    set_mode(pnt, NON_INTERACT);
-    // Removed redundant NULL check and free for buffer here, as buffer should always be NULL at this point
-    return 0;
+	set_mode(pnt, MULTILINE);
+	while (1)
+	{
+		buffer = readline("> ");
+		if (buffer == NULL || g_global_signal == 1)
+		{
+			close(fd);
+			if (buffer != NULL)
+				free(buffer);
+			return (1);
+		}
+		if (ft_strcmp(buffer, delimiter) == 0)
+		{
+			free(buffer);
+			break ;
+		}
+		if (buffer[0] == '$')
+		{
+			temp = buffer;
+			buffer = broaden_local_token(pnt, buffer);
+			free(temp);
+		}
+		write(fd, buffer, ft_strlen(buffer));
+		write(fd, "\n", 1);
+		free(buffer);
+	}
+	set_mode(pnt, NON_INTERACT);
+	return (0);
 }
 
 
@@ -143,7 +122,8 @@ int	create_heredoc(t_data *pnt, t_tab_cmd *tab_cmd, int i)
 	object = name_create_multiline(i);
 	if (!object)
 		return (error_out(pnt, "malloc issue", 1), 1);
-	file_descriptor = open(object, O_CREAT | O_TRUNC | O_RDWR | O_CLOEXEC, 0666);
+	file_descriptor = open(object, \
+		O_CREAT | O_TRUNC | O_RDWR | O_CLOEXEC, 0666);
 	if (file_descriptor < 0)
 		return (free(object), error_out(pnt, "minishell: open: ", 1));
 	stat = in_to_fd(pnt, file_descriptor, tab_cmd->redirections[i].value);

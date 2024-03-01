@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:27:31 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/22 19:10:45 by hezhukov         ###   ########.fr       */
+/*   Updated: 2024/03/01 13:39:24 by device           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,11 @@
 
 int	check_arguments(t_type_token type)
 {
-// 	if (type == WORD || type == DQUOTE || type == SQUOTE)
-// 		return (1);
 	return (type == WORD || type == DQUOTE || type == SQUOTE);
-	// return (0);
 }
 
 int	check_if_redirection(t_type_token type)
 {
-	// if (type == WORD || type == SQUOTE || type == DQUOTE || type == PIPE)
-	// 	return (1);
-	// return (0);
 	return (type == WORD || type == SQUOTE || type == DQUOTE || type == PIPE);
 }
 
