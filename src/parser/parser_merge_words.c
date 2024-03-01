@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_merge_words.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:27:26 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/03/01 13:15:27 by device           ###   ########.fr       */
+/*   Updated: 2024/03/01 13:27:17 by hezhukov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,45 +119,7 @@ int	copy_concat_create(t_data *pnt, t_token *new_tokens, \
 	return (EXIT_SUCCESS);
 }
 
-<<<<<<< HEAD
 int	token_copy(t_data *pnt, t_token *new_tokens, int *i, int *j)
-=======
-
-// int is_last_token_no_space(t_data *data, int *src_idx) { // Renamed src_index to src_idx
-//   return *src_idx > 0 && data->tokens[*src_idx].no_space == 1;
-// }
-
-// char *concat_previous_value(t_data *data, t_token *new_tokens, int *dest_idx) { // Renamed dest_index to dest_idx
-//   char *new_value = ft_strjoin(new_tokens[*dest_idx - 1].value, data->tokens[*src_idx].value); // Use src_idx from the previous function call
-//   if (!new_value) {
-//     return (char *)error_out(data, "Memory allocation failed in ft_strjoin", 1); // Cast the return value to char*
-//   }
-//   free(new_tokens[*dest_idx - 1].value);
-//   return new_value;
-// }
-
-// char *copy_value(t_data *data, int *src_idx) { // Renamed src_index to src_idx
-//   char *new_value = ft_strdup(data->tokens[*src_idx].value); // Use src_idx
-//   if (!new_value) {
-//     return (char *)error_out(data, "Memory allocation failed in ft_strdup", 1); // Cast the return value to char*
-//   }
-//   return new_value;
-// }
-
-// int copy_concat_create(t_data *data, t_token *new_tokens, int *src_idx, int *dest_idx) { // Renamed src_index and dest_index to src_idx and dest_idx
-//   if (is_last_token_no_space(data, src_idx)) {
-//     new_tokens[*dest_idx].value = concat_previous_value(data, new_tokens, dest_idx);
-//   } else {
-//     new_tokens[*dest_idx].value = copy_value(data, src_idx);
-//   }
-//   (*dest_idx)++;
-//   return 0;
-// }
-
-
-
-int	token_copy(t_data *pnt, t_token *tokens_new, int *i, int *j)
->>>>>>> main
 {
 	int	ret;
 
