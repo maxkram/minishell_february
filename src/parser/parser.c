@@ -3,13 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2024/02/29 11:32:03 by hezhukov         ###   ########.fr       */
+/*   Created: 2024/02/29 16:08:19 by device            #+#    #+#             */
+/*   Updated: 2024/03/01 12:02:42 by device           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "../include/minishell.h"
 

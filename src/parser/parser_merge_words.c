@@ -3,36 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   parser_merge_words.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:27:26 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/29 11:31:56 by hezhukov         ###   ########.fr       */
+/*   Updated: 2024/03/01 13:15:27 by device           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	copy_normalization(t_token *new_tokens_array, int *i, int *j, char **tmp)
+int	copy_normalization(t_token *new_tokens, int *i, int *j, char **tmp)
 {
 	int	k;
+	char *new_value;
 
 	k = -1;
-	if (*i > 0 && new_tokens_array[*j].no_space == 1)
+	if (*i > 0 && new_tokens[*j].no_space == 1)
 	{
 		*j = *j - 1;
-		new_tokens_array[*j].value = \
-			ft_strjoin(new_tokens_array[*j].value, tmp[++k]);
-		if (!new_tokens_array[*j].value)
+		new_value = ft_strjoin(new_tokens[*j].value, tmp[++k]);
+		if (!new_value)
 			return (1);
+		free(new_tokens[*j].value);
+		new_tokens[*j].value = new_value;
 		*j = *j + 1;
 	}
 	while (tmp[++k])
 	{
 		if (k == 1 && *j > 1 && \
-			check_if_redirection(new_tokens_array[*j - 2].type) == 0)
-			new_tokens_array[*j - 2].no_space = 2;
-		new_tokens_array[*j].value = ft_strdup_fd(tmp[k]);
-		if (!new_tokens_array[*j].value)
+			check_if_redirection(new_tokens[*j - 2].type) == 0)
+			new_tokens[*j - 2].no_space = 2;
+		new_tokens[*j].value = ft_strdup_fd(tmp[k]);
+		if (!new_tokens[*j].value)
 			return (1);
 		*j = *j + 1;
 	}
@@ -58,7 +60,7 @@ void	clean_double_pointer(char **pnt)
 	}
 }
 
-int	words_splitting(t_data *pnt, t_token *new_tkns, int *i, int *j)
+int	words_splitting(t_data *pnt, t_token *new_tokens, int *i, int *j)
 {
 	char	**temp;
 
@@ -70,7 +72,7 @@ int	words_splitting(t_data *pnt, t_token *new_tkns, int *i, int *j)
 		clean_double_pointer(temp);
 		return (2);
 	}
-	if (copy_normalization(new_tkns, i, j, temp) == 1)
+	if (copy_normalization(new_tokens, i, j, temp) == 1)
 	{
 		clean_double_pointer(temp);
 		return (error_out(pnt, "malloc", 1));
@@ -97,8 +99,7 @@ int	copy_concat_create(t_data *pnt, t_token *new_tokens, \
 	if (*src_index > 0 && new_tokens[*dest_index].no_space == 1)
 	{
 		*dest_index -= 1;
-		new_value = ft_strjoin(new_tokens[*dest_index].value, \
-			pnt->tokens[*src_index].value);
+		new_value = ft_strjoin(new_tokens[*dest_index].value, pnt->tokens[*src_index].value);
 		if (!new_value)
 			return (error_out(pnt, \
 				"Memory allocation failed in ft_strjoin", 1));
@@ -118,23 +119,23 @@ int	copy_concat_create(t_data *pnt, t_token *new_tokens, \
 	return (0);
 }
 
-int	token_copy(t_data *pnt, t_token *tokens_new, int *i, int *j)
+int	token_copy(t_data *pnt, t_token *new_tokens, int *i, int *j)
 {
 	int	ret;
 
-	tokens_new[*j].type = pnt->tokens[*i].type;
+	new_tokens[*j].type = pnt->tokens[*i].type;
 	if (check_arguments(pnt->tokens[*i].type) == 1)
 	{
 		if (pnt->tokens[*i].type == WORD)
 		{
-			ret = words_splitting(pnt, tokens_new, i, j);
+			ret = words_splitting(pnt, new_tokens, i, j);
 			if (ret == 1 || ret == 2)
 				return (ret % 2);
 		}
 		else
-			if (copy_concat_create(pnt, tokens_new, i, j) == 1)
+			if (copy_concat_create(pnt, new_tokens, i, j) == 1)
 				return (1);
-		tokens_new[*j].no_space = pnt->tokens[*i].no_space;
+		new_tokens[*j].no_space = pnt->tokens[*i].no_space;
 	}
 	else
 		*j = *j + 1;
