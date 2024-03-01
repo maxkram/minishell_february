@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_redirections.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 13:56:30 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/28 17:39:55 by hezhukov         ###   ########.fr       */
+/*   Updated: 2024/03/01 13:37:55 by device           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ int	handle_input_redirection(t_data *pnt, t_tab_cmd *tab_cmd, int i)
 {
 	if (tab_cmd->file_in != -1)
 		close(tab_cmd->file_in);
-	tab_cmd->file_in = open(tab_cmd->redirections[i].value, O_RDONLY | O_CLOEXEC);
+	tab_cmd->file_in = open(tab_cmd->redirections[i].value, \
+		O_RDONLY | O_CLOEXEC);
 	if (tab_cmd->file_in == -1)
 		return (error_out(pnt, tab_cmd->redirections[i].value, 1));
 	return (EXIT_SUCCESS);

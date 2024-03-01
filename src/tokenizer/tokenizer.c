@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:27:58 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/24 16:54:05 by hezhukov         ###   ########.fr       */
+/*   Updated: 2024/03/01 13:53:05 by device           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,6 @@ int	check_syntax_redirection(t_data *pnt, int i)
 			|| pnt->tokens[i].type == REDIRECT_OUT)
 		&& (check_if_redirection(pnt->tokens[i + 1].type) == 0))
 		return (error_in_syntax(pnt->tokens[i + 1].type, pnt), 1);
-	// else if (pnt->tokens[i].type == REDIRECT_MULTILINE
-	// 	&& (check_if_redirection(pnt->tokens[i + 1].type) == 0))
-	// 	return (error_in_syntax(pnt->tokens[i + 1].type, pnt), 1);
-	// else if (pnt->tokens[i].type == REDIRECT_IN
-	// 	&& (check_if_redirection(pnt->tokens[i + 1].type) == 0))
-	// 	return (error_in_syntax(pnt->tokens[i + 1].type, pnt), 1);
-	// else if (pnt->tokens[i].type == REDIRECT_OUT
-	// 	&& (check_if_redirection(pnt->tokens[i + 1].type) == 0))
-	// 	return (error_in_syntax(pnt->tokens[i + 1].type, pnt), 1);
 	return (EXIT_SUCCESS);
 }
 
@@ -44,14 +35,6 @@ int	syntax_checking(t_data *pnt)
 				|| pnt->tokens[i + 1].type == PIPE
 				|| check_if_redirection(pnt->tokens[i - 1].type) == 0))
 			return (error_in_syntax(pnt->tokens[i].type, pnt), 1);
-		// else if (pnt->tokens[i].type == PIPE && i == 0)
-		// 	return (error_in_syntax(pnt->tokens[i].type, pnt), 1);
-		// else if (pnt->tokens[i].type == PIPE
-		// 	&& pnt->tokens[i + 1].type == PIPE)
-		// 	return (error_in_syntax(pnt->tokens[i].type, pnt), 1);
-		// else if (pnt->tokens[i].type == PIPE
-		// 	&& (check_if_redirection(pnt->tokens[i - 1].type) == 0))
-		// 	return (error_in_syntax(pnt->tokens[i].type, pnt), 1);
 		else if (check_if_redirection(pnt->tokens[i].type) == 0
 			&& i == pnt->count_token - 1)
 			return (error_in_syntax(0, pnt), 1);

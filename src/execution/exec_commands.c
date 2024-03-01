@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_commands.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/24 13:55:59 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/28 17:16:15 by hezhukov         ###   ########.fr       */
+/*   Updated: 2024/03/01 13:37:36 by device           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,17 +130,11 @@ void	execute_command(t_data *pnt, int i)
 {
 	if (input_output_redirect(pnt, &pnt->cmdt[i]) == 1 && \
 		pipelines_redirect(pnt, i))
-		{
-			// close(fd_pipe[0]);
-			// fd_pipe[0] = -1;
-			close(pnt->fd_pipe[1]);
-			pnt->fd_pipe[1] = -1;
-			// // close_pipe_end(fd_pipe, READ_END);
-			// // close_pipe_end(fd_pipe, WRITE_END);
-			// close(pnt->fd_before);
-			// pnt->fd_before = -1;
-			return ;
-		}
+	{
+		close(pnt->fd_pipe[1]);
+		pnt->fd_pipe[1] = -1;
+		return ;
+	}
 	change_fd_input_output(pnt, &pnt->cmdt[i], i);
 	if (if_builtin(&pnt->cmdt[i]))
 		execute_builtin(pnt, &pnt->cmdt[i], i);

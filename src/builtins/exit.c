@@ -6,7 +6,7 @@
 /*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:25:17 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/28 19:52:48 by device           ###   ########.fr       */
+/*   Updated: 2024/03/01 14:11:40 by device           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,19 +54,13 @@ long int	to_long_int(char *s)
 	return (sgn * n);
 }
 
-/**
- * @changes
- * - deleted
- * 	if (cnt < 2)
-		ft_putstr_fd("exit\n", 2);
-*/
 void	built_exit_annex(t_data *pnt, t_tab_cmd *tab_cmd,
 	long int exit_code, int cnt)
 {
 	if ((!tab_cmd || tab_cmd->num_args == 1) && cnt < 2)
 	{
-		close (pnt->fd_pipe[0]);
-		close (pnt->fd_pipe[1]);
+		// close (pnt->fd_pipe[0]);
+		// close (pnt->fd_pipe[1]);
 		total_clean(pnt);
 		exit(pnt->code_exit);
 	}
@@ -77,8 +71,8 @@ void	built_exit_annex(t_data *pnt, t_tab_cmd *tab_cmd,
 		pnt->code_exit = 2;
 		if (cnt != 1)
 			return ;
-		close (pnt->fd_pipe[0]);
-		close (pnt->fd_pipe[1]);
+		// close (pnt->fd_pipe[0]);
+		// close (pnt->fd_pipe[1]);
 		total_clean(pnt);
 		exit (pnt->code_exit);
 	}
@@ -87,11 +81,10 @@ void	built_exit_annex(t_data *pnt, t_tab_cmd *tab_cmd,
 	else
 		pnt->code_exit = exit_code % 256;
 	if (cnt == 1)
-		total_clean(pnt);
-	if (cnt == 1)
 	{
-		close (pnt->fd_pipe[0]);
-		close (pnt->fd_pipe[1]);
+		// close (pnt->fd_pipe[1]);
+		// close (pnt->fd_pipe[0]);
+		total_clean(pnt);
 		exit(pnt->code_exit);
 	}
 }
