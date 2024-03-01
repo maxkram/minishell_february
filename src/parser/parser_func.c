@@ -34,7 +34,7 @@ int	redirections_fill(t_data *pnt, int j, int i)
 	pnt->cmdt[j].redirections = NULL;
 	pnt->cmdt[j].num_redirections = count;
 	if (count <= 0)
-		return (0);
+		return (EXIT_SUCCESS);
 	pnt->cmdt[j].redirections = ft_calloc(count, sizeof(t_token));
 	if (!pnt->cmdt[j].redirections)
 		return (error_out(pnt, "ft_calloc", 1));
@@ -52,7 +52,7 @@ int	redirections_fill(t_data *pnt, int j, int i)
 		}
 		i++;
 	}
-	return (0);
+	return (EXIT_SUCCESS);
 }
 
 int	words_merging(t_data *pnt)
@@ -80,5 +80,5 @@ int	words_merging(t_data *pnt)
 	free(pnt->tokens);
 	pnt->tokens = new_tokens;
 	pnt->count_token = j;
-	return (0);
+	return (EXIT_SUCCESS);
 }

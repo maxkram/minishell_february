@@ -27,14 +27,14 @@ int	length_of_variable(const char *n)
 int	if_has(const char *n, char c)
 {
 	if (!n)
-		return (0);
+		return (EXIT_SUCCESS);
 	while (*n)
 	{
 		if (*n == c)
 			return (1);
 		n++;
 	}
-	return (0);
+	return (EXIT_SUCCESS);
 }
 
 int	substring_concatenation(char *string, char **pnt)

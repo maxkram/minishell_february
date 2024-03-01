@@ -45,7 +45,7 @@ int	find_path(t_data *pnt, t_tab_cmd *tab_cmd)
 		temporary = tab_cmd->cmd;
 		tab_cmd->cmd = result;
 		free(temporary);
-		return (0);
+		return (EXIT_SUCCESS);
 	}
 	free(temporary);
 	free(result);

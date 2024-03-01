@@ -38,7 +38,7 @@ int	copy_normalization(t_token *new_tokens, int *i, int *j, char **tmp)
 			return (1);
 		*j = *j + 1;
 	}
-	return (0);
+	return (EXIT_SUCCESS);
 }
 
 void	clean_double_pointer(char **pnt)
@@ -78,7 +78,7 @@ int	words_splitting(t_data *pnt, t_token *new_tokens, int *i, int *j)
 		return (error_out(pnt, "malloc", 1));
 	}
 	clean_double_pointer(temp);
-	return (0);
+	return (EXIT_SUCCESS);
 }
 
 /**
@@ -116,10 +116,48 @@ int	copy_concat_create(t_data *pnt, t_token *new_tokens, \
 				"Memory allocation failed in ft_strdup", 1));
 	}
 	*dest_index += 1;
-	return (0);
+	return (EXIT_SUCCESS);
 }
 
+<<<<<<< HEAD
 int	token_copy(t_data *pnt, t_token *new_tokens, int *i, int *j)
+=======
+
+// int is_last_token_no_space(t_data *data, int *src_idx) { // Renamed src_index to src_idx
+//   return *src_idx > 0 && data->tokens[*src_idx].no_space == 1;
+// }
+
+// char *concat_previous_value(t_data *data, t_token *new_tokens, int *dest_idx) { // Renamed dest_index to dest_idx
+//   char *new_value = ft_strjoin(new_tokens[*dest_idx - 1].value, data->tokens[*src_idx].value); // Use src_idx from the previous function call
+//   if (!new_value) {
+//     return (char *)error_out(data, "Memory allocation failed in ft_strjoin", 1); // Cast the return value to char*
+//   }
+//   free(new_tokens[*dest_idx - 1].value);
+//   return new_value;
+// }
+
+// char *copy_value(t_data *data, int *src_idx) { // Renamed src_index to src_idx
+//   char *new_value = ft_strdup(data->tokens[*src_idx].value); // Use src_idx
+//   if (!new_value) {
+//     return (char *)error_out(data, "Memory allocation failed in ft_strdup", 1); // Cast the return value to char*
+//   }
+//   return new_value;
+// }
+
+// int copy_concat_create(t_data *data, t_token *new_tokens, int *src_idx, int *dest_idx) { // Renamed src_index and dest_index to src_idx and dest_idx
+//   if (is_last_token_no_space(data, src_idx)) {
+//     new_tokens[*dest_idx].value = concat_previous_value(data, new_tokens, dest_idx);
+//   } else {
+//     new_tokens[*dest_idx].value = copy_value(data, src_idx);
+//   }
+//   (*dest_idx)++;
+//   return 0;
+// }
+
+
+
+int	token_copy(t_data *pnt, t_token *tokens_new, int *i, int *j)
+>>>>>>> main
 {
 	int	ret;
 
@@ -138,6 +176,7 @@ int	token_copy(t_data *pnt, t_token *new_tokens, int *i, int *j)
 		new_tokens[*j].no_space = pnt->tokens[*i].no_space;
 	}
 	else
-		*j = *j + 1;
-	return (0);
+		// *j = *j + 1;
+		(*j)++;
+	return (EXIT_SUCCESS);
 }

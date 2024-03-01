@@ -18,7 +18,7 @@ int	array_length(char **arr)
 
 	i = 0;
 	if (!arr)
-		return (0);
+		return (EXIT_SUCCESS);
 	while (arr[i])
 		i++;
 	return (i);
@@ -54,7 +54,7 @@ int	remove_vars_of_arr(t_data *pnt, char *peg)
 	free(pnt->env[place]);
 	free(pnt->env);
 	pnt->env = arr;
-	return (0);
+	return (EXIT_SUCCESS);
 }
 
 void	built_unset(t_data *pnt, t_tab_cmd *tab_cmd)

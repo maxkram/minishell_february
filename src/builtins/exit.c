@@ -24,7 +24,7 @@ int	ok_for_numeric(char *s)
 			return (1);
 		s++;
 	}
-	return (0);
+	return (EXIT_SUCCESS);
 }
 
 long int	to_long_int(char *s)
@@ -35,7 +35,7 @@ long int	to_long_int(char *s)
 	n = 0;
 	sgn = 1;
 	if (!s)
-		return (0);
+		return (EXIT_SUCCESS);
 	while (*s == 32 || (*s > 8 && *s < 14))
 		s++;
 	if (*s == '-' || *s == '+')

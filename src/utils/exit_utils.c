@@ -44,7 +44,7 @@ int	ft_putstr_int(char *s, int fd)
 
 	i = 0;
 	if (!s)
-		return (0);
+		return (EXIT_SUCCESS);
 	while (*s)
 	{
 		ft_putchar_fd(*s++, fd);

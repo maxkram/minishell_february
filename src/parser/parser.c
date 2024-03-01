@@ -70,7 +70,7 @@ int	cmdt_init(t_data *pnt, int j, int *i)
 	*i = parse_and_fill_command(pnt, j, *i - 1) + 1;
 	if (*i == 0)
 		return (1);
-	return (0);
+	return (EXIT_SUCCESS);
 }
 
 int	parser(t_data *pnt)
@@ -93,5 +93,5 @@ int	parser(t_data *pnt)
 		j++;
 	}
 	cleanup_tokens(pnt);
-	return (0);
+	return (EXIT_SUCCESS);
 }

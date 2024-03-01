@@ -19,7 +19,7 @@ int	setup_pipes(t_data *pnt)
 		error_out(pnt, "pipe", 1);
 		return (-1);
 	}
-	return (0);
+	return (EXIT_SUCCESS);
 }
 
 void	wait_for_childs(t_data *pnt)

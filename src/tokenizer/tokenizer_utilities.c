@@ -50,5 +50,5 @@ int	reallocate_tokens_if_max(t_data *pnt, int max_token)
 	free(pnt->tokens);
 	pnt->tokens = new_tokens_array;
 	pnt->max_token *= 2;
-	return (0);
+	return (EXIT_SUCCESS);
 }

@@ -53,7 +53,7 @@ int	check_valid_execution(t_tab_cmd *tab_cmd, t_data *pnt)
 			closedir(directory);
 		}
 		else if (access(tab_cmd->cmd, X_OK) == 0)
-			return (0);
+			return (EXIT_SUCCESS);
 		else
 		{
 			ft_printf_fd(2, "minishell: %s: Permission denied\n",
@@ -115,7 +115,7 @@ int	find_exec(t_data *pnt, t_tab_cmd *tab_cmd)
 		return (check_valid_execution(tab_cmd, pnt));
 	result = path_searching(pnt, tab_cmd);
 	if (result == 0)
-		return (0);
+		return (EXIT_SUCCESS);
 	else if (result == 2)
 		return (1);
 	if (is_exist(pnt, tab_cmd, i) == 1)

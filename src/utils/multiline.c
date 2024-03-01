@@ -82,6 +82,7 @@ static char	*broaden_local_token(t_data *pnt, char *letter)
 // {
 // 	char			*buffer;
 
+<<<<<<< HEAD
 // 	set_mode(pnt, MULTILINE);
 // 	while (1)
 // 	{
@@ -131,6 +132,26 @@ static int in_to_fd(t_data *pnt, int fd, char *delimiter) {
     set_mode(pnt, NON_INTERACT);
     // Removed redundant NULL check and free for buffer here, as buffer should always be NULL at this point
     return 0;
+=======
+	set_mode(pnt, MULTILINE);
+	while (1)
+	{
+		buffer = readline("> ");
+		if (g_global_signal == 1)
+			return (free(buffer), 1);
+		if (ft_strcmp(buffer, delimiter) == 0)
+			break ;
+		if (buffer[0] == '$')
+			buffer = broaden_local_token(pnt, buffer);
+		write(fd, buffer, ft_strlen(buffer));
+		write(fd, "\n", 1);
+		free(buffer);
+	}
+	set_mode(pnt, NON_INTERACT);
+	if (buffer != NULL)
+		free(buffer);
+	return (EXIT_SUCCESS);
+>>>>>>> main
 }
 
 
@@ -163,5 +184,5 @@ int	create_heredoc(t_data *pnt, t_tab_cmd *tab_cmd, int i)
 	}
 	close(file_descriptor);
 	free(object);
-	return (0);
+	return (EXIT_SUCCESS);
 }

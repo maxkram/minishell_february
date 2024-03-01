@@ -35,7 +35,7 @@ int	redirects_cmd_tab(t_data *pnt, t_tab_cmd *tab_cmd, int i)
 	else if (tab_cmd->redirections[i].type == REDIRECT_MULTILINE)
 		if (create_heredoc(pnt, tab_cmd, i) == 1)
 			return (1);
-	return (0);
+	return (EXIT_SUCCESS);
 }
 
 /**

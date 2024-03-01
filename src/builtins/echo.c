@@ -23,7 +23,7 @@ int	is_flag(char *arg)
 			return (1);
 		arg++;
 	}
-	return (0);
+	return (EXIT_SUCCESS);
 }
 
 void	built_echo(t_data *pnt, t_tab_cmd *tab_cmd)

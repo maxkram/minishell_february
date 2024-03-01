@@ -83,5 +83,20 @@ int	if_builtin(t_tab_cmd *tab_cmd)
 		return (1);
 	if (ft_strcmp(tab_cmd->cmd, "echo") == 0)
 		return (1);
-	return (0);
+	return (EXIT_SUCCESS);
+
+	//     const char *builtin_cmds[] = {
+    //     "exit", "cd", "env", "unset", "export", "pwd", "echo"
+    // };
+    // const int num_builtins = sizeof(builtin_cmds) / sizeof(builtin_cmds[0]);
+
+    // int i = 0;
+    // while (i < num_builtins)
+    // {
+    //     if (ft_strcmp(tab_cmd->cmd, builtin_cmds[i]) == 0)
+    //         return 1;
+    //     i++;
+    // }
+
+    // return EXIT_SUCCESS;
 }

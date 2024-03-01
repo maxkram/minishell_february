@@ -29,7 +29,7 @@ static int	handle_path_found(t_tab_cmd *tab_cmd, char *full_path)
 {
 	free(tab_cmd->cmd);
 	tab_cmd->cmd = full_path;
-	return (0);
+	return (EXIT_SUCCESS);
 }
 
 static int	cleanup_and_return(char *msg, char *to_free, int return_value)
