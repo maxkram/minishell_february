@@ -62,7 +62,8 @@ char	*get_target_path(t_tab_cmd *tab_cmd)
 {
 	char	*path;
 
-	if (tab_cmd->num_args <= 1 || !tab_cmd->args[1] || tab_cmd->args[1][0] == 0)
+	if (tab_cmd->num_args <= 1 || !tab_cmd->args[1] || tab_cmd->args[1][0] == 0
+			|| tab_cmd->args[1][0] == '~')
 	{
 		path = getenv("HOME");
 		if (!path)
