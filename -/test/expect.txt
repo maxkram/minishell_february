@@ -1,5 +1,0 @@
-src
-sr*
-abc
-xyz
-xyz123

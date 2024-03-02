@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:43:52 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/03/02 14:55:36 by device           ###   ########.fr       */
+/*   Updated: 2024/03/02 15:03:37 by hezhukov         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -177,18 +177,15 @@ void	built_exit(t_data *pntr, t_tab_cmd *cmd_tab);
 void	built_echo(t_data *pnt, t_tab_cmd *tab_cmd);
 void	built_unset(t_data *pnt, t_tab_cmd *tab_cmd);
 void	index_sort(char **arr, int str_count, int *index);
-// void	print_env(char **env, int fd);
 int		built_env(t_data *data);
 int		var_in_env(char *str);
 void	print_export(char **env, int fd);
 int		built_export(t_data *data, t_tab_cmd *cmd);
 int		parser(t_data *pointer);
 int		redirections_fill(t_data *pointer, int i, int j);
-// int		args_cmd_fill(t_data *pointer, int i, int j);
 int		words_merging(t_data *pointer);
 int		count_pipes(t_data *pointer);
 int		new_tokens_count(t_data *pointer);
-// int		count_characters(char const *s);
 int		token_copy(t_data *pointer, t_token *tokens_new, int *i, int *j);
 void	clean_double_pointer(char **pnt);
 int		word_filling(t_data *pntr, char const *str);
@@ -216,7 +213,6 @@ void	free_string_array(char **pnt);
 void	fd_exit(t_data *pntr, int code_exit);
 int		ft_putstr_int(char *s, int fd);
 int		increase_shlvl(t_data *pntr);
-// int		search_variable(char **ev, char *name);
 int		create_env_var(t_data *pntr, char *key, char *keep);
 void	cmdt_cleaning(t_data *pntr);
 void	pntr_cleaning(t_data *pnt);
@@ -256,14 +252,10 @@ void	cleanup_heredoc(t_data *pntr, int i);
 int		in_to_fd(t_data *pnt, int fd, char *delimiter);
 char	**path_getter(t_data *pnt, int i);
 void	env_init(t_data *pnt, char **env);
-// Parsing
 int		check_arguments(t_type_token type);
 int		check_if_redirection(t_type_token type);
-// Clean up
 void	free_ptr(void *ptr);
 int		error_out(t_data *pnt, char *s, int n);
-// Builtins
-// Export
 int		env_var_count(char **env);
 int		print_env_vars(t_data *data);
 void	set_error_and_code(char *cmd_arg, int *code_exit);
