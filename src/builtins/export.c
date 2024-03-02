@@ -6,12 +6,11 @@
 /*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:26:14 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/03/02 12:07:27 by device           ###   ########.fr       */
+/*   Updated: 2024/03/02 12:37:59 by device           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 /**
 * realloc_env_vars: Reallocate the environment variable array to a new size.
@@ -193,4 +192,3 @@ int	built_export(t_data *pnt, t_tab_cmd *cmd)
 	}
 	return (EXIT_SUCCESS);
 }
-

@@ -6,7 +6,7 @@
 /*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 13:25:05 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/03/02 12:31:16 by device           ###   ########.fr       */
+/*   Updated: 2024/03/02 12:46:24 by device           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ int	main(int argc, char *argv[], char **env_p)
 	while (1)
 	{
 		set_mode(&pnt, INTERACT);
-		// set_mode(&pnt, NON_INTERACT);
 		pnt.input = readline(PROMPT);
+		// set_mode(&pnt, NON_INTERACT);
 		if (g_global_signal == 1 && g_global_signal--)
 			pnt.code_exit = 130;
 		if (!pnt.input)

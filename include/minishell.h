@@ -6,7 +6,7 @@
 /*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:43:52 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/03/02 12:24:23 by device           ###   ########.fr       */
+/*   Updated: 2024/03/02 12:42:24 by device           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,7 +197,8 @@ int		word_filling(t_data *pntr, char const *s);
 int		filling_quotes(t_data *pntr, char const *str, char tmp);
 int		tokener(t_data *pntr);
 int		extender(t_data *pntr);
-int		dollar_replacement(char *string, char **value, t_data *pntr, int exception);
+int		dollar_replacement(char *string, \
+	char **value, t_data *pntr, int exception);
 char	*value_of_variable(t_data *pntr, char *i);
 int		variable_index(char **env, char *n);
 int		length_of_variable(const char *n);
@@ -241,9 +242,11 @@ int		realloc_and_check(t_data *pnt);
 int		handle_pipe(t_data *pnt);
 int		handle_quotes(t_data *pnt, int *i);
 int		handle_word(t_data *pnt, int *i);
-int		clean_token_array(t_token *array_tokens, int max_number_token, t_data *pnt);
+int		clean_token_array(t_token *array_tokens, \
+	int max_number_token, t_data *pnt);
 int		reallocate_tokens_if_max(t_data *pnt, int max_token);
-int		parse_and_fill_command(t_data *data, int command_index, int token_index);
+int		parse_and_fill_command(t_data *data, \
+	int command_index, int token_index);
 int		input_output_redirect(t_data *pnt, t_tab_cmd *tab_cmd);
 int		setup_pipes(t_data *pnt);
 void	execute_command(t_data *pnt, int i);
@@ -253,18 +256,12 @@ void	cleanup_heredoc(t_data *pntr, int i);
 int		in_to_fd(t_data *pnt, int fd, char *delimiter);
 char	**path_getter(t_data *pnt, int i);
 void	env_init(t_data *pnt, char **env);
-
 // Parsing
 int		check_arguments(t_type_token type);
 int		check_if_redirection(t_type_token type);
-
-
-
 // Clean up
 void	free_ptr(void *ptr);
 int		error_out(t_data *pnt, char *s, int n);
-
-
 // Builtins
 // Export
 int		env_var_count(char **env);

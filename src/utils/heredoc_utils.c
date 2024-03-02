@@ -6,7 +6,7 @@
 /*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 17:47:21 by device            #+#    #+#             */
-/*   Updated: 2024/03/01 17:50:22 by device           ###   ########.fr       */
+/*   Updated: 2024/03/02 13:02:36 by device           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ static char	*broaden_local_token(t_data *pnt, char *letter)
 
 static int	process_buffer(t_data *pnt, char **buffer, int fd, char *delimiter)
 {
-	char	*temp;
 
 	if (ft_strcmp(*buffer, delimiter) == 0)
 	{
@@ -82,11 +81,7 @@ static int	process_buffer(t_data *pnt, char **buffer, int fd, char *delimiter)
 		return (0);
 	}
 	if ((*buffer)[0] == '$')
-	{
-		temp = *buffer;
 		*buffer = broaden_local_token(pnt, *buffer);
-		free(temp);
-	}
 	ft_putendl_fd(*buffer, fd);
 	free(*buffer);
 	return (1);
