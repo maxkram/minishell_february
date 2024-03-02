@@ -98,5 +98,9 @@ int		ft_putstr(char *s, int fd);
 int		ft_split_length(char **arr);
 void	*free_null(void *ptr);
 void	*arr_free(void **arr);
+int		ft_putchar(char c, int fd);
+int		ft_putstr(char *s, int fd);
+int		count_dig(int n);
+int		ft_putnbr(int n, int fd);
 
 #endif

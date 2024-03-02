@@ -6,7 +6,7 @@
 /*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 17:47:21 by device            #+#    #+#             */
-/*   Updated: 2024/03/02 13:02:36 by device           ###   ########.fr       */
+/*   Updated: 2024/03/02 14:37:43 by device           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ static char	*broaden_local_token(t_data *pnt, char *letter)
 
 static int	process_buffer(t_data *pnt, char **buffer, int fd, char *delimiter)
 {
-
 	if (ft_strcmp(*buffer, delimiter) == 0)
 	{
 		free(*buffer);

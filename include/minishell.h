@@ -6,7 +6,7 @@
 /*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:43:52 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/03/02 12:42:24 by device           ###   ########.fr       */
+/*   Updated: 2024/03/02 14:55:36 by device           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -267,6 +267,5 @@ int		error_out(t_data *pnt, char *s, int n);
 int		env_var_count(char **env);
 int		print_env_vars(t_data *data);
 void	set_error_and_code(char *cmd_arg, int *code_exit);
-
 
 #endif
