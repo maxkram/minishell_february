@@ -1,7 +1,6 @@
 NAME = minishell
 CC = gcc
 CFLAGS = -Wall -Werror -Wextra -g
-# LIBS = -Llib/libft -lft -L$(READLINE_PATH)/lib -lreadline
 LIBS = -Llib/libft -lft -L vendor/readline/lib -lreadline -lncurses
 INCLUDES = -Iinclude -I$(READLINE_PATH)/include
 
