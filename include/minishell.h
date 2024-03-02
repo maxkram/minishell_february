@@ -6,7 +6,7 @@
 /*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:43:52 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/03/02 11:26:23 by device           ###   ########.fr       */
+/*   Updated: 2024/03/02 12:24:23 by device           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,8 +169,7 @@ void	execution(t_data *pntr);
 char	*ft_get_env(char *str, char **env);
 char	*cmd_fullpath(t_data *data, char *cmd);
 void	ft_dup2(int fd, int std);
-int		change_fd_input_output(t_data *pntr, \
-	t_tab_cmd *tab_cmd, int i);
+int		change_fd_input_output(t_data *pntr, t_tab_cmd *tab_cmd, int i);
 int		find_path(t_data *pntr, t_tab_cmd *tab_cmd);
 int		built_cd(t_data *pnt, t_tab_cmd *tab_cmd);
 int		make_var(t_data *pnt, char *var_name, char *value);
@@ -187,8 +186,6 @@ int		parser(t_data *pointer);
 int		redirections_fill(t_data *pointer, int i, int j);
 // int		args_cmd_fill(t_data *pointer, int i, int j);
 int		words_merging(t_data *pointer);
-int		check_if_redirection(t_type_token type);
-int		check_arguments(t_type_token type);
 int		count_pipes(t_data *pointer);
 int		new_tokens_count(t_data *pointer);
 // int		count_characters(char const *s);
@@ -200,8 +197,7 @@ int		word_filling(t_data *pntr, char const *s);
 int		filling_quotes(t_data *pntr, char const *str, char tmp);
 int		tokener(t_data *pntr);
 int		extender(t_data *pntr);
-int		dollar_replacement(char *string, char **value, \
-	t_data *pntr, int exception);
+int		dollar_replacement(char *string, char **value, t_data *pntr, int exception);
 char	*value_of_variable(t_data *pntr, char *i);
 int		variable_index(char **env, char *n);
 int		length_of_variable(const char *n);
@@ -214,7 +210,7 @@ int		find_exec(t_data *pntr, t_tab_cmd *cmd_tab);
 void	fd_cleaning(t_data *pntr, t_tab_cmd *tab_cmd, int i);
 void	total_clean(t_data *pntr);
 void	pntr_cleaning(t_data *pntr);
-void	init_pntr(t_data *pntr, char **env);
+void	init_pnt(t_data *pntr, char **env);
 void	free_string_array(char **pnt);
 void	fd_exit(t_data *pntr, int code_exit);
 int		ft_putstr_int(char *s, int fd);
@@ -231,37 +227,49 @@ void	cleanup_commands(t_data *pnt);
 t_data	*get_data(void);
 void	ft_error(char *str);
 void	my_error(char *str);
-int		error_out(t_data *pnt, char *s, int n);
 void	safe_free(void **ptr);
 void	error_in_syntax(int type, t_data *pntr);
 void	free_all(t_data *data);
 void	free_ptr(void *ptr);
 void	free_str_tab(char **tab);
-int		env_var_count(char **env);
 int		check_exception(t_data *pnt, int i);
 int		variable_index(char **env, char *n);
 int		substring_beginning(char *word, char *start);
 int		path_searching(t_data *data, t_tab_cmd *tab_cmd);
-int		print_env_vars(t_data *data);
 int		fill_redirection(t_data *pnt, char const *str);
 int		realloc_and_check(t_data *pnt);
 int		handle_pipe(t_data *pnt);
 int		handle_quotes(t_data *pnt, int *i);
 int		handle_word(t_data *pnt, int *i);
-int		clean_token_array(t_token *array_tokens, \
-	int max_number_token, t_data *pnt);
+int		clean_token_array(t_token *array_tokens, int max_number_token, t_data *pnt);
 int		reallocate_tokens_if_max(t_data *pnt, int max_token);
-int		parse_and_fill_command(t_data *data, \
-	int command_index, int token_index);
+int		parse_and_fill_command(t_data *data, int command_index, int token_index);
 int		input_output_redirect(t_data *pnt, t_tab_cmd *tab_cmd);
 int		setup_pipes(t_data *pnt);
 void	execute_command(t_data *pnt, int i);
 void	handle_redirection(int fd, int std_channel);
 void	close_pipe_end(int *fd_pipe, int end);
 void	cleanup_heredoc(t_data *pntr, int i);
-void	set_error_and_code(char *cmd_arg, int *code_exit);
 int		in_to_fd(t_data *pnt, int fd, char *delimiter);
 char	**path_getter(t_data *pnt, int i);
 void	env_init(t_data *pnt, char **env);
+
+// Parsing
+int		check_arguments(t_type_token type);
+int		check_if_redirection(t_type_token type);
+
+
+
+// Clean up
+void	free_ptr(void *ptr);
+int		error_out(t_data *pnt, char *s, int n);
+
+
+// Builtins
+// Export
+int		env_var_count(char **env);
+int		print_env_vars(t_data *data);
+void	set_error_and_code(char *cmd_arg, int *code_exit);
+
 
 #endif

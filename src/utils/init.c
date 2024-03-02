@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hezhukov <hezhukov@student.42.fr>          +#+  +:+       +#+        */
+/*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:28:30 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/22 18:28:30 by hezhukov         ###   ########.fr       */
+/*   Updated: 2024/03/02 12:24:06 by device           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ char	**string_to_array(char **source)
 	return (copy);
 }
 
-void	init_pntr(t_data *pnt, char **env)
+void	init_pnt(t_data *pnt, char **env)
 {
 	char	**copy_env;
 

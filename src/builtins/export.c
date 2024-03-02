@@ -6,7 +6,7 @@
 /*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:26:14 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/03/02 11:26:36 by device           ###   ########.fr       */
+/*   Updated: 2024/03/02 12:07:27 by device           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,43 +77,43 @@ int	get_env_var_index(char **env, char *var)
 }
 
 /**
-** set_env_var: Set or update an environment variable.
-** This function sets a new environment variable or updates the value of an
-** existing one. If the variable already exists, its value is updated; if not,
-** the variable is added to the environment. The environment variables array
-** may be reallocated if necessary to accommodate the new variable.
-**
-** @param pnt: Pointer to the data structure containing the env variables array.
-** @param key: The name of the environment variable to set or update.
-** @param value: The value to set for the environment variable.
-** @return bool: Returns true if the operation is successful, false otherwise.
+ * set_env_var: Set or update an environment variable.
+ * This function sets a new environment variable or updates the value of an
+ * existing one. If the variable already exists, its value is updated; if not,
+ * the variable is added to the environment. The environment variables array
+ * may be reallocated if necessary to accommodate the new variable.
+ * @param pnt: Pointer to the data structure containing the env variables array.
+ * @param key: The name of the environment variable to set or update.
+ * @param value: The value to set for the environment variable.
+ * @param index:
+ * @return bool: Returns true if the operation is successful, false otherwise.
 */
 bool	set_env_var(t_data *pnt, char *key, char *value)
 {
-	int		idx;
-	char	*tmp;
+	int		index;
+	char	*new_value;
 
-	idx = get_env_var_index(pnt->env, key);
+	index = get_env_var_index(pnt->env, key);
 	if (value == NULL)
 		value = "";
-	tmp = ft_strjoin("=", value);
-	if (!tmp)
-		return (false);
-	if (idx != -1 && pnt->env[idx])
+	new_value = ft_strjoin("=", value);
+	if (!new_value)
+		return (FALSE);
+	if (index != -1 && pnt->env[index])
 	{
-		free_ptr(pnt->env[idx]);
-		pnt->env[idx] = ft_strjoin(key, tmp);
+		free_ptr(pnt->env[index]);
+		pnt->env[index] = ft_strjoin(key, new_value);
 	}
 	else
 	{
-		idx = env_var_count(pnt->env);
-		pnt->env = realloc_env_vars(pnt, idx + 1);
+		index = env_var_count(pnt->env);
+		pnt->env = realloc_env_vars(pnt, index + 1);
 		if (!pnt->env)
 			return (false);
-		pnt->env[idx] = ft_strjoin(key, tmp);
+		pnt->env[index] = ft_strjoin(key, new_value);
 	}
-	free_ptr(tmp);
-	return (true);
+	free_ptr(new_value);
+	return (TRUE);
 }
 
 /**

@@ -6,7 +6,7 @@
 /*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/26 13:25:05 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/03/02 10:21:04 by device           ###   ########.fr       */
+/*   Updated: 2024/03/02 12:31:16 by device           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,12 @@ int	main(int argc, char *argv[], char **env_p)
 	(void)argv;
 	if (argc != 1)
 		return (ft_putstr("Error: too many arguments\n", 2));
-	init_pntr(&pnt, env_p);
+	init_pnt(&pnt, env_p);
 	while (1)
 	{
 		set_mode(&pnt, INTERACT);
+		// set_mode(&pnt, NON_INTERACT);
 		pnt.input = readline(PROMPT);
-		set_mode(&pnt, NON_INTERACT);
 		if (g_global_signal == 1 && g_global_signal--)
 			pnt.code_exit = 130;
 		if (!pnt.input)
