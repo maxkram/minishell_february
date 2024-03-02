@@ -6,7 +6,7 @@
 /*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:26:14 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/02/28 19:47:04 by device           ###   ########.fr       */
+/*   Updated: 2024/03/01 22:11:17 by device           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,3 +125,121 @@ int	built_export(t_data *pnt, t_tab_cmd *cmd)
 	}
 	return (EXIT_SUCCESS);
 }
+
+
+// int	has_no_has(const char *set, char c)
+// {
+// 	if (!set)
+// 		return (0);
+// 	while (*set)
+// 	{
+// 		if (*set == c)
+// 			return (1);
+// 		set++;
+// 	}
+// 	return (0);
+// }
+
+// int	probel(const char *str)
+// {
+// 	const char	arr[] = " \v\f\r\n\t";
+
+// 	if (!str)
+// 		return (1);
+// 	while (has_no_has(arr, *str))
+// 		str++;
+// 	return (!*str);
+// }
+
+// static int	validity(char *str)
+// {
+// 	if (str == NULL || !(ft_isalpha(*str) || *str == '_'))
+// 		return (1);
+// 	while (*str && *str != '=')
+// 	{
+// 		if (!(ft_isalnum(*str) || *str == '_'))
+// 			return (1);
+// 		str++;
+// 	}
+// 	return (0);
+// }
+
+// static void	check_norm(t_data *data, char *line)
+// {
+// 	char	*value;
+// 	char	*key;
+// 	int		i;
+
+// 	if (!line || !*line || !has_no_has(line, '='))
+// 		return ;
+// 	i = 0;
+// 	while (line[i] && line[i] != '=')
+// 		i++;
+// 	key = ft_substr(line, 0, i++);
+// 	if (!key)
+// 		return ;
+// 	while (line[i])
+// 		i++;
+// 	value = ft_substr(line, ft_strlen(key) + 1, i);
+// 	if (!value)
+// 	{
+// 		free(key);
+// 		return ;
+// 	}
+// 	make_var(data, key, value);
+// 	free(value);
+// 	free(key);
+// }
+
+// static void	no_args(char **envp)
+// {
+// 	int	vvod;
+// 	int	i;
+
+// 	vvod = 0;
+// 	while (envp[vvod])
+// 	{
+// 		i = 0;
+// 		ft_putstr_fd("declare -x ", STDOUT_FILENO);
+// 		while (envp[vvod][i] && envp[vvod][i] != '=')
+// 			ft_putchar_fd(envp[vvod][i++], STDOUT_FILENO);
+// 		if (envp[vvod][i] == '=')
+// 		{
+// 			ft_putchar_fd(envp[vvod][i++], STDOUT_FILENO);
+// 			ft_putchar_fd('"', STDOUT_FILENO);
+// 			while (envp[vvod][i])
+// 				ft_putchar_fd(envp[vvod][i++], STDOUT_FILENO);
+// 			ft_putchar_fd('"', STDOUT_FILENO);
+// 		}
+// 		write(STDOUT_FILENO, "\n", 1);
+// 		vvod++;
+// 	}
+// }
+
+// void	built_export(t_data *data, t_tab_cmd *cmd_table)
+// {
+// 	int		i;
+
+// 	data->code_exit = 0;
+// 	if (cmd_table->num_args == 1)
+// 		no_args(data->env);
+// 	i = 1;
+// 	while (i < cmd_table->num_args)
+// 	{
+// 		if (validity(cmd_table->args[i]))
+// 		{
+// 			if (probel(cmd_table->args[i]) && !data->code_exit)
+// 				ft_putendl_fd("export: not valid in this context:", 2);
+// 			else if (!data->code_exit)
+// 			{
+// 				ft_putstr_fd("bash: export: `", STDERR_FILENO);
+// 				ft_putstr_fd(cmd_table->args[i], STDERR_FILENO);
+// 				ft_putendl_fd("': not a valid identifier", STDERR_FILENO);
+// 			}
+// 			data->code_exit = 1;
+// 		}
+// 		else if (data->cmdt_count == 1)
+// 			check_norm(data, cmd_table->args[i]);
+// 		i++;
+// 	}
+// }
