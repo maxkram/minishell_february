@@ -6,12 +6,24 @@
 /*   By: device <device@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/22 18:26:14 by hezhukov          #+#    #+#             */
-/*   Updated: 2024/03/01 22:11:17 by device           ###   ########.fr       */
+/*   Updated: 2024/03/02 11:26:36 by device           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+
+/**
+* realloc_env_vars: Reallocate the environment variable array to a new size.
+* This function creates a new array of environment variables with the specified
+* size, copies the existing variables into the new array, frees the old array,
+* and returns the new array. The new array is initially filled with NULLs,
+* ensuring that any unused slots are properly null-terminated.
+*
+* @param pnt: Pointer to the data structure containing the env variables array.
+* @param size: The new size for the environment variables array.
+* @return char**: Returns the newly allocated environment variables array.
+*/
 static char	**realloc_env_vars(t_data *pnt, int size)
 {
 	char	**new_env;
@@ -31,6 +43,17 @@ static char	**realloc_env_vars(t_data *pnt, int size)
 	return (new_env);
 }
 
+/**
+** get_env_var_index: Find the index of a specific environment variable.
+** This function searches for a given environment variable by its name within
+** the current list of environment variables. It concatenates the variable name
+** with an = sign to match the format used in environment variables (KEY=value).
+** If the variable is found, it returns its index; otherwise, it returns -1.
+**
+** @param env: The array of environment variables.
+** @param var: The name of the environment variable to find.
+** @return int: The index of the environment variable if found, -1 otherwise.
+*/
 int	get_env_var_index(char **env, char *var)
 {
 	int		i;
@@ -53,6 +76,18 @@ int	get_env_var_index(char **env, char *var)
 	return (-1);
 }
 
+/**
+** set_env_var: Set or update an environment variable.
+** This function sets a new environment variable or updates the value of an
+** existing one. If the variable already exists, its value is updated; if not,
+** the variable is added to the environment. The environment variables array
+** may be reallocated if necessary to accommodate the new variable.
+**
+** @param pnt: Pointer to the data structure containing the env variables array.
+** @param key: The name of the environment variable to set or update.
+** @param value: The value to set for the environment variable.
+** @return bool: Returns true if the operation is successful, false otherwise.
+*/
 bool	set_env_var(t_data *pnt, char *key, char *value)
 {
 	int		idx;
@@ -81,23 +116,56 @@ bool	set_env_var(t_data *pnt, char *key, char *value)
 	return (true);
 }
 
+/**
+ * is_valid_env_var_key: Validates environment variable names.
+ * Checks if a string can be a valid environment variable name, starting with an
+ * alphabet character or underscore, followed by alphanumeric characters or
+ * underscores.
+ * @param var: The string to validate.
+ * @return bool: Returns true if valid, false otherwise.
+ *
+ * Valid names:
+ * - PATH: All uppercase, common convention.
+ * - USER_ID: Uppercase with underscores, clear and readable.
+ * - _API_KEY: Starts with underscore, then uppercase letters.
+ * - dbPort: Mixed case; valid, though uppercase is common.
+ * - config_file_path: Lowercase with underscores; valid, less common.
+ *
+ * Invalid names:
+ * - 9PATH: Starts with a digit.
+ * - USER ID: Contains a space
+ * - API-KEY: Contains a dash.
+ * - *SECRET*: Not allowed special characters (*).
+ * - .DOTFILE: Starts with a dot.
+ */
 bool	is_valid_env_var_key(char *var)
 {
 	int	i;
 
 	i = 0;
-	if (ft_isalpha(var[i]) == 0 && var[i] != '_')
-		return (false);
+	if (ft_isalpha(var[i]) == FALSE && var[i] != '_')
+		return (FALSE);
 	i++;
 	while (var[i] && var[i] != '=')
 	{
-		if (ft_isalnum(var[i]) == 0 && var[i] != '_')
-			return (false);
+		if (ft_isalnum(var[i]) == FALSE && var[i] != '_')
+			return (FALSE);
 		i++;
 	}
-	return (true);
+	return (TRUE);
 }
 
+/**
+ * built_export: 'export' command for setting environment variables.
+ * Executes the 'export' shell command functionality.
+ * Without arguments, it lists  * all environment variables.
+ * With arguments, it sets variables in 'KEY=value' format.
+ * Invalid variable names trigger an error.
+ *
+ * @param pnt: Contains the environment variables array.
+ * @param cmd: Contains the 'export' command arguments.
+ * @return int: EXIT_SUCCESS on successful execution.
+ */
 int	built_export(t_data *pnt, t_tab_cmd *cmd)
 {
 	int		i;
@@ -112,7 +180,7 @@ int	built_export(t_data *pnt, t_tab_cmd *cmd)
 	{
 		if (!is_valid_env_var_key(cmd->args[i]))
 			set_error_and_code(cmd->args[i], &pnt->code_exit);
-		else if (ft_strchr(cmd->args[i], '='))
+		else if (ft_strchr(cmd->args[i], '=') && pnt->cmdt_count == 1)
 		{
 			equal_sign_pos = ft_strchr(cmd->args[i], '=');
 			key = ft_strndup(cmd->args[i], equal_sign_pos - cmd->args[i]);
@@ -126,120 +194,3 @@ int	built_export(t_data *pnt, t_tab_cmd *cmd)
 	return (EXIT_SUCCESS);
 }
 
-
-// int	has_no_has(const char *set, char c)
-// {
-// 	if (!set)
-// 		return (0);
-// 	while (*set)
-// 	{
-// 		if (*set == c)
-// 			return (1);
-// 		set++;
-// 	}
-// 	return (0);
-// }
-
-// int	probel(const char *str)
-// {
-// 	const char	arr[] = " \v\f\r\n\t";
-
-// 	if (!str)
-// 		return (1);
-// 	while (has_no_has(arr, *str))
-// 		str++;
-// 	return (!*str);
-// }
-
-// static int	validity(char *str)
-// {
-// 	if (str == NULL || !(ft_isalpha(*str) || *str == '_'))
-// 		return (1);
-// 	while (*str && *str != '=')
-// 	{
-// 		if (!(ft_isalnum(*str) || *str == '_'))
-// 			return (1);
-// 		str++;
-// 	}
-// 	return (0);
-// }
-
-// static void	check_norm(t_data *data, char *line)
-// {
-// 	char	*value;
-// 	char	*key;
-// 	int		i;
-
-// 	if (!line || !*line || !has_no_has(line, '='))
-// 		return ;
-// 	i = 0;
-// 	while (line[i] && line[i] != '=')
-// 		i++;
-// 	key = ft_substr(line, 0, i++);
-// 	if (!key)
-// 		return ;
-// 	while (line[i])
-// 		i++;
-// 	value = ft_substr(line, ft_strlen(key) + 1, i);
-// 	if (!value)
-// 	{
-// 		free(key);
-// 		return ;
-// 	}
-// 	make_var(data, key, value);
-// 	free(value);
-// 	free(key);
-// }
-
-// static void	no_args(char **envp)
-// {
-// 	int	vvod;
-// 	int	i;
-
-// 	vvod = 0;
-// 	while (envp[vvod])
-// 	{
-// 		i = 0;
-// 		ft_putstr_fd("declare -x ", STDOUT_FILENO);
-// 		while (envp[vvod][i] && envp[vvod][i] != '=')
-// 			ft_putchar_fd(envp[vvod][i++], STDOUT_FILENO);
-// 		if (envp[vvod][i] == '=')
-// 		{
-// 			ft_putchar_fd(envp[vvod][i++], STDOUT_FILENO);
-// 			ft_putchar_fd('"', STDOUT_FILENO);
-// 			while (envp[vvod][i])
-// 				ft_putchar_fd(envp[vvod][i++], STDOUT_FILENO);
-// 			ft_putchar_fd('"', STDOUT_FILENO);
-// 		}
-// 		write(STDOUT_FILENO, "\n", 1);
-// 		vvod++;
-// 	}
-// }
-
-// void	built_export(t_data *data, t_tab_cmd *cmd_table)
-// {
-// 	int		i;
-
-// 	data->code_exit = 0;
-// 	if (cmd_table->num_args == 1)
-// 		no_args(data->env);
-// 	i = 1;
-// 	while (i < cmd_table->num_args)
-// 	{
-// 		if (validity(cmd_table->args[i]))
-// 		{
-// 			if (probel(cmd_table->args[i]) && !data->code_exit)
-// 				ft_putendl_fd("export: not valid in this context:", 2);
-// 			else if (!data->code_exit)
-// 			{
-// 				ft_putstr_fd("bash: export: `", STDERR_FILENO);
-// 				ft_putstr_fd(cmd_table->args[i], STDERR_FILENO);
-// 				ft_putendl_fd("': not a valid identifier", STDERR_FILENO);
-// 			}
-// 			data->code_exit = 1;
-// 		}
-// 		else if (data->cmdt_count == 1)
-// 			check_norm(data, cmd_table->args[i]);
-// 		i++;
-// 	}
-// }
